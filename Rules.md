@@ -11,3 +11,5 @@
 - function component
 
 - strong typed, if possible, use interface
+
+- use as few thirdparty packages as possible
