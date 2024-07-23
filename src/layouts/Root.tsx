@@ -5,19 +5,23 @@ import TopLoader from "nextjs-toploader";
 import { SessionProvider } from "@/providers/Session";
 import AppThemeProvider from "@/providers/Theme";
 import type { ChildrenProps } from "@/interfaces";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
 
 /**
  *
  * @TODO : add font, add favicon, color theme
  */
 export default function RootLayout({ children }: Readonly<ChildrenProps>) {
+  const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
   return (
     <html lang="id-ID" suppressContentEditableWarning suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <title>Forum Gamers</title>
       </head>
-      <body className="bg-[#B2CEDE] dark:bg-[#1034A6]">
+      <body className={cn(font.variable)}>
         <Suspense>
           <SessionProvider>
             <AppThemeProvider>
