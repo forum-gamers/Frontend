@@ -17,7 +17,7 @@ export default function RootLayout({ children }: Readonly<ChildrenProps>) {
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <title>Forum Gamers</title>
       </head>
-      <body>
+      <body className="bg-[#B2CEDE] dark:bg-[#1034A6]">
         <Suspense>
           <SessionProvider>
             <AppThemeProvider>
