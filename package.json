@@ -10,21 +10,23 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
+    "aos": "^2.3.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.408.0",
     "next": "14.2.5",
+    "next-auth": "^4.24.7",
+    "next-themes": "^0.3.0",
+    "nextjs-toploader": "^1.6.12",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7",
-    "aos": "^2.3.4",
-    "next-auth": "^4.24.7",
-    "next-themes": "^0.3.0",
-    "nextjs-toploader": "^1.6.12"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

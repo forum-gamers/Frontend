@@ -1,3 +1,4 @@
+import type { Session } from "next-auth";
 import type { ReactNode } from "react";
 
 export interface ChildrenProps {
@@ -6,6 +7,15 @@ export interface ChildrenProps {
 
 export type ServerAction<T = any> = (
   formData: FormData
-) => Promise<{ data: T | null; error: Error | null }>;
+) => Promise<{ data: T | null; error?: string | null }>;
 
 export type FormAction = (FormData: FormData) => Promise<void>;
+
+export interface CustomSession extends Session {
+  user?: {
+    id?: string;
+    name?: string | null;
+    access_token?: string | null;
+    isVerified: boolean;
+  };
+}

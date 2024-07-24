@@ -4,7 +4,7 @@ import { useState, type ChangeEventHandler } from "react";
 import { loginHandler } from "../action";
 import SubmitBtn from "@/components/SubmitBtn";
 import Link from "next/link";
-import { swalError } from "@/libs/swal";
+import { swalError } from "@/lib/swal";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { FormAction } from "@/interfaces";
@@ -24,7 +24,7 @@ export default function LoginForm() {
 
     const { data, error } = await loginHandler(formData);
     if (error) {
-      swalError(error?.message || "Something went wrong");
+      swalError(error || "Something went wrong");
       return;
     }
 
@@ -64,6 +64,7 @@ export default function LoginForm() {
           placeholder="name@example.com"
           required
           onChange={onChangeHandler}
+          pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
         />
       </div>
       <div>
@@ -76,6 +77,8 @@ export default function LoginForm() {
         <input
           type="password"
           name="password"
+          autoComplete="current-password"
+          pattern=".{8,}"
           id="password"
           value={password}
           placeholder="••••••••"
@@ -103,11 +106,11 @@ export default function LoginForm() {
       />
 
       <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-        Not a member yet?{" "}
+        Not a register yet?{" "}
         <Link
           prefetch
           href="/register"
-          className="font-medium text-teal-600 hover:underline dark:text-teal-500"
+          className="font-medium text-[#0000EE] hover:underline dark:text-teal-500"
         >
           Sign up
         </Link>
