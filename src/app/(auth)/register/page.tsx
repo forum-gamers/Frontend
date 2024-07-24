@@ -6,3 +6,5 @@ export default async function Page() {
   if (await getServerSideSession()) redirect("/");
   return <RegisterPage />;
 }
+
+export const dynamic = "force-static";

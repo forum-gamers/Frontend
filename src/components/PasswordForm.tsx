@@ -16,6 +16,7 @@ export interface PasswordInputProps {
   pattern: string;
   className?: string;
   placeHolder?: string;
+  labelClass?: string;
 }
 
 export default function PasswordInput({
@@ -29,6 +30,7 @@ export default function PasswordInput({
   title,
   className,
   placeHolder = "password",
+  labelClass = "",
 }: PasswordInputProps) {
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -40,7 +42,7 @@ export default function PasswordInput({
         htmlFor={id}
         className={`block ${
           required && "after:content-['*'] after:ml-0.5 after:text-red-500"
-        } text-sm font-medium leading-5 text-gray-700`}
+        } ${labelClass}`}
       >
         {label}
       </Label>
@@ -56,6 +58,7 @@ export default function PasswordInput({
           required={required}
           placeholder={placeHolder}
           className={className}
+          autoComplete="new-password"
         />
         <PasswordToggleBtn onClick={visibleChange} open={visible} />
       </div>
