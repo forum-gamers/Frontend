@@ -1,0 +1,64 @@
+"use client";
+
+import { useState, type ChangeEventHandler } from "react";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import PasswordToggleBtn from "./PasswordToogleBtn";
+
+export interface PasswordInputProps {
+  required?: boolean;
+  label: string;
+  id: string;
+  onChangeHandler: ChangeEventHandler<HTMLInputElement>;
+  name: string;
+  value: string;
+  title?: string;
+  pattern: string;
+  className?: string;
+  placeHolder?: string;
+}
+
+export default function PasswordInput({
+  required = false,
+  id,
+  label,
+  onChangeHandler,
+  name,
+  value,
+  pattern,
+  title,
+  className,
+  placeHolder = "password",
+}: PasswordInputProps) {
+  const [visible, setVisible] = useState<boolean>(false);
+
+  const visibleChange = () => setVisible(!visible);
+
+  return (
+    <div className="grid w-full max-w-sm items-center gap-1.5">
+      <Label
+        htmlFor={id}
+        className={`block ${
+          required && "after:content-['*'] after:ml-0.5 after:text-red-500"
+        } text-sm font-medium leading-5 text-gray-700`}
+      >
+        {label}
+      </Label>
+      <div className="relative">
+        <Input
+          pattern={pattern}
+          title={title}
+          id={id}
+          type={visible ? "text" : "password"}
+          name={name}
+          value={value}
+          onChange={onChangeHandler}
+          required={required}
+          placeholder={placeHolder}
+          className={className}
+        />
+        <PasswordToggleBtn onClick={visibleChange} open={visible} />
+      </div>
+    </div>
+  );
+}

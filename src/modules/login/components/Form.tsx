@@ -8,6 +8,8 @@ import { swalError } from "@/lib/swal";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { FormAction } from "@/interfaces";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -48,14 +50,14 @@ export default function LoginForm() {
       action={actionHandler}
       id="login-form"
     >
-      <div>
-        <label
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label
           htmlFor="email"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Email Address
-        </label>
-        <input
+        </Label>
+        <Input
           type="email"
           name="email"
           id="email"
@@ -67,14 +69,14 @@ export default function LoginForm() {
           pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
         />
       </div>
-      <div>
-        <label
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label
           htmlFor="password"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Password
-        </label>
-        <input
+        </Label>
+        <Input
           type="password"
           name="password"
           autoComplete="current-password"
