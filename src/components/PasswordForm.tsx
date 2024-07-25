@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ChangeEventHandler } from "react";
+import { memo, useState, type ChangeEventHandler } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import PasswordToggleBtn from "./PasswordToogleBtn";
@@ -19,7 +19,7 @@ export interface PasswordInputProps {
   labelClass?: string;
 }
 
-export default function PasswordInput({
+function PasswordInput({
   required = false,
   id,
   label,
@@ -65,3 +65,5 @@ export default function PasswordInput({
     </div>
   );
 }
+
+export default memo(PasswordInput);

@@ -10,6 +10,7 @@ import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
 import PasswordInput from "@/components/PasswordForm";
 import { signIn } from "next-auth/react";
+import EmailForm from "@/components/EmailForm";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -81,27 +82,16 @@ export default function RegisterForm() {
         </div>
       </div>
 
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label
-          htmlFor="email"
-          className="block after:content-['*'] after:ml-0.5 after:text-red-500 text-sm font-medium leading-5 text-gray-700"
-        >
-          Email address
-        </Label>
-        <div className="mt-1 relative rounded-md shadow-sm">
-          <Input
-            id="email"
-            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-            value={email}
-            onChange={onChangeHandler}
-            name="email"
-            placeholder="user@example.com"
-            type="email"
-            required
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-          />
-        </div>
-      </div>
+      <EmailForm
+        onChangeHandler={onChangeHandler}
+        id="email"
+        name="email"
+        value={email}
+        required
+        label="Email Address"
+        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+        labelClass="text-sm font-medium leading-5 text-gray-700"
+      />
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label

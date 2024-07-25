@@ -8,9 +8,8 @@ import { swalError } from "@/lib/swal";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { FormAction } from "@/interfaces";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import PasswordInput from "@/components/PasswordForm";
+import EmailForm from "@/components/EmailForm";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -51,25 +50,16 @@ export default function LoginForm() {
       action={actionHandler}
       id="login-form"
     >
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label
-          htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Email Address
-        </Label>
-        <Input
-          type="email"
-          name="email"
-          id="email"
-          value={email}
-          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="name@example.com"
-          required
-          onChange={onChangeHandler}
-          pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-        />
-      </div>
+      <EmailForm
+        labelClass="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        label="Email Address"
+        onChangeHandler={onChangeHandler}
+        id="email"
+        name="email"
+        value={email}
+        required
+        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
       <PasswordInput
         onChangeHandler={onChangeHandler}
         id="password"
