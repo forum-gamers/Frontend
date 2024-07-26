@@ -3,7 +3,7 @@
 import EmailForm from "@/components/EmailForm";
 import SubmitBtn from "@/components/SubmitBtn";
 import type { CustomSession, FormAction } from "@/interfaces";
-import { useState, type ChangeEventHandler } from "react";
+import { useEffect, useState, type ChangeEventHandler } from "react";
 import { forgetPasswordHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
@@ -18,14 +18,16 @@ export default function ForgetForm({ session }: ForgetFormProps) {
   const [email, setEmail] = useState<string>("");
   const [inIndonesia, setInIndonesia] = useState<boolean>(false);
 
-  const actionHandler: FormAction = async (formData) => {
-    if (!email && !session) return;
-
+  useEffect(() => {
     if ("geolocation" in navigator)
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
         setInIndonesia(isInIndonesia(latitude, longitude));
       });
+  }, []);
+
+  const actionHandler: FormAction = async (formData) => {
+    if (!email && !session) return;
 
     formData.append("email", email);
     formData.append("lang", inIndonesia ? "id" : "en");
