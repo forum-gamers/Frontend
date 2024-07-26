@@ -7,5 +7,3 @@ export default async function Page() {
 
   return <LoginPage />;
 }
-
-export const dynamic = "force-static";

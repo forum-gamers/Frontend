@@ -6,5 +6,3 @@ export default async function Page() {
 
   return <ForgetPassword session={session} />;
 }
-
-export const dynamic = "force-static";

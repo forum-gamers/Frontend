@@ -19,3 +19,11 @@ export interface CustomSession extends Session {
     isVerified: boolean;
   };
 }
+
+export type PageProps<
+  params = Record<string, string>,
+  searchParams = Record<string, string>
+> = {
+  params: params;
+  searchParams?: searchParams;
+};
