@@ -4,24 +4,27 @@ import type { ServerAction } from "@/interfaces";
 import request from "@/lib/axios";
 import { revalidatePath } from "next/cache";
 
-export const loginHandler: ServerAction<string> = async (formData) => {
+export const forgetPasswordHandler: ServerAction = async (formData) => {
   const {
     status,
-    data: { data, message },
-  } = await request.Mutation<string>({
-    url: "/user/login",
+    data: { message },
+  } = await request.Mutation({
+    url: "/user/forget-password",
     method: "POST",
     data: {
       email: formData.get("email") as string,
-      password: formData.get("password") as string,
+    },
+    params: {
+      lang: formData.get("lang") as string,
     },
   });
+
   if (status !== 200) return { data: null, error: message };
 
-  revalidatePath("/login");
+  revalidatePath("/forget-password");
 
   return {
-    data,
+    data: "OK",
     error: null,
   };
 };
