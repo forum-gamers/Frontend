@@ -2,14 +2,14 @@
 
 import { useState, type ChangeEventHandler } from "react";
 import { loginHandler } from "../action";
-import SubmitBtn from "@/components/SubmitBtn";
+import SubmitBtn from "@/components/common/SubmitBtn";
 import Link from "next/link";
 import { swalError } from "@/lib/swal";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { FormAction } from "@/interfaces";
-import PasswordInput from "@/components/PasswordForm";
-import EmailForm from "@/components/EmailForm";
+import PasswordInput from "@/components/common/PasswordForm";
+import EmailForm from "@/components/common/EmailForm";
 
 export default function LoginForm() {
   const router = useRouter();
