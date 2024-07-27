@@ -8,6 +8,7 @@ import type { ChildrenProps } from "@/interfaces";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import InitPage from "@/components/Init";
+import Head from "next/head";
 
 const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -18,10 +19,10 @@ const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
 export default function RootLayout({ children }: Readonly<ChildrenProps>) {
   return (
     <html lang="id-ID" suppressContentEditableWarning suppressHydrationWarning>
-      <head>
+      <Head>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <title>Forum Gamers</title>
-      </head>
+      </Head>
       <body className={cn(font.variable, `bg-[#D6EFFF] dark:bg-[#001F3F]`)}>
         <Suspense>
           <SessionProvider>
