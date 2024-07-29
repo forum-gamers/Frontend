@@ -92,3 +92,28 @@ export interface PostResponse {
   userBio: string;
   communityId?: number | null;
 }
+
+export interface CommentResponse {
+  id: number;
+  userId: string;
+  postId: number;
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+  username: string;
+  imageUrl?: string;
+  bio?: string;
+  replies: ReplyResponse[];
+}
+
+export interface ReplyResponse {
+  id: number;
+  userId: string;
+  commentId: number;
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+  username: string;
+  imageUrl?: string;
+  bio?: string;
+}

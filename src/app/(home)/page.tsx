@@ -7,7 +7,7 @@ export default async function Page() {
   const session = await getServerSideSession();
   if (!session) redirect("/login");
 
-  //   const { data } = await fetchPosts(session?.user?.access_token ?? "");
+  const { data } = await fetchPosts(session?.user?.access_token ?? "");
 
-  return <Home datas={[]} />;
+  return <Home datas={data} />;
 }

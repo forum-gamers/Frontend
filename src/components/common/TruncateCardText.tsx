@@ -3,7 +3,15 @@
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
-export default function TruncateCardText({ text }: { text: string }) {
+export interface TruncateCardTextProps {
+  text: string;
+  className?: string;
+}
+
+export default function TruncateCardText({
+  text,
+  className,
+}: TruncateCardTextProps) {
   const [truncate, setTruncate] = useState(false);
 
   useEffect(() => {
@@ -13,7 +21,13 @@ export default function TruncateCardText({ text }: { text: string }) {
   const seeMoreAction = () => setTruncate(false);
   return (
     <>
-      <p className={`${truncate ? "truncate" : ""} text-xs`}>{text}</p>
+      <p
+        className={`${truncate ? "truncate" : ""} text-xs ${
+          !!className && className
+        }`}
+      >
+        {text}
+      </p>
       {truncate && (
         <Button
           variant="ghost"

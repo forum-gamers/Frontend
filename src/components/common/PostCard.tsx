@@ -1,21 +1,29 @@
 import type { PostResponse } from "@/interfaces/model";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { GUEST } from "../images";
 import { differenceInHours, differenceInDays } from "date-fns";
 import TruncateCardText from "./TruncateCardText";
 import LazyLoadImg from "./LazyLoadImage";
-import { Heart, MessageSquareMore } from "lucide-react";
-import { Button } from "../ui/button";
 import { memo } from "react";
 import LikeButton from "./LikeButton";
+import CommentButton from "./CommentButton";
+import ProfilePic from "./ProfilePic";
 
 export interface PostCardProps {
   data: PostResponse;
 }
 
 function PostCard({
-  data: { username, userImageUrl, createdAt, text, medias, id, isLiked },
+  data: {
+    username,
+    userImageUrl,
+    createdAt,
+    text,
+    medias,
+    id,
+    userId,
+    isLiked,
+    userBio,
+  },
 }: PostCardProps) {
   let date = new Date(createdAt);
   let time = differenceInDays(new Date(), date);
@@ -25,18 +33,13 @@ function PostCard({
   return (
     <Card data-aos="fade-left">
       <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
-        <Avatar>
-          <AvatarImage>
-            <AvatarImage
-              src={userImageUrl || GUEST.src}
-              alt={`${username} avatar`}
-            />
-            <AvatarFallback>
-              {username.split(" ")?.[0]?.[0]}
-              {username.split(" ")?.[1]?.[0] || "GUEST"}
-            </AvatarFallback>
-          </AvatarImage>
-        </Avatar>
+        <ProfilePic
+          bio={userBio}
+          src={userImageUrl}
+          alt={`${username} profile picture`}
+          username={username}
+          id={userId}
+        />
         <hgroup className="w-full text-xs">
           <p>{username || "GUEST"}</p>
           <p>{Math.abs(time)}</p>
@@ -65,9 +68,7 @@ function PostCard({
           isLiked={isLiked}
           className="hover:bg-slate-200 gap-2"
         />
-        <Button variant="ghost" className="hover:bg-slate-200 gap-2">
-          <MessageSquareMore /> Comment
-        </Button>
+        <CommentButton postId={id} />
       </CardFooter>
     </Card>
   );

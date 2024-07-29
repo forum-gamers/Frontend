@@ -6,9 +6,9 @@ import usePost from "@/hooks/usePost";
 export default function PostList() {
   const { datas } = usePost();
   return (
-    <section className="overflow-y-scroll">
+    <div className="overflow-y-scroll space-y-6">
       {!!datas.length &&
         datas.map((data) => <PostCard key={data.id} data={data} />)}
-    </section>
+    </div>
   );
 }
