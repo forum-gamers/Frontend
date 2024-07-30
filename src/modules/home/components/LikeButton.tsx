@@ -1,14 +1,14 @@
 "use client";
 
-import { HeartIcon } from "../icons/HeroIconsSolid";
-import { Button, type ButtonProps } from "../ui/button";
+import { HeartIcon } from "../../../components/icons/HeroIconsSolid";
+import { Button, type ButtonProps } from "../../../components/ui/button";
 import {
   memo,
   useOptimistic,
   useTransition,
   type MouseEventHandler,
 } from "react";
-import { likePost, unlikePost } from "@/actions/post";
+import { likePost, unlikePost } from "../action";
 import usePost from "@/hooks/usePost";
 
 export interface PostLikeButtonProps extends ButtonProps {

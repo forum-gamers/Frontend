@@ -109,6 +109,7 @@ export interface CommentResponse {
 export interface ReplyResponse {
   id: number;
   userId: string;
+  postId: number;
   commentId: number;
   text: string;
   createdAt: Date;

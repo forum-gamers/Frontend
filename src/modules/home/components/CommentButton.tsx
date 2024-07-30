@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { memo } from "react";
-import { ChatBubbleLeftIcon } from "../icons/HeroIconsSolid";
-import { motion } from "./FramerMotion";
-import { Button } from "../ui/button";
+import { ChatBubbleLeftIcon } from "../../../components/icons/HeroIconsSolid";
+import { motion } from "../../../components/common/FramerMotion";
+import { Button } from "../../../components/ui/button";
 
 export interface CommentButtonProps {
   postId: number;
@@ -16,9 +16,9 @@ function CommentButton({
   className,
 }: CommentButtonProps) {
   return (
-    <Button className={className} variant="ghost">
-      <ChatBubbleLeftIcon className="h-6 w-6" />
-      <Link prefetch href={`/comment/${postId}`}>
+    <Link prefetch href={`/comment/${postId}`}>
+      <Button className={className} variant="ghost">
+        <ChatBubbleLeftIcon className="h-6 w-6" />
         <motion.span
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -26,8 +26,8 @@ function CommentButton({
         >
           {countComment}
         </motion.span>
-      </Link>
-    </Button>
+      </Button>
+    </Link>
   );
 }
 

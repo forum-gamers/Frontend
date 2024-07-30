@@ -1,12 +1,17 @@
 import type { PostResponse } from "@/interfaces/model";
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import TruncateCardText from "./TruncateCardText";
-import LazyLoadImg from "./LazyLoadImage";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "../../../components/ui/card";
+import TruncateCardText from "../../../components/common/TruncateCardText";
+import LazyLoadImg from "../../../components/common/LazyLoadImage";
 import { memo } from "react";
 import LikeButton from "./LikeButton";
 import CommentButton from "./CommentButton";
-import ProfilePic from "./ProfilePic";
-import Timestamp from "./Timestamp";
+import ProfilePic from "../../../components/common/ProfilePic";
+import Timestamp from "../../../components/common/Timestamp";
 
 export interface PostCardProps {
   data: PostResponse;

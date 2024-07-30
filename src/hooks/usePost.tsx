@@ -8,6 +8,7 @@ export interface InitialState {
 export interface InitialAction {
   setDatas: (datas: PostResponse[]) => void;
   updateLike: (id: number) => void;
+  updateCountComment: (id: number) => void;
 }
 
 const usePost = create<InitialState & InitialAction>((set) => ({
@@ -21,6 +22,17 @@ const usePost = create<InitialState & InitialAction>((set) => ({
               ...data,
               isLiked: !data.isLiked,
               countLike: data.countLike + (data.isLiked ? -1 : 1),
+            }
+          : data
+      ),
+    })),
+  updateCountComment: (id: number) =>
+    set(({ datas }) => ({
+      datas: datas.map((data) =>
+        data.id === id
+          ? {
+              ...data,
+              countComment: +data.countComment + 1,
             }
           : data
       ),

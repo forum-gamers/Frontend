@@ -1,14 +1,19 @@
 "use client";
 
 import { useState, type ChangeEventHandler } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Textarea } from "../ui/textarea";
-import SubmitBtn from "./SubmitBtn";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../../components/ui/popover";
+import { Textarea } from "../../../components/ui/textarea";
+import SubmitBtn from "../../../components/common/SubmitBtn";
 import type { FormAction } from "@/interfaces";
-import { replyComment } from "@/actions/post";
+import { replyComment } from "../action";
 import { swalError } from "@/lib/swal";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 import useComment from "@/hooks/useComment";
+import usePost from "@/hooks/usePost";
 
 export interface ReplyBtnProps {
   commentId: number;
@@ -17,6 +22,7 @@ export interface ReplyBtnProps {
 
 export default function ReplyBtn({ commentId, userId }: ReplyBtnProps) {
   const { addReply } = useComment();
+  const { updateCountComment } = usePost();
   const [text, setText] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
 
@@ -35,7 +41,10 @@ export default function ReplyBtn({ commentId, userId }: ReplyBtnProps) {
       return;
     }
 
-    if (data) addReply(data);
+    if (data) {
+      addReply(data);
+      updateCountComment(data.postId);
+    }
 
     setOpen(false);
     setText("");

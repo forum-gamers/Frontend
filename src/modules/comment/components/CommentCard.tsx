@@ -1,10 +1,15 @@
 import type { CommentResponse } from "@/interfaces/model";
 import { memo } from "react";
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import ProfilePic from "./ProfilePic";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "../../../components/ui/card";
+import ProfilePic from "../../../components/common/ProfilePic";
 import ReplyBtn from "./ReplyBtn";
-import TruncateCardText from "./TruncateCardText";
-import Timestamp from "./Timestamp";
+import TruncateCardText from "../../../components/common/TruncateCardText";
+import Timestamp from "../../../components/common/Timestamp";
 
 export interface CommentCardProps {
   data: CommentResponse;
