@@ -20,7 +20,10 @@ function PostLikeButton({
   ...rest
 }: PostLikeButtonProps) {
   const { updateLike } = usePost();
-  const [liked, optimisticLiked] = useOptimistic(isLiked, (prev) => !prev);
+  const [liked, optimisticLiked] = useOptimistic(
+    isLiked,
+    (prev: boolean) => !prev
+  );
 
   const clickHandler: MouseEventHandler = async (e) => {
     e.preventDefault();

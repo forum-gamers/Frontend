@@ -40,7 +40,7 @@ function PostCard({
           username={username}
           id={userId}
         />
-        <hgroup className="w-full text-xs">
+        <hgroup className="w-full text-xs antialiased">
           <p>{username || "GUEST"}</p>
           <p>{Math.abs(time)}</p>
         </hgroup>
