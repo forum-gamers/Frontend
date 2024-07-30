@@ -2,7 +2,12 @@
 
 import { HeartIcon } from "../icons/HeroIconsSolid";
 import { Button, type ButtonProps } from "../ui/button";
-import { memo, useOptimistic, type MouseEventHandler } from "react";
+import {
+  memo,
+  useOptimistic,
+  useTransition,
+  type MouseEventHandler,
+} from "react";
 import { likePost, unlikePost } from "@/actions/post";
 import usePost from "@/hooks/usePost";
 
@@ -20,20 +25,26 @@ function PostLikeButton({
   totalLike,
   ...rest
 }: PostLikeButtonProps) {
+  const [pending, startTransition] = useTransition();
   const { updateLike } = usePost();
   const [liked, optimisticLiked] = useOptimistic(
     isLiked,
     (prev: boolean) => !prev
   );
+  const [count, optimisticCount] = useOptimistic(
+    totalLike,
+    (prev: number) => prev + (isLiked ? -1 : 1)
+  );
 
   const clickHandler: MouseEventHandler = async (e) => {
     e.preventDefault();
+    startTransition(async () => {
+      optimisticLiked(liked);
+      optimisticCount(count);
+      isLiked ? await unlikePost(postId) : await likePost(postId);
 
-    optimisticLiked(liked);
-
-    isLiked ? await unlikePost(postId) : await likePost(postId);
-
-    updateLike(postId);
+      updateLike(postId);
+    });
   };
 
   return (
@@ -42,13 +53,14 @@ function PostLikeButton({
       onClick={clickHandler}
       variant="ghost"
       className={className}
+      disabled={pending}
     >
       <HeartIcon
         className={`h-6 w-6 text-[#EE2924] ${
           liked ? "text-[#EE2924]" : "text-transparent stroke-[#EE2924]"
         }`}
       />{" "}
-      <span>{totalLike}</span>
+      <span>{count}</span>
     </Button>
   );
 }
