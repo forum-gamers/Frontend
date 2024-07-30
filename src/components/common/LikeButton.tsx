@@ -5,18 +5,19 @@ import { Button, type ButtonProps } from "../ui/button";
 import { memo, useOptimistic, type MouseEventHandler } from "react";
 import { likePost, unlikePost } from "@/actions/post";
 import usePost from "@/hooks/usePost";
-import { motion } from "./FramerMotion";
 
 export interface PostLikeButtonProps extends ButtonProps {
   className?: string;
   postId: number;
   isLiked: boolean;
+  totalLike: number;
 }
 
 function PostLikeButton({
   className,
   postId,
   isLiked,
+  totalLike,
   ...rest
 }: PostLikeButtonProps) {
   const { updateLike } = usePost();
@@ -47,13 +48,7 @@ function PostLikeButton({
           liked ? "text-[#EE2924]" : "text-transparent stroke-[#EE2924]"
         }`}
       />{" "}
-      <motion.span
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-      >
-        {liked ? "Unlike" : "Like"}
-      </motion.span>
+      <span>{totalLike}</span>
     </Button>
   );
 }

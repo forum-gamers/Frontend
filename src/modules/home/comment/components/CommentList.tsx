@@ -8,7 +8,7 @@ export default function CommentList() {
 
   return (
     <div className="overflow-y-scroll space-y-6">
-      {!!datas.length &&
+      {!!datas?.length &&
         datas.map((el) => <CommentCard key={el.id} data={el} />)}
     </div>
   );

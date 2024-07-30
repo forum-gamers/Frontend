@@ -16,7 +16,13 @@ const usePost = create<InitialState & InitialAction>((set) => ({
   updateLike: (id: number) =>
     set(({ datas }) => ({
       datas: datas.map((data) =>
-        data.id === id ? { ...data, isLiked: !data.isLiked } : data
+        data.id === id
+          ? {
+              ...data,
+              isLiked: !data.isLiked,
+              countLike: data.countLike + (data.isLiked ? -1 : 1),
+            }
+          : data
       ),
     })),
 }));

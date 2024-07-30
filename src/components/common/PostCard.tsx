@@ -1,12 +1,12 @@
 import type { PostResponse } from "@/interfaces/model";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import { differenceInHours, differenceInDays } from "date-fns";
 import TruncateCardText from "./TruncateCardText";
 import LazyLoadImg from "./LazyLoadImage";
 import { memo } from "react";
 import LikeButton from "./LikeButton";
 import CommentButton from "./CommentButton";
 import ProfilePic from "./ProfilePic";
+import Timestamp from "./Timestamp";
 
 export interface PostCardProps {
   data: PostResponse;
@@ -23,13 +23,10 @@ function PostCard({
     userId,
     isLiked,
     userBio,
+    countLike,
+    countComment,
   },
 }: PostCardProps) {
-  let date = new Date(createdAt);
-  let time = differenceInDays(new Date(), date);
-
-  if (time < 1) time = differenceInHours(new Date(), date);
-
   return (
     <Card data-aos="fade-left">
       <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
@@ -42,7 +39,7 @@ function PostCard({
         />
         <hgroup className="w-full text-xs antialiased">
           <p>{username || "GUEST"}</p>
-          <p>{Math.abs(time)}</p>
+          <Timestamp timestamp={createdAt} />
         </hgroup>
       </CardHeader>
       <CardContent className="mt-4">
@@ -64,11 +61,16 @@ function PostCard({
       </CardContent>
       <CardFooter>
         <LikeButton
+          totalLike={countLike}
           postId={id}
           isLiked={isLiked}
           className="hover:bg-slate-200 gap-2"
         />
-        <CommentButton postId={id} />
+        <CommentButton
+          countComment={countComment}
+          postId={id}
+          className="hover:bg-slate-200 gap-2"
+        />
       </CardFooter>
     </Card>
   );
