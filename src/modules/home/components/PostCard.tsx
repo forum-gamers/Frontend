@@ -7,11 +7,12 @@ import {
 } from "../../../components/ui/card";
 import TruncateCardText from "../../../components/common/TruncateCardText";
 import LazyLoadImg from "../../../components/common/LazyLoadImage";
-import { memo } from "react";
+import { Fragment, memo } from "react";
 import LikeButton from "./LikeButton";
 import CommentButton from "./CommentButton";
 import ProfilePic from "../../../components/common/ProfilePic";
 import Timestamp from "../../../components/common/Timestamp";
+import VideoPlayer from "@/components/common/VideoPlayer";
 
 export interface PostCardProps {
   data: PostResponse;
@@ -52,14 +53,25 @@ function PostCard({
         {!!medias.length && (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
             {medias.map((el) => (
-              <LazyLoadImg
-                className="py-1 hover:scale-105"
-                key={el.fileId}
-                src={el.url}
-                alt="post image"
-                width={400}
-                height={300}
-              />
+              <Fragment key={el.fileId}>
+                {el.type === "image" ? (
+                  <LazyLoadImg
+                    className="py-1 hover:scale-105"
+                    src={el.url}
+                    alt="post image"
+                    width={400}
+                    height={300}
+                  />
+                ) : (
+                  <VideoPlayer
+                    src={el.url}
+                    alt="post video"
+                    width={400}
+                    height={300}
+                    className="py-1 hover:scale-105"
+                  />
+                )}
+              </Fragment>
             ))}
           </div>
         )}

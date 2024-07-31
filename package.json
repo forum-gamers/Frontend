@@ -28,6 +28,7 @@
     "nextjs-toploader": "^1.6.12",
     "react": "^18",
     "react-dom": "^18",
+    "react-player": "^2.16.0",
     "react-resizable-panels": "^2.0.22",
     "sweetalert2": "^11.12.3",
     "tailwind-merge": "^2.4.0",
