@@ -9,7 +9,7 @@ export interface HomeProps {
 
 export default function Home({ datas }: HomeProps) {
   return (
-    <Container as="section">
+    <Container as="div" data-aos="fade-up">
       <InitHomePage datas={datas}>
         <PostList />
       </InitHomePage>

@@ -11,5 +11,5 @@ export default async function Page({
 
   const { data } = await fetchPostComment(value);
 
-  return <Comment datas={data} />;
+  return <Comment datas={data} postId={value} />;
 }

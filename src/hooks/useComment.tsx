@@ -8,6 +8,7 @@ export interface InitialState {
 export interface InitialAction {
   setDatas: (datas: CommentResponse[]) => void;
   addReply: (reply: ReplyResponse) => void;
+  addComment: (comment: CommentResponse) => void;
 }
 
 const useComment = create<InitialState & InitialAction>((set) => ({
@@ -21,6 +22,8 @@ const useComment = create<InitialState & InitialAction>((set) => ({
           : data
       ),
     })),
+  addComment: (comment) =>
+    set((state) => ({ datas: [comment, ...state.datas] })),
 }));
 
 export default useComment;

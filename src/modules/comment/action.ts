@@ -48,3 +48,27 @@ export const replyComment: ServerAction<ReplyResponse> = async (formData) => {
 
   return { error: null, data };
 };
+
+export const postAComment: ServerAction<CommentResponse> = async (formData) => {
+  const {
+    status,
+    data: { data, message },
+  } = await request.Mutation<CommentResponse>({
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    data: {
+      text: formData.get("text"),
+    },
+    method: "POST",
+    url: `/comment/${formData.get("postId")}`,
+  });
+
+  if (status !== 201) return { error: message, data: null };
+
+  return { data, error: null };
+};
