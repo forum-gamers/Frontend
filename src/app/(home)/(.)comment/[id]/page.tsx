@@ -1,3 +1,4 @@
+import { Dialog } from "@/components/ui/dialog";
 import type { PageProps } from "@/interfaces";
 import Comment from "@/modules/comment";
 import { fetchPostComment } from "@/modules/comment/action";
@@ -11,5 +12,10 @@ export default async function Page({
 
   const { data } = await fetchPostComment(value);
 
-  return <Comment datas={data} postId={value} />;
+  return (
+    <Dialog open>
+      {" "}
+      <Comment datas={data} postId={value} />
+    </Dialog>
+  );
 }

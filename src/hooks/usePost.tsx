@@ -9,6 +9,7 @@ export interface InitialAction {
   setDatas: (datas: PostResponse[]) => void;
   updateLike: (id: number) => void;
   updateCountComment: (id: number) => void;
+  addPost: (post: PostResponse) => void;
 }
 
 const usePost = create<InitialState & InitialAction>((set) => ({
@@ -37,6 +38,7 @@ const usePost = create<InitialState & InitialAction>((set) => ({
           : data
       ),
     })),
+  addPost: (post) => set((state) => ({ datas: [post, ...state.datas] })),
 }));
 
 export default usePost;

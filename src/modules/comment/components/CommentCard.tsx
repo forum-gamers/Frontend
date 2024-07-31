@@ -50,7 +50,7 @@ function CommentCard({
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           <ReplyBtn commentId={id} userId={userId} />
-          {!!replies.length && (
+          {!!replies?.length && (
             <Button variant="ghost" onClick={onCLickHandler}>
               See Reply
             </Button>

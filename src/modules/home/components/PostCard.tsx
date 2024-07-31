@@ -44,13 +44,13 @@ function PostCard({
           id={userId}
         />
         <hgroup className="w-full text-xs antialiased">
-          <p>{username || "GUEST"}</p>
+          <p>{username}</p>
           <Timestamp timestamp={createdAt} />
         </hgroup>
       </CardHeader>
       <CardContent className="mt-4">
         {!!text && <TruncateCardText text={text} />}
-        {!!medias.length && (
+        {!!medias?.length && (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
             {medias.map((el) => (
               <Fragment key={el.fileId}>
