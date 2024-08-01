@@ -9,5 +9,5 @@ export default async function Page() {
 
   const { data } = await fetchPosts(session?.user?.access_token ?? "");
 
-  return <Home datas={data} />;
+  return <Home datas={data} session={session}/>;
 }

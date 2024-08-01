@@ -13,7 +13,7 @@ import FileForm, {
 import SubmitBtn from "@/components/common/SubmitBtn";
 import { createPost } from "../action";
 import { swalError } from "@/lib/swal";
-import usePost from "@/hooks/usePost";
+import usePost from "../hooks/usePost";
 
 export default function CreatePostForm() {
   const { addPost } = usePost();

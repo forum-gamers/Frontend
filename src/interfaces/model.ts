@@ -83,6 +83,7 @@ export interface PostResponse {
   privacy: string;
   countLike: number;
   countComment: number;
+  editedText: boolean;
   countShare: number;
   isLiked: boolean;
   isShared: boolean;

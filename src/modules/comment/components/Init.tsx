@@ -1,6 +1,6 @@
 "use client";
 
-import useComment from "@/hooks/useComment";
+import useComment from "@/modules/comment/hooks/useComment";
 import type { ChildrenProps } from "@/interfaces";
 import type { CommentResponse } from "@/interfaces/model";
 import { memo, useEffect } from "react";

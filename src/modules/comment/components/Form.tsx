@@ -3,7 +3,7 @@
 import SubmitBtn from "@/components/common/SubmitBtn";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import useComment from "@/hooks/useComment";
+import useComment from "@/modules/comment/hooks/useComment";
 import type { FormAction } from "@/interfaces";
 import { useState, type ChangeEventHandler } from "react";
 import { postAComment } from "../action";

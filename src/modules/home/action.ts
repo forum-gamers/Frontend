@@ -78,3 +78,49 @@ export const createPost: ServerAction<PostResponse> = async (formData) => {
     data,
   };
 };
+
+export const deletePost = async (postId: number) => {
+  const {
+    status,
+    data: { message },
+  } = await request.Mutation({
+    method: "DELETE",
+    url: `/post/${postId}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message };
+
+  return { error: null };
+};
+
+export const editPostText = async (text: string, postId: number) => {
+  "use server";
+  const {
+    status,
+    data: { message },
+  } = await request.Mutation({
+    method: "PATCH",
+    url: `/post/${postId}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    data: {
+      text,
+    },
+  });
+
+  if (status !== 200) return { error: message };
+
+  return { error: null };
+};

@@ -10,6 +10,8 @@ export interface InitialAction {
   updateLike: (id: number) => void;
   updateCountComment: (id: number) => void;
   addPost: (post: PostResponse) => void;
+  deletePost: (postId: number) => void;
+  editPostText: (text: string, postId: number) => void;
 }
 
 const usePost = create<InitialState & InitialAction>((set) => ({
@@ -39,6 +41,14 @@ const usePost = create<InitialState & InitialAction>((set) => ({
       ),
     })),
   addPost: (post) => set((state) => ({ datas: [post, ...state.datas] })),
+  deletePost: (id) =>
+    set(({ datas }) => ({ datas: datas.filter((data) => data.id !== id) })),
+  editPostText: (text, postId) =>
+    set(({ datas }) => ({
+      datas: datas.map((el) =>
+        el.id === postId ? { ...el, text, editedText: true } : el
+      ),
+    })),
 }));
 
 export default usePost;

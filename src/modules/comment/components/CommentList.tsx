@@ -1,7 +1,7 @@
 "use client";
 
 import CommentCard from "./CommentCard";
-import useComment from "@/hooks/useComment";
+import useComment from "@/modules/comment/hooks/useComment";
 
 export default function CommentList() {
   const { datas } = useComment();

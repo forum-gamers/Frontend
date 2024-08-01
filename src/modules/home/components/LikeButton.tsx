@@ -9,7 +9,7 @@ import {
   type MouseEventHandler,
 } from "react";
 import { likePost, unlikePost } from "../action";
-import usePost from "@/hooks/usePost";
+import usePost from "../hooks/usePost";
 
 export interface PostLikeButtonProps extends ButtonProps {
   className?: string;

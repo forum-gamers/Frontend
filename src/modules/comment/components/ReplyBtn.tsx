@@ -12,8 +12,8 @@ import type { FormAction } from "@/interfaces";
 import { replyComment } from "../action";
 import { swalError } from "@/lib/swal";
 import { Button } from "../../../components/ui/button";
-import useComment from "@/hooks/useComment";
-import usePost from "@/hooks/usePost";
+import useComment from "@/modules/comment/hooks/useComment";
+import usePost from "@/modules/home/hooks/usePost";
 
 export interface ReplyBtnProps {
   commentId: number;
