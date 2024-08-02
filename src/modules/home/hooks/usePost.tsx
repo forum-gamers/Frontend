@@ -16,7 +16,14 @@ export interface InitialAction {
 
 const usePost = create<InitialState & InitialAction>((set) => ({
   datas: [],
-  setDatas: (datas) => set({ datas }),
+  setDatas: (datas) =>
+    set((state) => ({
+      datas: Array.from(
+        [...state.datas, ...datas]
+          .reduce((acc, item) => acc.set(item.id, item), new Map())
+          .values()
+      ),
+    })),
   updateLike: (id: number) =>
     set(({ datas }) => ({
       datas: datas.map((data) =>

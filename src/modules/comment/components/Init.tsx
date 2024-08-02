@@ -10,8 +10,9 @@ export interface InitCommentProps extends ChildrenProps {
 }
 
 function InitComment({ children, datas }: InitCommentProps) {
-  const { setDatas } = useComment();
+  const { setDatas, resetData } = useComment();
   useEffect(() => {
+    resetData();
     setDatas(datas);
   }, []);
 

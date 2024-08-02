@@ -2,14 +2,15 @@
 
 import type { CustomSession } from "@/interfaces";
 import PostCard from "./PostCard";
-import usePost from "../hooks/usePost";
+import useScrollPost from "../hooks/useScrollPost";
+import SkeletonCard from "@/components/common/SkeletonCard";
 
 export interface PostListProps {
   session: CustomSession | null;
 }
 
 export default function PostList({ session }: PostListProps) {
-  const { datas } = usePost();
+  const { datas, ref, pending } = useScrollPost<HTMLDivElement>();
 
   return (
     <div className="overflow-y-scroll space-y-6 no-scrollbar">
@@ -17,6 +18,8 @@ export default function PostList({ session }: PostListProps) {
         datas.map((data) => (
           <PostCard session={session} key={data.id} data={data} />
         ))}
+      <div ref={ref}></div>
+      {pending && <SkeletonCard />}
     </div>
   );
 }

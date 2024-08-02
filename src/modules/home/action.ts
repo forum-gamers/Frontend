@@ -1,7 +1,7 @@
 "use server";
 
 import { getServerSideSession } from "@/helpers/global";
-import type { ServerAction } from "@/interfaces";
+import type { BasePagination, ServerAction } from "@/interfaces";
 import type { PostResponse } from "@/interfaces/model";
 import request from "@/lib/axios";
 
@@ -123,4 +123,48 @@ export const editPostText = async (text: string, postId: number) => {
   if (status !== 200) return { error: message };
 
   return { error: null };
+};
+
+export const fetchPosts = async ({ page, limit }: BasePagination) => {
+  const {
+    status,
+    data: { data, message },
+  } = await request.Query<PostResponse[]>({
+    url: "/post",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    params: {
+      page,
+      limit,
+    },
+  });
+
+  if (status !== 200) return { data: [] as PostResponse[], error: message };
+
+  return { data, error: null };
+};
+
+export const fetchPostById = async (postId: number) => {
+  const {
+    status,
+    data: { data, message },
+  } = await request.Query<PostResponse>({
+    url: `/post/${postId}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { data: null, error: message };
+
+  return { data, error: null };
 };

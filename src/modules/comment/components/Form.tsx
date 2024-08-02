@@ -8,6 +8,7 @@ import type { FormAction } from "@/interfaces";
 import { useState, type ChangeEventHandler } from "react";
 import { postAComment } from "../action";
 import { swalError } from "@/lib/swal";
+import usePost from "@/modules/home/hooks/usePost";
 
 export interface CommentFormProps {
   postId: number;
@@ -15,6 +16,7 @@ export interface CommentFormProps {
 
 export default function CommentForm({ postId }: CommentFormProps) {
   const { addComment } = useComment();
+  const { updateCountComment } = usePost();
   const [text, setText] = useState<string>("");
 
   const actionHandler: FormAction = async (formData) => {
@@ -32,6 +34,7 @@ export default function CommentForm({ postId }: CommentFormProps) {
     if (data) {
       addComment(data);
       setText("");
+      updateCountComment(postId);
       return;
     }
 

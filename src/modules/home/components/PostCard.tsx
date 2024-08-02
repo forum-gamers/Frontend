@@ -34,6 +34,7 @@ import { Badge } from "@/components/ui/badge";
 export interface PostCardProps {
   data: PostResponse;
   session: CustomSession | null;
+  as?: "page" | "card";
 }
 
 function PostCard({
@@ -52,6 +53,7 @@ function PostCard({
     editedText,
   },
   session,
+  as = "card",
 }: PostCardProps) {
   const { deletePost: deletePostFromCtx, editPostText } = usePost();
   const [editable, setEditable] = useState<boolean>(false);
@@ -177,11 +179,13 @@ function PostCard({
           isLiked={isLiked}
           className="hover:bg-slate-200 gap-2"
         />
-        <CommentButton
-          countComment={countComment}
-          postId={id}
-          className="hover:bg-slate-200 gap-2"
-        />
+        {as === "card" && (
+          <CommentButton
+            countComment={countComment}
+            postId={id}
+            className="hover:bg-slate-200 gap-2"
+          />
+        )}
       </CardFooter>
     </Card>
   );

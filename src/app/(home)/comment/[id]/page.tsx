@@ -1,7 +1,8 @@
 import type { PageProps } from "@/interfaces";
 import Comment from "@/modules/comment";
 import { fetchPostComment } from "@/modules/comment/action";
-import { redirect } from "next/navigation";
+import { fetchPostById } from "@/modules/home/action";
+import { notFound, redirect } from "next/navigation";
 
 export default async function Page({
   params: { id },
@@ -9,7 +10,12 @@ export default async function Page({
   const value = parseInt(id);
   if (isNaN(value)) redirect("/");
 
-  const { data } = await fetchPostComment(value);
+  const [{ data = [] }, { data: post }] = await Promise.all([
+    fetchPostComment(value),
+    fetchPostById(value),
+  ]);
 
-  return <Comment datas={data} postId={value} />;
+  if (!post) notFound();
+
+  return <Comment datas={data} post={post} />;
 }
