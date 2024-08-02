@@ -2,7 +2,7 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { useFormStatus } from "react-dom";
-import LoaderSvg from "./svg/Loader";
+import LoaderSvg from "../svg/Loader";
 
 export interface SubmitBtnProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {

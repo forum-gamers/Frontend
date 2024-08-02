@@ -7,7 +7,7 @@ import AppThemeProvider from "@/providers/Theme";
 import type { ChildrenProps } from "@/interfaces";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import InitPage from "@/components/Init";
+import InitPage from "@/components/common/Init";
 
 const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
 

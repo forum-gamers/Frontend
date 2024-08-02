@@ -1,8 +1,8 @@
 "use client";
 
 import { type ChangeEventHandler, memo } from "react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 
 export interface EmailFormProps {
   id: string;

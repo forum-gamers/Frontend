@@ -1,6 +1,6 @@
 "use client";
 
-import SubmitBtn from "@/components/SubmitBtn";
+import SubmitBtn from "@/components/common/SubmitBtn";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import type { FormAction } from "@/interfaces";
@@ -8,9 +8,9 @@ import { useState, type ChangeEventHandler } from "react";
 import { registerHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
-import PasswordInput from "@/components/PasswordForm";
+import PasswordInput from "@/components/common/PasswordForm";
 import { signIn } from "next-auth/react";
-import EmailForm from "@/components/EmailForm";
+import EmailForm from "@/components/common/EmailForm";
 
 export default function RegisterForm() {
   const router = useRouter();

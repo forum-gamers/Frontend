@@ -27,3 +27,8 @@ export type PageProps<
   params: params;
   searchParams?: searchParams;
 };
+
+export interface BasePagination {
+  page?: number;
+  limit?: number;
+}

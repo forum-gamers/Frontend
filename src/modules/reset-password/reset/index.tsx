@@ -1,7 +1,7 @@
-import PriorityImage from "@/components/PriorityImage";
+import PriorityImage from "@/components/common/PriorityImage";
 import Link from "next/link";
 import { LOGO_BLUE } from "@/components/images";
-import Container from "@/components/Container";
+import Container from "@/components/common/Container";
 import ResetForm from "./components/Form";
 
 export interface ResetFormProps {

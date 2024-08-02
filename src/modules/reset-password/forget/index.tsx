@@ -1,4 +1,4 @@
-import Container from "@/components/Container";
+import Container from "@/components/common/Container";
 import type { CustomSession } from "@/interfaces";
 import ForgetForm from "./components/Form";
 import Link from "next/link";

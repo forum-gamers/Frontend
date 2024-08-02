@@ -1,8 +1,8 @@
 "use client";
 
 import { memo, useState, type ChangeEventHandler } from "react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 import PasswordToggleBtn from "./PasswordToogleBtn";
 
 export interface PasswordInputProps {

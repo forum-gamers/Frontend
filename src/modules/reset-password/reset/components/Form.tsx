@@ -1,7 +1,7 @@
 "use client";
 
-import PasswordForm from "@/components/PasswordForm";
-import SubmitBtn from "@/components/SubmitBtn";
+import PasswordForm from "@/components/common/PasswordForm";
+import SubmitBtn from "@/components/common/SubmitBtn";
 import type { FormAction } from "@/interfaces";
 import { useState, type ChangeEventHandler } from "react";
 import { resetPasswordHandler } from "../action";

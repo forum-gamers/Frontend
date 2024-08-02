@@ -1,6 +1,6 @@
 "use client";
 
-import PasswordEye, { type PasswordEyeProps } from "./svg/PasswordEye";
+import PasswordEye, { type PasswordEyeProps } from "../svg/PasswordEye";
 
 export interface PasswordToggleBtnProps extends PasswordEyeProps {
   onClick: () => void;
