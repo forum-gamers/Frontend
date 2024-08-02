@@ -168,3 +168,45 @@ export const fetchPostById = async (postId: number) => {
 
   return { data, error: null };
 };
+
+export const bookmarkPost = async (postId: number) => {
+  const {
+    status,
+    data: { message },
+  } = await request.Mutation({
+    method: "POST",
+    url: `/bookmark/${postId}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 201) return { error: message };
+
+  return { error: null };
+};
+
+export const unBookmarkPost = async (postId: number) => {
+  const {
+    status,
+    data: { message },
+  } = await request.Mutation({
+    method: "DELETE",
+    url: `/bookmark/${postId}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message };
+
+  return { error: null };
+};

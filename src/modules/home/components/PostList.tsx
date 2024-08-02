@@ -15,8 +15,13 @@ export default function PostList({ session }: PostListProps) {
   return (
     <div className="overflow-y-scroll space-y-6 no-scrollbar">
       {!!datas?.length &&
-        datas.map((data) => (
-          <PostCard session={session} key={data.id} data={data} />
+        datas.map((data, idx) => (
+          <PostCard
+            session={session}
+            key={data.id}
+            data={data}
+            dataAos={idx % 2 === 0 ? "fade-right" : "fade-left"}
+          />
         ))}
       <div ref={ref}></div>
       {pending && <SkeletonCard />}

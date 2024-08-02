@@ -30,11 +30,13 @@ import { deletePost } from "../action";
 import usePost from "../hooks/usePost";
 import EditableText from "@/modules/home/components/EditableText";
 import { Badge } from "@/components/ui/badge";
+import BookmarkBtn from "./BookmarkBtn";
 
 export interface PostCardProps {
   data: PostResponse;
   session: CustomSession | null;
   as?: "page" | "card";
+  dataAos: "fade-left" | "fade-right" | "fade-up";
 }
 
 function PostCard({
@@ -46,14 +48,17 @@ function PostCard({
     medias,
     id,
     userId,
+    isBookmarked,
     isLiked,
     userBio,
     countLike,
     countComment,
     editedText,
+    countBookmark,
   },
   session,
   as = "card",
+  dataAos,
 }: PostCardProps) {
   const { deletePost: deletePostFromCtx, editPostText } = usePost();
   const [editable, setEditable] = useState<boolean>(false);
@@ -91,7 +96,7 @@ function PostCard({
   };
 
   return (
-    <Card data-aos="fade-left">
+    <Card data-aos={dataAos} data-aos-duration="500">
       <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
         <ProfilePic
           bio={userBio}
@@ -186,6 +191,11 @@ function PostCard({
             className="hover:bg-slate-200 gap-2"
           />
         )}
+        <BookmarkBtn
+          postId={id}
+          countBookmark={countBookmark}
+          isBookmarked={isBookmarked}
+        />
       </CardFooter>
     </Card>
   );

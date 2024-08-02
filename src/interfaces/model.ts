@@ -83,9 +83,11 @@ export interface PostResponse {
   privacy: string;
   countLike: number;
   countComment: number;
+  countBookmark: number;
   editedText: boolean;
   countShare: number;
   isLiked: boolean;
+  isBookmarked: boolean;
   isShared: boolean;
   community?: CommunityResponse | null;
   username: string;

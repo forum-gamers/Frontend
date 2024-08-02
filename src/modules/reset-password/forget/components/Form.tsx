@@ -19,7 +19,6 @@ export default function ForgetForm({ session }: ForgetFormProps) {
   const [inIndonesia, setInIndonesia] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log({ session });
     if ("geolocation" in navigator)
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;

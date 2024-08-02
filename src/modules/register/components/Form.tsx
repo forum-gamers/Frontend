@@ -24,7 +24,6 @@ export default function RegisterForm() {
     });
 
   const actionHandler: FormAction = async (formData) => {
-    console.log(formData);
     if (!username || !email || !password || !phoneNumber || !confirmPassword)
       return;
 
