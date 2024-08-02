@@ -1,11 +1,14 @@
 "use server";
 
 import { getServerSideSession } from "@/helpers/global";
-import type { ServerAction } from "@/interfaces";
+import type { BasePagination, ServerAction } from "@/interfaces";
 import type { CommentResponse, ReplyResponse } from "@/interfaces/model";
 import request from "@/lib/axios";
 
-export const fetchPostComment = async (postId: number) => {
+export const fetchPostComment = async (
+  postId: number,
+  { page, limit }: BasePagination
+) => {
   const {
     status,
     data: { data, message },
@@ -17,6 +20,10 @@ export const fetchPostComment = async (postId: number) => {
           await getServerSideSession()
         )?.user?.access_token
       }`,
+    },
+    params: {
+      page,
+      limit,
     },
   });
 

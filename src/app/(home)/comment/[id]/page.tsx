@@ -11,7 +11,7 @@ export default async function Page({
   if (isNaN(value)) redirect("/");
 
   const [{ data = [] }, { data: post }] = await Promise.all([
-    fetchPostComment(value),
+    fetchPostComment(value, {}),
     fetchPostById(value),
   ]);
 

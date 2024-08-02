@@ -1,15 +1,22 @@
 "use client";
 
+import SkeletonCard from "@/components/common/SkeletonCard";
+import useScrollComment from "../hooks/useScrollComment";
 import CommentCard from "./CommentCard";
-import useComment from "@/modules/comment/hooks/useComment";
 
-export default function CommentList() {
-  const { datas } = useComment();
+export interface CommentListProps {
+  postId: number;
+}
+
+export default function CommentList({ postId }: CommentListProps) {
+  const { datas, ref, pending } = useScrollComment<HTMLDivElement>({ postId });
 
   return (
     <div className="overflow-y-scroll space-y-6 no-scrollbar">
       {!!datas?.length &&
         datas.map((el) => <CommentCard key={el.id} data={el} />)}
+      <div ref={ref}></div>
+      {pending && <SkeletonCard />}
     </div>
   );
 }

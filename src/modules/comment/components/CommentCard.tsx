@@ -51,8 +51,12 @@ function CommentCard({
         <CardFooter className="flex justify-between items-center">
           <ReplyBtn commentId={id} userId={userId} />
           {!!replies?.length && (
-            <Button variant="ghost" onClick={onCLickHandler}>
-              See Reply
+            <Button
+              variant="ghost"
+              onClick={onCLickHandler}
+              className="transition-all duration-100"
+            >
+              {open ? "Hide " : "See "} Reply
             </Button>
           )}
         </CardFooter>

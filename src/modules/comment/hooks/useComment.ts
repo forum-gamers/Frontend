@@ -15,7 +15,13 @@ export interface InitialAction {
 const useComment = create<InitialState & InitialAction>((set) => ({
   datas: [],
   setDatas: (datas) =>
-    set((state) => ({ ...state, datas: [...state.datas, ...datas] })),
+    set((state) => ({
+      datas: Array.from(
+        [...state.datas, ...datas]
+          .reduce((acc, item) => acc.set(item.id, item), new Map())
+          .values()
+      ),
+    })),
   addReply: (reply) =>
     set((state) => ({
       datas: state.datas.map((data) =>

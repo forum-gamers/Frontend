@@ -20,7 +20,8 @@ export default function Comment({ datas, post }: CommentProps) {
         <PostCard data={post} session={null} as="page" />
         <Breakline className="mb-4" />
         <CommentForm postId={post.id} />
-        <CommentList />
+        <Breakline className="mb-4" />
+        <CommentList postId={post.id} />
       </Init>
     </Container>
   );
