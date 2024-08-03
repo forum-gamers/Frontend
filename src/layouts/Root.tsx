@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { memo, Suspense } from "react";
 import "@/styles/globals.css";
 import "aos/dist/aos.css";
 import TopLoader from "nextjs-toploader";
@@ -20,7 +20,7 @@ export interface RootLayoutProps extends ChildrenProps {
  *
  * @TODO : add favicon
  */
-export default function RootLayout({ children, user }: RootLayoutProps) {
+function RootLayout({ children, user }: RootLayoutProps) {
   return (
     <html lang="id-ID" suppressContentEditableWarning suppressHydrationWarning>
       <head>
@@ -50,3 +50,5 @@ export default function RootLayout({ children, user }: RootLayoutProps) {
     </html>
   );
 }
+
+export default memo(RootLayout);
