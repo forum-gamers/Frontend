@@ -7,15 +7,20 @@ import AppThemeProvider from "@/providers/Theme";
 import type { ChildrenProps } from "@/interfaces";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import InitPage from "@/components/common/Init";
+import InitPage from "@/layouts/Init";
+import type { UserAttributes } from "@/interfaces/model";
 
 const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+export interface RootLayoutProps extends ChildrenProps {
+  user: UserAttributes;
+}
 
 /**
  *
  * @TODO : add favicon
  */
-export default function RootLayout({ children }: Readonly<ChildrenProps>) {
+export default function RootLayout({ children, user }: RootLayoutProps) {
   return (
     <html lang="id-ID" suppressContentEditableWarning suppressHydrationWarning>
       <head>
@@ -37,7 +42,7 @@ export default function RootLayout({ children }: Readonly<ChildrenProps>) {
                 speed={200}
                 shadow="0 0 10px #05b6d3,0 0 5px #45c6c0"
               />
-              <InitPage>{children}</InitPage>
+              <InitPage user={user}>{children}</InitPage>
             </AppThemeProvider>
           </SessionProvider>
         </Suspense>
