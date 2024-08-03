@@ -145,5 +145,11 @@ export interface UserRecomendationAttributes {
   userBio: string;
   userId: string;
   followerStatus: "non-follower" | "follower";
-  source: string;
+  source: UserRecomendationSource;
 }
+
+export type UserRecomendationSource =
+  | "non_followed"
+  | "tag"
+  | "community"
+  | "group";

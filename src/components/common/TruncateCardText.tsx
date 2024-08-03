@@ -7,12 +7,14 @@ export interface TruncateCardTextProps {
   text: string;
   className?: string;
   max?: number;
+  as?: "p" | "blockquote";
 }
 
 export default function TruncateCardText({
   text,
   className,
   max = 60,
+  as: As = "p",
 }: TruncateCardTextProps) {
   const [truncate, setTruncate] = useState(text.length > max);
 
@@ -20,13 +22,13 @@ export default function TruncateCardText({
 
   return (
     <>
-      <p
+      <As
         className={`${truncate ? "truncate" : ""} text-xs ${
           !!className && className
         }`}
       >
         {text}
-      </p>
+      </As>
       {truncate && (
         <Button
           variant="ghost"

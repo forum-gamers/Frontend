@@ -1,6 +1,7 @@
 "use server";
 
-import type { CustomSession } from "@/interfaces";
+import type { CustomSession, Lang } from "@/interfaces";
+import type { UserRecomendationSource } from "@/interfaces/model";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
@@ -24,4 +25,26 @@ export const isInIndonesia = (latitude: number, longitude: number) => {
     longitude >= indonesiaBoundingBox.west &&
     longitude <= indonesiaBoundingBox.east
   );
+};
+
+export const getSourceDescription = (
+  source: UserRecomendationSource,
+  lang: Lang = "id"
+) => {
+  switch (source) {
+    case "community":
+      return lang === "id"
+        ? "kamu berada di komunitas yang sama"
+        : "you are in same community";
+    case "group":
+      return lang === "id"
+        ? "kamu berada di grup chat yang sama"
+        : "you are in same group chat";
+    case "tag":
+      return lang === "id"
+        ? "kamu mungkin memiliki ketertarikan yang sama"
+        : "you may have same interest";
+    default:
+      return "";
+  }
 };
