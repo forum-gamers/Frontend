@@ -1,24 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 
 export interface TruncateCardTextProps {
   text: string;
   className?: string;
+  max?: number;
 }
 
 export default function TruncateCardText({
   text,
   className,
+  max = 60,
 }: TruncateCardTextProps) {
-  const [truncate, setTruncate] = useState(false);
-
-  useEffect(() => {
-    if (text.length > 60) setTruncate(true);
-  }, [text]);
+  const [truncate, setTruncate] = useState(text.length > max);
 
   const seeMoreAction = () => setTruncate(false);
+
   return (
     <>
       <p

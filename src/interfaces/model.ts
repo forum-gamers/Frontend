@@ -138,3 +138,12 @@ export interface UserAttributes {
   updatedAt: Date;
   phoneNumber: string;
 }
+
+export interface UserRecomendationAttributes {
+  username: string;
+  userImageUrl?: string;
+  userBio: string;
+  userId: string;
+  followerStatus: "non-follower" | "follower";
+  source: string;
+}
