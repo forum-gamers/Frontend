@@ -1,8 +1,8 @@
-import Container from "@/components/Container";
+import Container from "@/components/common/Container";
 import Link from "next/link";
 import LoginForm from "./components/Form";
 import { LOGO_BLUE } from "@/components/images";
-import PriorityImage from "@/components/PriorityImage";
+import PriorityImage from "@/components/common/PriorityImage";
 
 export default function LoginPage() {
   return (

@@ -1,7 +1,7 @@
 "use client";
 
-import EmailForm from "@/components/EmailForm";
-import SubmitBtn from "@/components/SubmitBtn";
+import EmailForm from "@/components/common/EmailForm";
+import SubmitBtn from "@/components/common/SubmitBtn";
 import type { CustomSession, FormAction } from "@/interfaces";
 import { useEffect, useState, type ChangeEventHandler } from "react";
 import { forgetPasswordHandler } from "../action";
@@ -19,7 +19,6 @@ export default function ForgetForm({ session }: ForgetFormProps) {
   const [inIndonesia, setInIndonesia] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log({ session });
     if ("geolocation" in navigator)
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
