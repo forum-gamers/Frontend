@@ -5,9 +5,14 @@ export interface ChildrenProps {
   readonly children: ReactNode;
 }
 
+export type ServerActionResult<T = any> = {
+  data: T | null;
+  error?: string | null;
+};
+
 export type ServerAction<T = any> = (
   formData: FormData
-) => Promise<{ data: T | null; error?: string | null }>;
+) => Promise<ServerActionResult<T>>;
 
 export type FormAction = (FormData: FormData) => Promise<void>;
 

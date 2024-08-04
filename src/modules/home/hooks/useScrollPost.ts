@@ -1,9 +1,22 @@
 import { useEffect, useRef, useState, useTransition } from "react";
-import usePost from "./usePost";
-import { fetchPosts } from "../action";
+import type { PostResponse } from "@/interfaces/model";
+import type { BasePagination, ServerActionResult } from "@/interfaces";
 
-export default function useScrollPost<T extends HTMLElement>() {
-  const { setDatas, datas } = usePost();
+export type UseScrollPostProps = () => {
+  datas: PostResponse[];
+  setDatas: (posts: PostResponse[]) => void;
+};
+
+export type Fetcher = ({
+  page,
+  limit,
+}: BasePagination) => Promise<ServerActionResult<PostResponse[]>>;
+
+export default function useScrollPost<T extends HTMLElement>(
+  handler: UseScrollPostProps,
+  fetcher: Fetcher
+) {
+  const { setDatas, datas } = handler();
   const [pending, startTransition] = useTransition();
   const ref = useRef<T>(null);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -16,12 +29,14 @@ export default function useScrollPost<T extends HTMLElement>() {
           startTransition(async () => {
             const limit = 15;
             if (hasMore) {
-              const { data, error } = await fetchPosts({
+              const { data, error } = await fetcher({
                 page,
                 limit,
               });
-              if (error || !data.length || data.length < limit)
+              if (error || !data || !data.length || data.length < limit) {
                 setHasMore(false);
+                return;
+              }
 
               setDatas(data);
               setPage((prev) => prev + 1);

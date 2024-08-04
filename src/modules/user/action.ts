@@ -27,6 +27,26 @@ export const getMe = async () => {
   return { data, error: null };
 };
 
+export const getUserById = async (id: string) => {
+  const {
+    status,
+    data: { data, message },
+  } = await request.Query<UserAttributes>({
+    url: `/user/${id}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message, data: null };
+
+  return { error: null, data };
+};
+
 export const getFollowRecomendation = async () => {
   const {
     status,

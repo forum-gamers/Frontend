@@ -1,4 +1,5 @@
 import type { ChildrenProps } from "@/interfaces";
+import { memo } from "react";
 
 export interface ContainerProps extends ChildrenProps {
   className?: string;
@@ -8,7 +9,7 @@ export interface ContainerProps extends ChildrenProps {
   [key: string]: any | undefined;
 }
 
-export default function Container({
+function Container({
   children,
   className = "",
   withMarginTop = true,
@@ -26,3 +27,5 @@ export default function Container({
     </ContainerTag>
   );
 }
+
+export default memo(Container);

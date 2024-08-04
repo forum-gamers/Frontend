@@ -210,3 +210,52 @@ export const unBookmarkPost = async (postId: number) => {
 
   return { error: null };
 };
+
+export const getPostByUserId = async (
+  id: string,
+  { page = 1, limit = 10 }: BasePagination,
+  withMediaOnly?: "t"
+) => {
+  const {
+    status,
+    data: { data, message },
+  } = await request.Query<PostResponse[]>({
+    url: `/post/user/${id}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    params: { page, limit, withMediaOnly },
+  });
+
+  if (status !== 200) return { error: message, data: [] };
+
+  return { error: null, data };
+};
+
+export const getMyPost = async (
+  { page = 1, limit = 10 }: BasePagination,
+  withMediaOnly?: "t"
+) => {
+  const {
+    status,
+    data: { data, message },
+  } = await request.Query<PostResponse[]>({
+    url: `/post/me`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    params: { withMediaOnly, page, limit },
+  });
+
+  if (status !== 200) return { error: message, data: [] };
+
+  return { error: null, data };
+};
