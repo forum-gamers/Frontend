@@ -259,3 +259,27 @@ export const getMyPost = async (
 
   return { error: null, data };
 };
+
+export const getMyLikedPost = async ({
+  page = 1,
+  limit = 15,
+}: BasePagination) => {
+  const {
+    status,
+    data: { data, message },
+  } = await request.Query<PostResponse[]>({
+    url: `/post/liked`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    params: { page, limit },
+  });
+
+  if (status !== 200) return { error: message, data: [] };
+
+  return { error: null, data };
+};
