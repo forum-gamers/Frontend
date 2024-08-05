@@ -13,6 +13,7 @@ import {
 } from "@/components/icons/HeroIconsSolid";
 import { bookmarkPost, unBookmarkPost } from "../action";
 import usePost from "../hooks/usePost";
+import useBookmark from "@/modules/bookmark/hooks/useBookmark";
 
 export interface BookmarkBtnProps extends ButtonProps {
   isBookmarked: boolean;
@@ -26,7 +27,8 @@ function BookmarkBtn({
   postId,
   ...rest
 }: BookmarkBtnProps) {
-  const { updateBookmark } = usePost();
+  const { removeDatas, setDatas } = useBookmark();
+  const { updateBookmark, datas } = usePost();
   const [pending, startTransition] = useTransition();
   const [bookmarked, optimisticBookmarked] = useOptimistic(
     isBookmarked,
@@ -44,6 +46,9 @@ function BookmarkBtn({
       optimisticCount(count);
 
       isBookmarked ? await unBookmarkPost(postId) : await bookmarkPost(postId);
+      isBookmarked
+        ? removeDatas(postId)
+        : setDatas([datas.find((el) => el.id !== postId) as any]);
 
       updateBookmark(postId);
     });

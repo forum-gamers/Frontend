@@ -4,6 +4,7 @@ import {
   ChatBubbleLeftIcon,
   MagnifyingGlassCircleIcon,
   UsersIcon,
+  BookmarkIcon,
 } from "@/components/icons/HeroIconsSolid";
 
 export interface SidebarMenu {
@@ -24,6 +25,11 @@ const SIDEBAR_MENUS: SidebarMenu[] = [
     title: "Search",
     href: "/search",
     icon: <MagnifyingGlassCircleIcon className={className} />,
+  },
+  {
+    title: "Bookmark",
+    href: "/bookmark",
+    icon: <BookmarkIcon className={className} />,
   },
   {
     title: "Team",
