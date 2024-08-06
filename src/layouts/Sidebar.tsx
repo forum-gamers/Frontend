@@ -7,11 +7,7 @@ export interface SidebarProps extends HTMLAttributes<HTMLElement> {}
 
 function Sidebar({ className, ...rest }: SidebarProps) {
   return (
-    <aside
-      {...rest}
-      id="sidebar"
-      className={`bg-[#D6EFFF] dark:bg-[#001F3F] ${!!className && className}`}
-    >
+    <aside {...rest} id="sidebar" className={` ${!!className && className}`}>
       <section className="flex items-center h-64">
         <div className="fixed z-20 w-full bg-white p-5 shadow-sm dark:border-b dark:border-neutral-800 dark:bg-dark lg:relative lg:border-none lg:!bg-transparent lg:p-0 xl:shadow-none pb-0">
           <div className="flex items-start justify-between lg:flex-col lg:space-y-4">

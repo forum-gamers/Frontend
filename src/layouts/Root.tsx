@@ -27,7 +27,7 @@ function RootLayout({ children, user }: RootLayoutProps) {
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <title>Forum Gamers</title>
       </head>
-      <body className={cn(font.variable, `bg-[#D6EFFF] dark:bg-[#001F3F]`)}>
+      <body className={cn(font.variable, `bg-background`)}>
         <Suspense>
           <SessionProvider>
             <AppThemeProvider>
