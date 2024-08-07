@@ -1,5 +1,5 @@
 import Footer from "@/components/common/Footer";
-import Navbar from "@/components/common/Navbar";
+import Navbar from "./Navbar";
 import type { ChildrenProps } from "@/interfaces";
 import Sidebar from "./Sidebar";
 import { memo, type ReactNode } from "react";
