@@ -2,20 +2,32 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  useCallback,
   useEffect,
   useRef,
   useState,
   useTransition,
+  type ChangeEventHandler,
   type InputHTMLAttributes,
+  type MouseEventHandler,
 } from "react";
 import { cn } from "@/lib/utils";
 import type { ServerAction } from "@/interfaces";
 import useDebounce from "@/hooks/useDebounce";
 import type { SearchResultDto } from "@/interfaces/response";
 import SkeletonCard from "../common/SkeletonCard";
-import Image from "next/image";
 import { ScrollArea } from "./scroll-area";
+import {
+  type ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import NoData from "../common/NoData";
+import SearchCard from "../common/SearchCard";
+import usePlaceHolder from "@/hooks/usePlaceholder";
+import useCanvaAnimation from "@/hooks/useCanvaAnimation";
+import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import AnimateParagraph from "../common/AnimateParagraph";
 
 export interface PlaceholdersAndVanishInputProps
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -30,157 +42,20 @@ export default function PlaceholdersAndVanishInput({
   onAction,
   ...rest
 }: PlaceholdersAndVanishInputProps) {
+  const params = useSearchParams();
+  const { replace, push } = useRouter();
+  const pathname = usePathname() as string;
   const [loading, startTransition] = useTransition();
-  const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
   const [results, setResults] = useState<SearchResultDto[]>([]);
+  const currentPlaceholder = usePlaceHolder(placeholders);
 
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const startAnimation = () => {
-    if (!intervalRef?.current)
-      intervalRef.current = setInterval(() => {
-        setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
-      }, 2000) as NodeJS.Timeout;
-  };
-  const handleVisibilityChange = () => {
-    if (document.visibilityState !== "visible" && intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    } else if (document.visibilityState === "visible") startAnimation();
-  };
-
-  useEffect(() => {
-    startAnimation();
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [placeholders]);
-
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const newDataRef = useRef<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState(
-    new URLSearchParams(window.location.search).get("q") || ""
+  const [value, setValue] = useState<string>("");
+  const debouncedValue = useDebounce(value, 300);
+  const { canvasRef, vanishAndSubmit, animating } = useCanvaAnimation(
+    value,
+    inputRef
   );
-  const [animating, setAnimating] = useState(false);
-  const debouncedValue = useDebounce(value, 500);
-
-  const draw = useCallback(() => {
-    if (!inputRef.current) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = 800;
-    canvas.height = 800;
-    ctx.clearRect(0, 0, 800, 800);
-    const computedStyles = getComputedStyle(inputRef.current);
-
-    const fontSize = parseFloat(computedStyles.getPropertyValue("font-size"));
-    ctx.font = `${fontSize * 2}px ${computedStyles.fontFamily}`;
-    ctx.fillStyle = "#FFF";
-    ctx.fillText(value, 16, 40);
-
-    const imageData = ctx.getImageData(0, 0, 800, 800);
-    const pixelData = imageData.data;
-    const newData: any[] = [];
-
-    for (let t = 0; t < 800; t++) {
-      let i = 4 * t * 800;
-      for (let n = 0; n < 800; n++) {
-        let e = i + 4 * n;
-        if (
-          pixelData[e] !== 0 &&
-          pixelData[e + 1] !== 0 &&
-          pixelData[e + 2] !== 0
-        ) {
-          newData.push({
-            x: n,
-            y: t,
-            color: [
-              pixelData[e],
-              pixelData[e + 1],
-              pixelData[e + 2],
-              pixelData[e + 3],
-            ],
-          });
-        }
-      }
-    }
-
-    newDataRef.current = newData.map(({ x, y, color }) => ({
-      x,
-      y,
-      r: 1,
-      color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3]})`,
-    }));
-  }, [value]);
-
-  useEffect(() => {
-    draw();
-  }, [value, draw]);
-
-  const animate = (start: number) => {
-    const animateFrame = (pos: number = 0) => {
-      requestAnimationFrame(() => {
-        const newArr = [];
-        for (let i = 0; i < newDataRef.current.length; i++) {
-          const current = newDataRef.current[i];
-          if (current.x < pos) {
-            newArr.push(current);
-          } else {
-            if (current.r <= 0) {
-              current.r = 0;
-              continue;
-            }
-            current.x += Math.random() > 0.5 ? 1 : -1;
-            current.y += Math.random() > 0.5 ? 1 : -1;
-            current.r -= 0.05 * Math.random();
-            newArr.push(current);
-          }
-        }
-        newDataRef.current = newArr;
-        const ctx = canvasRef.current?.getContext("2d");
-        if (ctx) {
-          ctx.clearRect(pos, 0, 800, 800);
-          newDataRef.current.forEach((t) => {
-            const { x: n, y: i, r: s, color: color } = t;
-            if (n > pos) {
-              ctx.beginPath();
-              ctx.rect(n, i, s, s);
-              ctx.fillStyle = color;
-              ctx.strokeStyle = color;
-              ctx.stroke();
-            }
-          });
-        }
-        if (newDataRef.current.length > 0) {
-          animateFrame(pos - 8);
-        } else {
-          setAnimating(false);
-        }
-      });
-    };
-    animateFrame(start);
-  };
-
-  const vanishAndSubmit = () => {
-    setAnimating(true);
-    draw();
-
-    const value = inputRef.current?.value || "";
-    if (value && inputRef.current) {
-      const maxX = newDataRef.current.reduce(
-        (prev, current) => (current.x > prev ? current.x : prev),
-        0
-      );
-      animate(maxX);
-    }
-  };
 
   useEffect(() => {
     startTransition(async () => {
@@ -195,6 +70,22 @@ export default function PlaceholdersAndVanishInput({
       }
     });
   }, [debouncedValue]);
+
+  const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const param = new URLSearchParams(params as ReadonlyURLSearchParams);
+    if (e.target.value) param.set("q", e.target.value);
+
+    if (!animating) setValue(e.target.value);
+
+    replace(`${pathname}?${params?.toString()}`);
+  };
+
+  const handleButtonClick: MouseEventHandler = (e) => {
+    e.preventDefault();
+    setValue("");
+    setResults([]);
+    inputRef.current?.focus();
+  };
 
   return (
     <div className="w-full max-w-xl mx-auto relative">
@@ -212,13 +103,11 @@ export default function PlaceholdersAndVanishInput({
           ref={canvasRef}
         />
         <input
-          onChange={(e) => {
-            if (!animating) {
-              setValue(e.target.value);
-            }
-          }}
+          {...rest}
+          onChange={onChangeHandler}
           ref={inputRef}
           value={value}
+          defaultValue={params?.get("q")?.toString()}
           type="text"
           className={cn(
             "w-full relative text-sm sm:text-base z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-20",
@@ -227,8 +116,9 @@ export default function PlaceholdersAndVanishInput({
         />
 
         <button
+          onClick={handleButtonClick}
           disabled={!value}
-          type="submit"
+          type="button"
           className="absolute right-2 top-1/2 z-50 -translate-y-1/2 h-8 w-8 rounded-full disabled:bg-gray-100 bg-black dark:bg-zinc-900 dark:disabled:bg-zinc-800 transition duration-200 flex items-center justify-center"
         >
           <motion.svg
@@ -266,80 +156,83 @@ export default function PlaceholdersAndVanishInput({
         <div className="absolute inset-0 flex items-center rounded-full pointer-events-none">
           <AnimatePresence mode="wait">
             {!value && (
-              <motion.p
-                initial={{
-                  y: 5,
-                  opacity: 0,
-                }}
-                key={`current-placeholder-${currentPlaceholder}`}
-                animate={{
-                  y: 0,
-                  opacity: 1,
-                }}
-                exit={{
-                  y: -15,
-                  opacity: 0,
-                }}
-                transition={{
-                  duration: 0.3,
-                  ease: "linear",
-                }}
+              <AnimateParagraph
                 className="dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
-              >
-                {placeholders[currentPlaceholder]}
-              </motion.p>
+                paragraph={placeholders[currentPlaceholder]}
+              />
             )}
           </AnimatePresence>
         </div>
       </form>
-      <div className="absolute top-full left-0 w-full mt-4 bg-white dark:bg-zinc-800 shadow-lg rounded-xl">
-        {loading
-          ? Array.from({ length: 5 }).map((_, index) => (
+      <SearchResult
+        debouncedValue={debouncedValue}
+        loading={loading}
+        results={results}
+        handleButtonClick={handleButtonClick}
+        push={push}
+      />
+    </div>
+  );
+}
+
+export interface SearchResultProps {
+  debouncedValue: string;
+  loading: boolean;
+  results: SearchResultDto[];
+  push: (navigate: string, opts?: NavigateOptions) => void;
+  handleButtonClick: MouseEventHandler;
+}
+
+function SearchResult({
+  debouncedValue,
+  loading,
+  results,
+  push,
+  handleButtonClick,
+}: SearchResultProps) {
+  const handleCardClick =
+    (data: SearchResultDto): MouseEventHandler =>
+    (e) => {
+      e.preventDefault();
+      switch (data.source) {
+        case "post":
+          push(`/comment/${data.id}`);
+          break;
+        case "user":
+          push(`/profile/${data.id}`);
+          break;
+        default:
+          return;
+      }
+    };
+  return (
+    <div className="absolute top-full left-0 w-full mt-4 space-y-2 !bg-transparent mx-auto z-20 shadow-lg rounded-xl">
+      {!!debouncedValue &&
+        (loading ? (
+          <div className="space-y-8">
+            {Array.from({ length: 5 }).map((_, index) => (
               <SkeletonCard key={index} />
-            ))
-          : !!results.length && (
-              <ScrollArea className="h-64 overflow-y-scroll !z-[999]">
-                {!results.length ? (
-                  <div>OK</div>
-                ) : (
-                  results.map((el, index) => (
-                    <motion.div
-                      layoutId={`card-${el.rank}-${el.id}`}
-                      className="p-4 flex flex-col md:flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
-                      key={el.id}
-                    >
-                      <div className="flex gap-4 flex-col md:flex-row">
-                        <motion.div layoutId={`image-${el.rank}-${el.id}`}>
-                          {!!el.imageUrl && (
-                            <Image
-                              width={100}
-                              height={100}
-                              src={el.imageUrl}
-                              alt={el.source}
-                              className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
-                            />
-                          )}
-                        </motion.div>
-                        <hgroup className="text-center md:text-left">
-                          <motion.h3
-                            layoutId={`title-${el.source}-${el.id}`}
-                            className="font-medium text-neutral-800 dark:text-neutral-200"
-                          >
-                            {el.source}
-                          </motion.h3>
-                          <motion.p
-                            layoutId={`description-${el.text}-${el.id}`}
-                            className="text-neutral-600 dark:text-neutral-400"
-                            dangerouslySetInnerHTML={{ __html: el.text }}
-                          />
-                        </hgroup>
-                      </div>
-                    </motion.div>
-                  ))
-                )}
-              </ScrollArea>
-            )}
-      </div>
+            ))}
+          </div>
+        ) : !!results.length ? (
+          <ScrollArea className="h-64 overflow-y-scroll !z-[999] py-4">
+            {results.map((el) => (
+              <SearchCard
+                data={el}
+                onClickHandler={handleCardClick(el)}
+                className="p-4 min-w-full flex z-50 border my-4 flex-col md:flex-row justify-between items-center rounded-xl cursor-pointer bg-white dark:bg-black"
+                key={el.id}
+              />
+            ))}
+          </ScrollArea>
+        ) : (
+          <NoData
+            title="No results found"
+            description="Try searching for something else"
+            onClick={handleButtonClick}
+            wrapperClass="p-4 min-w-full flex z-50 border h-64 justify-center items-center bg-white dark:bg-zinc-800"
+          />
+        ))}
     </div>
   );
 }
