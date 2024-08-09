@@ -6,4 +6,9 @@ export interface SearchResultDto {
   searchedField: string;
   rank: number;
   similarityScore: number;
+  context?: SearchResultContextDto | null;
+}
+
+export interface SearchResultContextDto {
+  postId?: number;
 }

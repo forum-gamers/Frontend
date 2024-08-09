@@ -190,25 +190,37 @@ function SearchResult({
   push,
   handleButtonClick,
 }: SearchResultProps) {
+  const [pending, startTransition] = useTransition();
   const handleCardClick =
     (data: SearchResultDto): MouseEventHandler =>
     (e) => {
       e.preventDefault();
-      switch (data.source) {
-        case "post":
-          push(`/comment/${data.id}`);
-          break;
-        case "user":
-          push(`/profile/${data.id}`);
-          break;
-        default:
-          return;
-      }
+      startTransition(() => {
+        switch (data.source) {
+          case "post":
+            push(`/comment/${data.id}`);
+            handleButtonClick(e);
+            break;
+          case "comment":
+          case "reply":
+            if (!data?.context?.postId) return;
+
+            push(`/comment/${data?.context?.postId}`);
+            handleButtonClick(e);
+            break;
+          case "user":
+            push(`/profile/${data.id}`);
+            handleButtonClick(e);
+            break;
+          default:
+            return;
+        }
+      });
     };
   return (
     <div className="absolute top-full left-0 w-full mt-4 space-y-2 !bg-transparent mx-auto z-20 shadow-lg rounded-xl">
       {!!debouncedValue &&
-        (loading ? (
+        (loading || pending ? (
           <div className="space-y-8">
             {Array.from({ length: 5 }).map((_, index) => (
               <SkeletonCard key={index} />
