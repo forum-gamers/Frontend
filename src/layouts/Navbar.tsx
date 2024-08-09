@@ -1,15 +1,12 @@
-"use client";
-
 import PriorityImage from "@/components/common/PriorityImage";
-import useProfile from "@/modules/user/hooks/useProfile";
-import { GUEST, LOGO_BLUE } from "@/components/images";
+import { LOGO_BLUE } from "@/components/images";
 import NavbarSearch from "@/components/ui/NavbarSearch";
 import { ChatBubbleLeftEllipsisIcon } from "@/components/icons/HeroIconsSolid";
 import { searchHandler } from "@/action/search";
 import { Suspense } from "react";
+import ProfileImage from "@/modules/user/components/ProfileImage";
 
 export default function Navbar() {
-  const { me } = useProfile();
   const placeholders = [
     "Search for friends",
     "Search for a post",
@@ -29,15 +26,12 @@ export default function Navbar() {
             src={LOGO_BLUE}
           />
         </figure>
-        <figure className="md:hidden rounded-full border-2 border-white shadow-md dark:border-neutral-800">
-          <PriorityImage
-            height={50}
-            width={50}
-            className="lg:hover:scale-105 rounded-full"
-            alt="profile"
-            src={me?.imageUrl || GUEST}
-          />
-        </figure>
+        <ProfileImage
+          wrapperClass="md:hidden rounded-full border-2 border-white shadow-md dark:border-neutral-800"
+          imageClass="lg:hover:scale-105 rounded-full"
+          h={50}
+          w={50}
+        />
         <Suspense>
           <NavbarSearch onAction={searchHandler} placeholders={placeholders} />
         </Suspense>
