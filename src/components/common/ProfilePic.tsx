@@ -43,7 +43,7 @@ function ProfilePicture({ src, alt, username, id, bio }: ProfilePicProps) {
       <PopoverContent {...trigger}>
         <article
           data-popover="profile-info-popover"
-          className="transition-all duration-200 max-w-[24rem] whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-white p-4 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
+          className="transition-all duration-200 max-w-[24rem] whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-background p-4 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
         >
           <div className="flex items-center justify-between gap-4 mb-2">
             <AvatarPic />

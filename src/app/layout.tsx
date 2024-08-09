@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 
 export default async function Layout({ children }: Readonly<ChildrenProps>) {
   const { error, data } = await getMe();
-  if (error || !data) redirect("/login");
 
   return <RootLayout user={data}>{children}</RootLayout>;
 }

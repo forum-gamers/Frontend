@@ -9,9 +9,9 @@ export default function RegisterPage() {
     <Container
       data-aos="fade-up"
       as="main"
-      className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-[80vh] lg:py-0"
+      className="flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 mt-8"
     >
-      <hgroup className="sm:mx-auto sm:w-full sm:max-w-md">
+      <hgroup className="w-full max-w-md">
         <PriorityImage
           height={40}
           width={40}
@@ -34,7 +34,7 @@ export default function RegisterPage() {
         </p>
       </hgroup>
 
-      <section className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <section className="mt-8 w-full max-w-md bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-indigo-300">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <RegisterForm />
         </div>
