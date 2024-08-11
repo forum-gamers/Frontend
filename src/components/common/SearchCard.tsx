@@ -4,6 +4,7 @@ import { memo, type MouseEventHandler } from "react";
 import { motion } from "./FramerMotion";
 import type { SearchResultDto } from "@/interfaces/response";
 import LazyLoadImg from "./LazyLoadImage";
+import sanitize from "sanitize-html";
 
 export interface SearchCardProps {
   onClickHandler: MouseEventHandler;
@@ -40,8 +41,9 @@ function SearchCard({ onClickHandler, data, className }: SearchCardProps) {
           <motion.p
             layoutId={`description-${data.text}-${data.id}`}
             className="text-neutral-600 dark:text-neutral-400"
-            dangerouslySetInnerHTML={{ __html: data.text }}
-          />
+          >
+            {sanitize(data.text)}
+          </motion.p>
         </hgroup>
       </div>
     </motion.button>
