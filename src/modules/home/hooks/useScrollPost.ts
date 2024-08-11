@@ -53,7 +53,15 @@ export default function useScrollPost<T extends HTMLElement>(
     if (ref?.current) observer.observe(ref.current);
 
     return () => observer.disconnect();
-  }, [datas.length, startTransition, hasMore, pending, page]);
+  }, [
+    datas.length,
+    startTransition,
+    hasMore,
+    pending,
+    page,
+    fetcher,
+    setDatas,
+  ]);
 
   return { datas, pending, ref };
 }

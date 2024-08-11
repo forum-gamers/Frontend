@@ -4,6 +4,7 @@ import { HeartIcon } from "../../../components/icons/HeroIconsSolid";
 import { Button, type ButtonProps } from "../../../components/ui/button";
 import {
   memo,
+  useCallback,
   useOptimistic,
   useTransition,
   type MouseEventHandler,
@@ -36,16 +37,27 @@ function PostLikeButton({
     (prev: number) => prev + (isLiked ? -1 : 1)
   );
 
-  const clickHandler: MouseEventHandler = async (e) => {
-    e.preventDefault();
-    startTransition(async () => {
-      optimisticLiked(liked);
-      optimisticCount(count);
-      isLiked ? await unlikePost(postId) : await likePost(postId);
+  const clickHandler: MouseEventHandler = useCallback(
+    async (e) => {
+      e.preventDefault();
+      startTransition(async () => {
+        optimisticLiked(liked);
+        optimisticCount(count);
+        isLiked ? await unlikePost(postId) : await likePost(postId);
 
-      updateLike(postId);
-    });
-  };
+        updateLike(postId);
+      });
+    },
+    [
+      postId,
+      liked,
+      count,
+      updateLike,
+      optimisticLiked,
+      optimisticCount,
+      startTransition,
+    ]
+  );
 
   return (
     <Button

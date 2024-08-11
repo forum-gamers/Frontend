@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -80,12 +81,15 @@ export default function PlaceholdersAndVanishInput({
     replace(`${pathname}?${params?.toString()}`);
   };
 
-  const handleButtonClick: MouseEventHandler = (e) => {
-    e.preventDefault();
-    setValue("");
-    setResults([]);
-    inputRef.current?.focus();
-  };
+  const handleButtonClick: MouseEventHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+      setValue("");
+      setResults([]);
+      inputRef.current?.focus();
+    },
+    [inputRef.current]
+  );
 
   return (
     <div className="w-full max-w-xl mx-auto relative">

@@ -9,7 +9,13 @@ import {
 } from "../../../components/ui/card";
 import TruncateCardText from "../../../components/common/TruncateCardText";
 import LazyLoadImg from "../../../components/common/LazyLoadImage";
-import { Fragment, memo, useState, type ChangeEventHandler } from "react";
+import {
+  Fragment,
+  memo,
+  useCallback,
+  useState,
+  type ChangeEventHandler,
+} from "react";
 import LikeButton from "./LikeButton";
 import CommentButton from "./CommentButton";
 import ProfilePic from "../../../components/common/ProfilePic";
@@ -69,7 +75,7 @@ function PostCard({
   const onTextChange: ChangeEventHandler<HTMLTextAreaElement> = (e) =>
     setPostText(e.target.value);
 
-  const deleteHandler = () => {
+  const deleteHandler = useCallback(() => {
     swalAskDelete({
       confirmText: "Delete",
       onConfirm: () => {
@@ -87,7 +93,7 @@ function PostCard({
       },
       onCancel: () => swalError("Canceled"),
     });
-  };
+  }, [id, deletePost, deletePostFromCtx]);
 
   const onComplete = (text: string) => {
     setEditable(false);

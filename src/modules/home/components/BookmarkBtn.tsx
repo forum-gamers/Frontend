@@ -3,6 +3,7 @@
 import { Button, type ButtonProps } from "@/components/ui/button";
 import {
   memo,
+  useCallback,
   useOptimistic,
   useTransition,
   type MouseEventHandler,
@@ -39,20 +40,36 @@ function BookmarkBtn({
     (prev: number) => prev + (isBookmarked ? -1 : 1)
   );
 
-  const onCLickHandler: MouseEventHandler = (e) => {
-    e.preventDefault();
-    startTransition(async () => {
-      optimisticBookmarked(bookmarked);
-      optimisticCount(count);
+  const onCLickHandler: MouseEventHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+      startTransition(async () => {
+        optimisticBookmarked(bookmarked);
+        optimisticCount(count);
 
-      isBookmarked ? await unBookmarkPost(postId) : await bookmarkPost(postId);
-      isBookmarked
-        ? removeDatas(postId)
-        : setDatas([datas.find((el) => el.id !== postId) as any]);
+        isBookmarked
+          ? await unBookmarkPost(postId)
+          : await bookmarkPost(postId);
+        isBookmarked
+          ? removeDatas(postId)
+          : setDatas([datas.find((el) => el.id !== postId) as any]);
 
-      updateBookmark(postId);
-    });
-  };
+        updateBookmark(postId);
+      });
+    },
+    [
+      postId,
+      bookmarked,
+      count,
+      updateBookmark,
+      optimisticBookmarked,
+      optimisticCount,
+      startTransition,
+      removeDatas,
+      setDatas,
+      datas,
+    ]
+  );
 
   return (
     <Button
