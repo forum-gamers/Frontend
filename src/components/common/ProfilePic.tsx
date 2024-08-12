@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { GUEST } from "../images";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -15,6 +15,27 @@ export interface ProfilePicProps {
   bio?: string;
 }
 
+const AvatarPic = memo(
+  ({ src, alt, username }: Omit<ProfilePicProps, "bio" | "id">) => {
+    const initials = useMemo(
+      () =>
+        username
+          .split(" ")
+          .map((name) => name[0])
+          .join(""),
+      [username]
+    );
+
+    return (
+      <Avatar>
+        <AvatarImage src={src || GUEST.src} alt={alt} />
+        <AvatarFallback>{initials}</AvatarFallback>
+      </Avatar>
+    );
+  }
+);
+AvatarPic.displayName = "AvatarPic";
+
 function ProfilePicture({ src, alt, username, id, bio }: ProfilePicProps) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -23,22 +44,10 @@ function ProfilePicture({ src, alt, username, id, bio }: ProfilePicProps) {
     onMouseLeave: () => setOpen(false),
   };
 
-  function AvatarPic() {
-    return (
-      <Avatar>
-        <AvatarImage src={src || GUEST.src} alt={alt} />
-        <AvatarFallback>
-          {username.split(" ")?.[0]?.[0]}
-          {username.split(" ")?.[1]?.[0]}
-        </AvatarFallback>
-      </Avatar>
-    );
-  }
-
   return (
     <Popover open={open}>
       <PopoverTrigger {...trigger}>
-        <AvatarPic />
+        <AvatarPic username={username} src={src} alt={alt} />
       </PopoverTrigger>
       <PopoverContent {...trigger}>
         <article
@@ -46,7 +55,7 @@ function ProfilePicture({ src, alt, username, id, bio }: ProfilePicProps) {
           className="transition-all duration-200 max-w-[24rem] whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-background p-4 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none"
         >
           <div className="flex items-center justify-between gap-4 mb-2">
-            <AvatarPic />
+            <AvatarPic username={username} src={src} alt={alt} />
             <Link
               prefetch
               href={`/profile/${id}`}

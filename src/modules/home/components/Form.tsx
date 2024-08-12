@@ -22,7 +22,7 @@ export default function CreatePostForm() {
   const [files, setFiles] = useState<File[]>([]);
 
   const actionHandler: FormAction = async (formData) => {
-    if (!text || !files.length) return;
+    if (!text && !files.length) return;
 
     formData.append("text", text);
     formData.append("allowComment", true.valueOf().toString());

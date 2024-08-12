@@ -1,4 +1,6 @@
-export default function Footer() {
+import { memo } from "react";
+
+function Footer() {
   return (
     <footer className=" fixed bottom-0 w-full md:hidden h-12 bg-blue-300 dark:bg-blue-900 p-4">
       <ul className="flex justify-around items-center">
@@ -11,3 +13,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default memo(Footer);

@@ -1,9 +1,11 @@
+import { memo } from "react";
+
 export interface RemoveSvgProps {
   w: string;
   h: string;
 }
 
-export default function RemoveSvg({ w, h }: RemoveSvgProps) {
+function RemoveSvg({ w, h }: RemoveSvgProps) {
   return (
     <svg
       fill="#000000"
@@ -18,3 +20,5 @@ export default function RemoveSvg({ w, h }: RemoveSvgProps) {
     </svg>
   );
 }
+
+export default memo(RemoveSvg);

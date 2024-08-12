@@ -93,7 +93,7 @@ function PostCard({
       },
       onCancel: () => swalError("Canceled"),
     });
-  }, [id, deletePost, deletePostFromCtx]);
+  }, [id, deletePostFromCtx]);
 
   const onComplete = (text: string) => {
     setEditable(false);

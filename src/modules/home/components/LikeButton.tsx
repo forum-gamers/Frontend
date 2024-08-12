@@ -56,6 +56,7 @@ function PostLikeButton({
       optimisticLiked,
       optimisticCount,
       startTransition,
+      isLiked,
     ]
   );
 

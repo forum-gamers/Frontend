@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, type MouseEventHandler } from "react";
+import { memo, useMemo, type MouseEventHandler } from "react";
 import { motion } from "./FramerMotion";
 import type { SearchResultDto } from "@/interfaces/response";
 import LazyLoadImg from "./LazyLoadImage";
@@ -13,6 +13,8 @@ export interface SearchCardProps {
 }
 
 function SearchCard({ onClickHandler, data, className }: SearchCardProps) {
+  const sanitizedText = useMemo(() => sanitize(data?.text), [data?.text]);
+
   return (
     <motion.button
       onClick={onClickHandler}
@@ -41,7 +43,7 @@ function SearchCard({ onClickHandler, data, className }: SearchCardProps) {
           <motion.p
             layoutId={`description-${data.text}-${data.id}`}
             className="text-neutral-600 dark:text-neutral-400"
-            dangerouslySetInnerHTML={{ __html: sanitize(data.text) }}
+            dangerouslySetInnerHTML={{ __html: sanitizedText }}
           />
         </hgroup>
       </div>

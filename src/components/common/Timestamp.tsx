@@ -1,14 +1,23 @@
 import { formatDistanceToNow } from "date-fns";
+import { memo, useMemo } from "react";
 
 export interface TimestampProps {
   timestamp: string | Date;
   className?: string;
+  as?: keyof JSX.IntrinsicElements;
 }
 
-export default function Timestamp({ timestamp, className }: TimestampProps) {
+function Timestamp({ timestamp, className, as: Tag = "p" }: TimestampProps) {
+  const time = useMemo(
+    () => formatDistanceToNow(new Date(timestamp), { addSuffix: true }),
+    [timestamp]
+  );
+
   return (
-    <p className={className} data-test-id="timestamp">
-      {formatDistanceToNow(new Date(timestamp), { addSuffix: true })}
-    </p>
+    <Tag className={className} data-test-id="timestamp">
+      {time}
+    </Tag>
   );
 }
+
+export default memo(Timestamp);

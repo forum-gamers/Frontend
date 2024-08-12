@@ -1,4 +1,6 @@
-export default function UploadLogo() {
+import { memo } from "react";
+
+function UploadLogo() {
   return (
     <svg
       className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
@@ -17,3 +19,5 @@ export default function UploadLogo() {
     </svg>
   );
 }
+
+export default memo(UploadLogo);

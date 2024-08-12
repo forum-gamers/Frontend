@@ -1,4 +1,6 @@
-export default function LoaderSvg() {
+import { memo } from "react";
+
+function LoaderSvg() {
   return (
     <svg
       className="absolute w-5 h-5 mr-3 -ml-1 text-white animate-spin"
@@ -22,3 +24,5 @@ export default function LoaderSvg() {
     </svg>
   );
 }
+
+export default memo(LoaderSvg);

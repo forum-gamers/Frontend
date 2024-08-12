@@ -1,6 +1,11 @@
 "use client";
 
-import { useState, type ChangeEvent, type MouseEventHandler } from "react";
+import {
+  useCallback,
+  useState,
+  type ChangeEvent,
+  type MouseEventHandler,
+} from "react";
 import RemoveSvg from "../svg/Remove";
 import UploadLogo from "../svg/UploadLogo";
 import { Label } from "../ui/label";
@@ -54,14 +59,16 @@ export default function FileForm({
     }
   };
 
-  const removeHandler =
+  const removeHandler = useCallback(
     (name: string): MouseEventHandler =>
-    (e) => {
-      e.preventDefault();
+      (e) => {
+        e.preventDefault();
 
-      setSelectedFiles((prev) => prev.filter((el) => el.name !== name));
-      onFileChange(selectedFiles.filter((el) => el.name !== name));
-    };
+        setSelectedFiles((prev) => prev.filter((el) => el.name !== name));
+        onFileChange(selectedFiles.filter((el) => el.name !== name));
+      },
+    [onFileChange, selectedFiles]
+  );
 
   return (
     <div className="flex flex-col space-y-2">
@@ -83,10 +90,11 @@ export default function FileForm({
             required={required}
             onChange={onchangeHandler}
             disabled={selectedFiles.length >= 4}
+            placeholder={placeHolder}
           />
         </Label>
       </div>
-      {selectedFiles.length > 0 && (
+      {!!selectedFiles.length && (
         <hgroup className="text-slate-900 overflow-x-hidden">
           <h3 className="text-sm flex justify-center">Uploaded Files</h3>
           <ul className="flex flex-row justify-center overflow-x-scroll space-x-2 items-start no-scrollbar w-80">

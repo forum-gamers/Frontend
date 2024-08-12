@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
 import { ArrowLeftCircleIcon } from "../icons/HeroIconsOutline";
+import { memo } from "react";
 
 export interface BackBtnProps {
   url?: string;
 }
 
-export default function BackBtn({ url }: BackBtnProps) {
+function BackBtn({ url }: BackBtnProps) {
   const router = useRouter();
 
   const handleOnClick = () => {
@@ -52,3 +52,5 @@ export default function BackBtn({ url }: BackBtnProps) {
     </div>
   );
 }
+
+export default memo(BackBtn);

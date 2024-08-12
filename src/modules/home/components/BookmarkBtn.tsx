@@ -68,6 +68,7 @@ function BookmarkBtn({
       removeDatas,
       setDatas,
       datas,
+      isBookmarked,
     ]
   );
 

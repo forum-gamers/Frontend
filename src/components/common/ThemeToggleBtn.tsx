@@ -3,13 +3,14 @@
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "@/components/icons/HeroIconsOutline";
+import { useCallback } from "react";
 
 export default function ThemeToggleBtn() {
   const { setTheme, resolvedTheme } = useTheme();
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setTheme(resolvedTheme === "light" ? "dark" : "light");
-  };
+  }, [resolvedTheme, setTheme]);
 
   return (
     <motion.button
