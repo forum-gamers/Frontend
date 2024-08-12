@@ -41,9 +41,8 @@ function SearchCard({ onClickHandler, data, className }: SearchCardProps) {
           <motion.p
             layoutId={`description-${data.text}-${data.id}`}
             className="text-neutral-600 dark:text-neutral-400"
-          >
-            {sanitize(data.text)}
-          </motion.p>
+            dangerouslySetInnerHTML={{ __html: sanitize(data.text) }}
+          />
         </hgroup>
       </div>
     </motion.button>
