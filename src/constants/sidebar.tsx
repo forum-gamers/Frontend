@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import {
   HomeIcon,
   ChatBubbleLeftIcon,
-  MagnifyingGlassCircleIcon,
   UsersIcon,
   BookmarkIcon,
 } from "@/components/icons/HeroIconsSolid";
@@ -20,11 +19,6 @@ const SIDEBAR_MENUS: SidebarMenu[] = [
     title: "Home",
     href: "/",
     icon: <HomeIcon className={className} />,
-  },
-  {
-    title: "Search",
-    href: "/search",
-    icon: <MagnifyingGlassCircleIcon className={className} />,
   },
   {
     title: "Bookmark",

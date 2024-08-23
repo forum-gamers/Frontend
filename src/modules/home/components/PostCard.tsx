@@ -70,10 +70,15 @@ function PostCard({
   const [editable, setEditable] = useState<boolean>(false);
   const [postText, setPostText] = useState<string>(text);
 
-  const onChangeEditable = () => setEditable(!editable);
+  const onChangeEditable = useCallback(
+    () => setEditable(!editable),
+    [editable]
+  );
 
-  const onTextChange: ChangeEventHandler<HTMLTextAreaElement> = (e) =>
-    setPostText(e.target.value);
+  const onTextChange: ChangeEventHandler<HTMLTextAreaElement> = useCallback(
+    (e) => setPostText(e.target.value),
+    []
+  );
 
   const deleteHandler = useCallback(() => {
     swalAskDelete({
@@ -95,11 +100,14 @@ function PostCard({
     });
   }, [id, deletePostFromCtx]);
 
-  const onComplete = (text: string) => {
-    setEditable(false);
-    setPostText(text);
-    editPostText(text, id);
-  };
+  const onComplete = useCallback(
+    (text: string) => {
+      setEditable(false);
+      setPostText(text);
+      editPostText(text, id);
+    },
+    [editPostText, id]
+  );
 
   return (
     <Card data-aos={dataAos} data-aos-duration="500">

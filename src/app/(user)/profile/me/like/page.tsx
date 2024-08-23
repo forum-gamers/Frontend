@@ -24,7 +24,7 @@ export default async function Page() {
       backgroundUrl={data.backgroundImageUrl}
       bio={data.bio}
       tabs={ME_TAB}
-      activeTab="post"
+      activeTab="like"
     >
       <UserPostList session={session} posts={posts} fetcher={getMyLikedPost} />
     </User>

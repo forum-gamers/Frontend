@@ -2,7 +2,6 @@ import type { ChildrenProps } from "@/interfaces";
 import RootLayout from "@/layouts/Root";
 import { getMe } from "@/modules/user/action";
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Forum Gamers",
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Layout({ children }: Readonly<ChildrenProps>) {
-  const { error, data } = await getMe();
+  const { data } = await getMe();
 
   return <RootLayout user={data}>{children}</RootLayout>;
 }

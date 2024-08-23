@@ -34,7 +34,7 @@ export default function UserPostList({
   }, []);
 
   return (
-    <CardContent className="flex flex-col p-0 gap-2 w-full space-y-6">
+    <CardContent className="flex flex-col p-0 gap-2 w-full space-y-6 border-none">
       {!!datas.length &&
         datas.map((post, idx) => (
           <PostCard

@@ -228,7 +228,7 @@ const SearchResult = ({
 
   if (loading || pending)
     return (
-      <div className="absolute top-full left-0 w-full mt-4 space-y-2 !bg-transparent mx-auto z-20 shadow-lg rounded-xl">
+      <div className="absolute top-full left-0 w-full mt-4 space-y-2 !bg-transparent mx-auto z-20 rounded-xl">
         <div className="space-y-8">
           {Array.from({ length: 5 }).map((_, index) => (
             <SkeletonCard key={index} />
@@ -238,7 +238,7 @@ const SearchResult = ({
     );
 
   return (
-    <div className="absolute top-full left-0 w-full mt-4 space-y-2 !bg-transparent mx-auto z-20 shadow-lg rounded-xl">
+    <div className="absolute top-full left-0 w-full mt-4 space-y-2 !bg-transparent mx-auto z-20 rounded-xl">
       {!!results.length ? (
         <ScrollArea className="h-64 overflow-y-scroll !z-[999] py-4">
           {results.map((el) => (
