@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  memo,
   useCallback,
   useEffect,
   useRef,
@@ -36,12 +35,14 @@ export interface PlaceholdersAndVanishInputProps
   placeholders: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onAction: ServerAction<SearchResultDto[]>;
+  className?: string;
 }
 
 export default function PlaceholdersAndVanishInput({
   placeholders,
   onChange,
   onAction,
+  className,
   ...rest
 }: PlaceholdersAndVanishInputProps) {
   const params = useSearchParams();
@@ -71,7 +72,7 @@ export default function PlaceholdersAndVanishInput({
         if (data) setResults(data);
       }
     });
-  }, [debouncedValue, onAction, vanishAndSubmit]);
+  }, [debouncedValue]);
 
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     const param = new URLSearchParams(params as ReadonlyURLSearchParams);
@@ -90,7 +91,7 @@ export default function PlaceholdersAndVanishInput({
   }, []);
 
   return (
-    <div className="w-full max-w-xl mx-auto relative">
+    <div className={`w-full max-w-xl mx-auto relative ${className}`}>
       <form
         className={cn(
           "w-full relative bg-white dark:bg-zinc-800 h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
@@ -185,75 +186,78 @@ export interface SearchResultProps {
   handleButtonClick: MouseEventHandler;
 }
 
-const SearchResult = memo(
-  ({
-    debouncedValue,
-    loading,
-    results,
-    push,
-    handleButtonClick,
-  }: SearchResultProps) => {
-    const [pending, startTransition] = useTransition();
+const SearchResult = ({
+  debouncedValue,
+  loading,
+  results,
+  push,
+  handleButtonClick,
+}: SearchResultProps) => {
+  const [pending, startTransition] = useTransition();
 
-    const handleCardClick = useCallback(
-      (data: SearchResultDto): MouseEventHandler =>
-        (e) => {
-          e.preventDefault();
-          startTransition(() => {
-            switch (data.source) {
-              case "post":
-                push(`/comment/${data.id}`);
-                handleButtonClick(e);
-                break;
-              case "comment":
-              case "reply":
-                if (!data?.context?.postId) return;
+  const handleCardClick = useCallback(
+    (data: SearchResultDto): MouseEventHandler =>
+      (e) => {
+        e.preventDefault();
+        startTransition(() => {
+          switch (data.source) {
+            case "post":
+              push(`/comment/${data.id}`);
+              handleButtonClick(e);
+              break;
+            case "comment":
+            case "reply":
+              if (!data?.context?.postId) return;
 
-                push(`/comment/${data?.context?.postId}`);
-                handleButtonClick(e);
-                break;
-              case "user":
-                push(`/profile/${data.id}`);
-                handleButtonClick(e);
-                break;
-              default:
-                return;
-            }
-          });
-        },
-      [push, handleButtonClick]
-    );
+              push(`/comment/${data?.context?.postId}`);
+              handleButtonClick(e);
+              break;
+            case "user":
+              push(`/profile/${data.id}`);
+              handleButtonClick(e);
+              break;
+            default:
+              return;
+          }
+        });
+      },
+    [push, handleButtonClick]
+  );
 
+  if (!debouncedValue) return null;
+
+  if (loading || pending)
     return (
       <div className="absolute top-full left-0 w-full mt-4 space-y-2 !bg-transparent mx-auto z-20 shadow-lg rounded-xl">
-        {!!debouncedValue &&
-          (loading || pending ? (
-            <div className="space-y-8">
-              {Array.from({ length: 5 }).map((_, index) => (
-                <SkeletonCard key={index} />
-              ))}
-            </div>
-          ) : !!results.length ? (
-            <ScrollArea className="h-64 overflow-y-scroll !z-[999] py-4">
-              {results.map((el) => (
-                <SearchCard
-                  data={el}
-                  onClickHandler={handleCardClick(el)}
-                  className="p-4 min-w-full flex z-50 border my-4 flex-col md:flex-row justify-between items-center rounded-xl cursor-pointer bg-white dark:bg-black"
-                  key={el.id}
-                />
-              ))}
-            </ScrollArea>
-          ) : (
-            <NoData
-              title="No results found"
-              description="Try searching for something else"
-              onClick={handleButtonClick}
-              wrapperClass="p-4 min-w-full flex z-50 border h-64 justify-center items-center bg-white dark:bg-zinc-800"
-            />
+        <div className="space-y-8">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <SkeletonCard key={index} />
           ))}
+        </div>
       </div>
     );
-  }
-);
-SearchResult.displayName = "SearchResult";
+
+  return (
+    <div className="absolute top-full left-0 w-full mt-4 space-y-2 !bg-transparent mx-auto z-20 shadow-lg rounded-xl">
+      {!!results.length ? (
+        <ScrollArea className="h-64 overflow-y-scroll !z-[999] py-4">
+          {results.map((el) => (
+            <SearchCard
+              data={el}
+              onClickHandler={handleCardClick(el)}
+              className="p-4 min-w-full flex z-50 border hover:scale-105 my-4 flex-col md:flex-row justify-between items-center rounded-xl cursor-pointer bg-white dark:bg-black"
+              key={el.id}
+            />
+          ))}
+        </ScrollArea>
+      ) : (
+        <NoData
+          title="No results found"
+          description="Try searching for something else"
+          onClick={handleButtonClick}
+          wrapperClass="p-4 min-w-full flex z-50 border h-64 justify-center items-center bg-white dark:bg-zinc-800"
+        />
+      )}
+    </div>
+  );
+};

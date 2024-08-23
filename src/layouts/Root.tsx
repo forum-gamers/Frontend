@@ -13,13 +13,9 @@ import type { UserAttributes } from "@/interfaces/model";
 const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export interface RootLayoutProps extends ChildrenProps {
-  user: UserAttributes;
+  user: UserAttributes | null;
 }
 
-/**
- *
- * @TODO : add favicon
- */
 function RootLayout({ children, user }: RootLayoutProps) {
   return (
     <html lang="id-ID" suppressContentEditableWarning suppressHydrationWarning>

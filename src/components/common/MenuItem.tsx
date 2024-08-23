@@ -23,7 +23,6 @@ function MenuItem({ menu: { title, href, icon }, className }: MenuItemProps) {
         <p className="ml-1 animate-enter-left whitespace-nowrap text-sm delay-1000">
           {title}
         </p>
-        <p className="flex-grow lg:hidden">{title}</p>
       </hgroup>
     </Link>
   );

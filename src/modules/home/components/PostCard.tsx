@@ -158,7 +158,7 @@ function PostCard({
           </Badge>
         )}
         {!!medias?.length && (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8 mx-auto px-2">
             {medias.map((el) => (
               <Fragment key={el.fileId}>
                 {el.type === "image" ? (

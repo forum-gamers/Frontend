@@ -3,6 +3,8 @@
 import useProfile from "@/modules/user/hooks/useProfile";
 import PriorityImage from "@/components/common/PriorityImage";
 import { GUEST } from "@/components/images";
+import Link from "next/link";
+import { memo } from "react";
 
 export interface ProfileImageProps {
   wrapperClass?: string;
@@ -11,7 +13,7 @@ export interface ProfileImageProps {
   w?: number;
 }
 
-export default function ProfileImage({
+function ProfileImage({
   wrapperClass,
   imageClass,
   h = 80,
@@ -20,14 +22,18 @@ export default function ProfileImage({
   const { me } = useProfile();
 
   return (
-    <figure className={wrapperClass}>
-      <PriorityImage
-        height={h}
-        width={w}
-        className={imageClass}
-        alt="profile"
-        src={me?.imageUrl || GUEST}
-      />
-    </figure>
+    <Link prefetch href="/profile" passHref>
+      <figure className={wrapperClass}>
+        <PriorityImage
+          height={h}
+          width={w}
+          className={imageClass}
+          alt="profile"
+          src={me?.imageUrl || GUEST}
+        />
+      </figure>
+    </Link>
   );
 }
+
+export default memo(ProfileImage);

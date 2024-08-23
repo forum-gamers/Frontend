@@ -1,4 +1,3 @@
-import TruncateCardText from "@/components/common/TruncateCardText";
 import Link from "next/link";
 import ProfilePic from "@/components/common/ProfilePic";
 import {
@@ -10,6 +9,7 @@ import {
 import { getSourceDescription } from "@/helpers/global";
 import type { UserRecomendationSource } from "@/interfaces/model";
 import type { Lang } from "@/interfaces";
+import { memo } from "react";
 
 export interface UserRecomendationCardProps {
   username: string;
@@ -21,7 +21,7 @@ export interface UserRecomendationCardProps {
   lang?: Lang;
 }
 
-export default function UserRecomendationCard({
+function UserRecomendationCard({
   username,
   id,
   bio,
@@ -31,7 +31,7 @@ export default function UserRecomendationCard({
   lang = "id",
 }: UserRecomendationCardProps) {
   return (
-    <Card className="flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 p-4 w-44 mx-auto max-h-28 border rounded-lg">
+    <Card className="flex flex-col overflow-x-hidden px-2 items-center justify-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 w-52 m-auto max-h-16 h-16 border rounded-lg">
       <ProfilePic
         username={username}
         bio={bio}
@@ -39,37 +39,29 @@ export default function UserRecomendationCard({
         src={imageUrl}
         id={id}
       />
-      <CardDescription className="antialiased">
+      <hgroup className="antialiased flex flex-col w-full">
         <CardTitle
-          className="font-display mb-2 text-xl font-semibold"
+          className="font-display mb-2 font-semibold text-xs"
           itemProp="author"
         >
           <Link href={`/profile/${id}`} prefetch rel="author">
             {username}
           </Link>
         </CardTitle>
-
-        {!!bio && (
-          <TruncateCardText
-            className="mb-4 prose prose-sm text-gray-400"
-            text={bio}
-            max={40}
-            as="blockquote"
-          />
-        )}
-      </CardDescription>
-      <CardContent className="flex">
         {!!source && source !== "non_followed" && (
-          <CardDescription>
+          <CardDescription className="text-xs">
             {getSourceDescription(source, lang)}
           </CardDescription>
         )}
         {isFollower && (
-          <CardDescription>
-            {lang === "id" ? "Mengikuti mu" : "Following you"}
+          <CardDescription className="text-xs block">
+            {lang === "id" ? "Mengikutimu" : "Followingyou"}
           </CardDescription>
         )}
-      </CardContent>
+      </hgroup>
+      <CardContent className="flex flex-col text-xs"></CardContent>
     </Card>
   );
 }
+
+export default memo(UserRecomendationCard);

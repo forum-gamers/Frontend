@@ -7,7 +7,7 @@ import Aos from "aos";
 import { useEffect } from "react";
 
 export interface InitPageProps extends ChildrenProps {
-  user: UserAttributes;
+  user: UserAttributes | null;
 }
 
 export default function InitPage({ children, user }: InitPageProps) {
@@ -20,7 +20,7 @@ export default function InitPage({ children, user }: InitPageProps) {
   }, []);
 
   useEffect(() => {
-    if (!me) setUser(user);
+    if (!me && user) setUser(user);
   }, [me, user]);
   return children;
 }

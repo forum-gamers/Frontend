@@ -18,7 +18,7 @@ export default function PostList({ session }: PostListProps) {
   );
 
   return (
-    <div className="overflow-y-scroll space-y-6 no-scrollbar">
+    <div className="overflow-y-scroll space-y-6 no-scrollbar mx-auto max-w-lg">
       {!!datas?.length &&
         datas.map((data, idx) => (
           <PostCard

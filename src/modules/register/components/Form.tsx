@@ -14,23 +14,19 @@ import EmailForm from "@/components/common/EmailForm";
 
 export default function RegisterForm() {
   const router = useRouter();
-  const [{ username, email, password, phoneNumber, confirmPassword }, setData] =
-    useState({
-      username: "",
-      email: "",
-      password: "",
-      phoneNumber: "",
-      confirmPassword: "",
-    });
+  const [{ username, email, password, confirmPassword }, setData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const actionHandler: FormAction = async (formData) => {
-    if (!username || !email || !password || !phoneNumber || !confirmPassword)
-      return;
+    if (!username || !email || !password || !confirmPassword) return;
 
     formData.append("username", username);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("phoneNumber", phoneNumber);
     formData.append("confirmPassword", confirmPassword);
 
     const { data, error } = await registerHandler(formData);
@@ -92,29 +88,6 @@ export default function RegisterForm() {
         labelClass="text-sm font-medium leading-5 text-gray-700"
       />
 
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label
-          htmlFor="phone"
-          className="block after:content-['*'] after:ml-0.5 after:text-red-500 text-sm font-medium leading-5 text-gray-700"
-        >
-          Phone number
-        </Label>
-        <div className="mt-1 relative rounded-md shadow-sm">
-          <Input
-            id="phone"
-            pattern="^\d{10,15}$"
-            title="Phone number must be between 10 to 15 digits long and must not contain spaces."
-            value={phoneNumber}
-            onChange={onChangeHandler}
-            name="phoneNumber"
-            placeholder="0123456789"
-            type="text"
-            required
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-          />
-        </div>
-      </div>
-
       <PasswordInput
         id="password"
         name="password"
@@ -156,8 +129,7 @@ export default function RegisterForm() {
               !email ||
               !password ||
               !confirmPassword ||
-              confirmPassword !== password ||
-              !phoneNumber
+              confirmPassword !== password
             }
             className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
           />
