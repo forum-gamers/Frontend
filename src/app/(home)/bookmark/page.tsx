@@ -1,19 +1,13 @@
 import { getServerSideSession } from "@/helpers/global";
 import BookmarkPage from "@/modules/bookmark";
-import { fetchBookmark } from "@/modules/bookmark/action";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
-  const [session, { data, error }] = await Promise.all([
-    getServerSideSession(),
-    fetchBookmark({}),
-  ]);
-
-  if (error) redirect("/");
+  const session = await getServerSideSession();
 
   if (!session) redirect("/login");
 
-  return <BookmarkPage session={session} datas={data} />;
+  return <BookmarkPage session={session} />;
 }
 
 export const dynamic = "force-dynamic";

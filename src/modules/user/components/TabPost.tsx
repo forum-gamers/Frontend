@@ -24,7 +24,7 @@ function TabPost({ activeTab, tabs }: TabPostProps) {
           variant="ghost"
           className={cn(
             tab.name === activeTab &&
-              "dark:bg-green-300 dark:text-blue-800 bg-blue-800 text-white"
+              "dark:bg-blue-300 dark:text-blue-800 bg-blue-800 text-white"
           )}
         >
           <Link prefetch href={tab.href} scroll={false}>

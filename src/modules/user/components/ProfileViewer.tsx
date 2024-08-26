@@ -3,8 +3,9 @@ import Link from "next/link";
 import ProfileImage from "./ProfileImage";
 import BackgroundImage from "./BackgroundImage";
 import UsernameViewer from "./UsernameViewer";
+import { memo } from "react";
 
-export default function ProfileViewer() {
+function ProfileViewer() {
   return (
     <div className="relative hidden w-full flex-col items-center overflow-hidden pb-2 lg:flex">
       <BackgroundImage
@@ -23,10 +24,12 @@ export default function ProfileViewer() {
           imageClass="lg:hover:scale-105 rounded-full"
           wrapperClass="-mt-11 rounded-full border-2 border-white shadow-md dark:border-neutral-800"
         />
-        <hgroup className="mt-1 flex items-center gap-2">
-          <UsernameViewer className="flex-grow whitespace-nowrap text-lg font-medium lg:text-xl" />
+        <hgroup className="mt-1 flex items-center gap-2 justify-center">
+          <UsernameViewer className="whitespace-nowrap text-lg font-medium lg:text-xl" />
         </hgroup>
       </Link>
     </div>
   );
 }
+
+export default memo(ProfileViewer);

@@ -16,7 +16,7 @@ export interface Mutation {
 }
 
 class ThirdPartyRequest {
-  private client: AxiosInstance;
+  private readonly client: AxiosInstance;
 
   constructor() {
     this.client = axios.create({
@@ -30,11 +30,13 @@ class ThirdPartyRequest {
     headers,
     params,
   }: Query): Promise<AxiosResponse<BaseResponse<T>>> {
+    const { signal } = new AbortController();
     return this.client<BaseResponse<T>>({
       url,
       headers,
       method: "GET",
       params,
+      signal,
     });
   }
 
@@ -45,12 +47,14 @@ class ThirdPartyRequest {
     method,
     params,
   }: Mutation): Promise<AxiosResponse<BaseResponse<T>>> {
+    const { signal } = new AbortController();
     return this.client<BaseResponse<T>>({
       url,
       headers,
       method,
       data,
       params,
+      signal,
     });
   }
 }

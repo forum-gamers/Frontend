@@ -52,7 +52,17 @@ function BookmarkBtn({
           : await bookmarkPost(postId);
         isBookmarked
           ? removeDatas(postId)
-          : setDatas([datas.find((el) => el.id !== postId) as any]);
+          : (() => {
+              const data = datas.find((data) => data.id === postId);
+              if (data)
+                setDatas([
+                  {
+                    ...data,
+                    isBookmarked: true,
+                    countBookmark: data.countBookmark + 1,
+                  },
+                ]);
+            })();
 
         updateBookmark(postId);
       });

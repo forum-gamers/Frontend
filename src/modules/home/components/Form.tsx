@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { useState, type ChangeEventHandler } from "react";
+import { useCallback, useMemo, useState, type ChangeEventHandler } from "react";
 import { WindowIcon } from "@/components/icons/HeroIconsOutline";
 import type { FormAction } from "@/interfaces";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,19 +14,28 @@ import SubmitBtn from "@/components/common/SubmitBtn";
 import { createPost } from "../action";
 import { swalError } from "@/lib/swal";
 import usePost from "../hooks/usePost";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export default function CreatePostForm() {
+  const privacyValues = useMemo(
+    () => ["public", "private", "friend-only"] as const,
+    []
+  );
   const { addPost } = usePost();
   const [open, setOpen] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
+  const [privacy, setPrivacy] =
+    useState<(typeof privacyValues)[number]>("public");
   const [files, setFiles] = useState<File[]>([]);
+  const [allowComment, setAllowComment] = useState<boolean>(true);
 
   const actionHandler: FormAction = async (formData) => {
     if (!text && !files.length) return;
 
     formData.append("text", text);
-    formData.append("allowComment", true.valueOf().toString());
-    formData.append("privacy", "public");
+    formData.append("allowComment", String(allowComment));
+    formData.append("privacy", privacy);
     for (const file of files) formData.append("files", file);
 
     const { error, data } = await createPost(formData);
@@ -44,24 +53,43 @@ export default function CreatePostForm() {
     }
   };
 
-  const onChangeHandler: ChangeEventHandler<HTMLTextAreaElement> = (e) =>
-    setText(e.target.value);
+  const onChangeHandler: ChangeEventHandler<HTMLTextAreaElement> = useCallback(
+    (e) => setText(e.target.value),
+    []
+  );
 
-  const onFileChange: OnFileChangeHandler = (files) => {
-    setFiles(files);
-  };
+  const onFileChange: OnFileChangeHandler = useCallback(
+    (files) => setFiles(files),
+    []
+  );
+
+  const onPrivacyChange: ChangeEventHandler<HTMLSelectElement> = useCallback(
+    (e) => setPrivacy(e.target.value as (typeof privacyValues)[number]),
+    [privacyValues, privacy]
+  );
+
+  const onCommentChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => setAllowComment(e.target.checked),
+    [allowComment]
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="sm:max-w-3xl flex items-center">
+      <DialogTrigger
+        asChild
+        className="sm:max-w-3xl flex items-center bg-background dark:bg-[#1C2541]"
+      >
         <div
           className={cn(
-            "flex h-24 flex-row justify-evenly items-center max-w-3xl px-8 py-20 gap-4 w-full bg-gradient-to-blue lg:from-lg-blue bg-lg-blue to-xl-blue dark:from-d-lg-blue lg:dark:bg-d-lg-blue dark:to-d-xl-blue rounded-lg",
-            open && "hidden"
+            "flex h-24 flex-row shadow-blue-300 dark:shadow-blue-900 shadow-sm bg-background border-4 mb-4 justify-evenly items-center max-w-3xl px-8 py-20 gap-4 w-full mx-auto rounded-lg",
+            "bg-background dark:bg-[#1C2541]"
           )}
         >
           <WindowIcon className="w-6 h-6" />
-          <Button className="rounded-md flex-1 justify-start bg-xs-blue dark:bg-d-xs-blue hover:bg-xs-blue h-24 hover:dark:bg-d-xs-blue">
+          <Button
+            variant="link"
+            className="rounded-md flex-1 justify-start text-neutral-900 dark:text-neutral-300 bg-background dark:bg-[#1C2541]"
+          >
             Create your post
           </Button>
         </div>
@@ -70,7 +98,7 @@ export default function CreatePostForm() {
         <form
           action={actionHandler}
           id="post-form"
-          className="w-full flex flex-col px-2 py-2 m-2 lg:from-lg-blue bg-lg-blue to-xl-blue dark:from-d-lg-blue lg:dark:bg-d-lg-blue dark:to-d-xl-blue"
+          className="w-full flex flex-col px-2 py-2 m-2"
         >
           <Textarea
             name="text"
@@ -81,7 +109,45 @@ export default function CreatePostForm() {
             spellCheck
             className="p-3 h-60 border border-sm-blue dark:border-d-sm-blue outline-none"
           />
-          <div className="flex flex-row my-2 py-2 px-2 justify-between items-center">
+          <div className="mt-4">
+            <Label
+              htmlFor="allowComment"
+              className="ml-2 text-gray-700 dark:text-gray-300"
+            >
+              Allow Comments
+            </Label>
+            <Input
+              type="checkbox"
+              id="allowComment"
+              name="allowComment"
+              checked={allowComment}
+              onChange={onCommentChange}
+              className="form-checkbox h-5 w-5 text-blue-600"
+            />
+          </div>
+
+          <div className="mt-4">
+            <Label
+              htmlFor="privacy"
+              className="block text-gray-700 dark:text-gray-300 mb-2"
+            >
+              Privacy
+            </Label>
+            <select
+              id="privacy"
+              name="privacy"
+              value={privacy}
+              onChange={onPrivacyChange}
+              className="block w-full mt-1 p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-300 dark:focus:border-blue-300"
+            >
+              {privacyValues.map((value) => (
+                <option key={value} value={value} className="capitalize">
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-row my-2 py-2 px-2 justify-between items-center hover:cursor-pointer">
             <FileForm
               accept={[
                 "image/png",
@@ -105,6 +171,7 @@ export default function CreatePostForm() {
               name="file"
               className="w-full h-4"
             />
+
             <SubmitBtn
               disabled={!text && !files.length}
               className="flex justify-center items-center shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"

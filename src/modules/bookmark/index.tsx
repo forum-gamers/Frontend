@@ -5,14 +5,13 @@ import type { CustomSession } from "@/interfaces";
 import BookmarkList from "./components/BookmarkList";
 
 export interface BookmarkPageProps {
-  datas: PostResponse[];
   session: CustomSession | null;
 }
 
-export default function BookmarkPage({ datas, session }: BookmarkPageProps) {
+export default function BookmarkPage({ session }: BookmarkPageProps) {
   return (
     <Container as="div" data-aos="fade-up">
-      <Init datas={datas}>
+      <Init>
         <BookmarkList session={session} />
       </Init>
     </Container>

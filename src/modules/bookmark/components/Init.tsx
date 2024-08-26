@@ -1,29 +1,25 @@
 "use client";
 
 import type { ChildrenProps } from "@/interfaces";
-import type { PostResponse } from "@/interfaces/model";
-import { useEffect } from "react";
+import { useEffect, useTransition } from "react";
 import useBookmark from "../hooks/useBookmark";
+import { usePathname } from "next/navigation";
+import { fetchBookmark } from "../action";
 
-export interface InitPageProps extends ChildrenProps {
-  datas: PostResponse[];
-}
+export interface InitPageProps extends ChildrenProps {}
 
-export default function InitPage({ children, datas }: InitPageProps) {
-  /**
-   * TODO
-   * update state when user un bookmark post
-   * case when bookmark a post and redirect to /bookmark for first time,all ok
-   * but the problem happen when u unbookmark a post on /bookmark
-   * when you go back to / and back to /bookmark again
-   * the unbookmarked post still exists
-   * its seems the zustand state doesnt updated or the page is being cached by next js
-   */
-  const { setDatas, resetDatas } = useBookmark();
+export default function InitPage({ children }: InitPageProps) {
+  const { setDatas } = useBookmark();
+  const pathname = usePathname();
+  const [, startTransition] = useTransition();
+
   useEffect(() => {
-    resetDatas();
-    setDatas(datas);
-  }, []);
+    startTransition(async () => {
+      //TODO: Update this after found a way to cancel next js page cache
+      const { data = [] } = await fetchBookmark({});
+      setDatas(data);
+    });
+  }, [pathname]);
 
   return children;
 }

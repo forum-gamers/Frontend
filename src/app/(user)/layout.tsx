@@ -1,8 +1,11 @@
 import Container from "@/components/common/Container";
 import type { ChildrenProps } from "@/interfaces";
 import Main from "@/layouts/Main";
+import { memo } from "react";
 
-export default function UserLayout({ children }: ChildrenProps) {
+export interface UserLayoutProps extends ChildrenProps {}
+
+function UserLayout({ children }: UserLayoutProps) {
   return (
     <Main>
       <Container
@@ -15,3 +18,5 @@ export default function UserLayout({ children }: ChildrenProps) {
     </Main>
   );
 }
+
+export default memo(UserLayout);
