@@ -12,9 +12,13 @@ import usePost from "@/modules/home/hooks/usePost";
 
 export interface CommentFormProps {
   postId: number;
+  disabled?: boolean;
 }
 
-export default function CommentForm({ postId }: CommentFormProps) {
+export default function CommentForm({
+  postId,
+  disabled = false,
+}: CommentFormProps) {
   const { addComment } = useComment();
   const { updateCountComment } = usePost();
   const [text, setText] = useState<string>("");
@@ -56,12 +60,13 @@ export default function CommentForm({ postId }: CommentFormProps) {
           id="comment"
           placeholder="Write a comment..."
           onChange={onChangeHandler}
+          disabled={disabled}
         />
       </div>
       <SubmitBtn
         text="Post Comment"
         type="submit"
-        disabled={!text}
+        disabled={!text || disabled}
         className="inline-flex bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
       />
     </form>

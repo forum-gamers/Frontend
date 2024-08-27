@@ -32,7 +32,7 @@ function UserPage({
   return (
     <>
       <BackBtn url="/" />
-      <header className="w-full rounded-md bg-background">
+      <header className="w-full rounded-md bg-white dark:bg-dark-theme-500">
         <div className="w-full">
           <PriorityImage
             width={450}
@@ -54,7 +54,7 @@ function UserPage({
           {/* <p>TODO (TITLE)</p> */}
         </hgroup>
       </header>
-      <Card className="w-full bg-background">
+      <Card className="w-full bg-white dark:bg-dark-theme-500">
         {!!bio && (
           <CardHeader>{lang === "id" ? "Tentang" : "About"}</CardHeader>
         )}
@@ -68,7 +68,10 @@ function UserPage({
           )}
         </CardContent>
       </Card>
-      <Card className="w-full bg-background !border-none" id="post-section">
+      <Card
+        className="w-full bg-light-theme-100 dark:bg-dark-theme-300 !border-none"
+        id="post-section"
+      >
         <TabPost tabs={tabs} activeTab={activeTab} />
         <div className="flex flex-col gap-2 p-2">{children}</div>
       </Card>

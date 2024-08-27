@@ -16,7 +16,7 @@ export interface TabPostProps {
 
 function TabPost({ activeTab, tabs }: TabPostProps) {
   return (
-    <CardHeader className="flex flex-row items-center justify-evenly gap-4 bg-blue-300 dark:bg-blue-900 rounded-sm">
+    <CardHeader className="flex flex-row h-4 items-center justify-evenly gap-4 bg-white dark:bg-dark-theme-500 rounded-sm">
       {tabs.map((tab) => (
         <Button
           asChild
@@ -24,7 +24,7 @@ function TabPost({ activeTab, tabs }: TabPostProps) {
           variant="ghost"
           className={cn(
             tab.name === activeTab &&
-              "dark:bg-blue-300 dark:text-blue-800 bg-blue-800 text-white"
+              "rounded-xl text-neutral-900 dark:text-neutral-300 underline dark:decoration-white underline-offset-8 decoration-dark-theme-500"
           )}
         >
           <Link prefetch href={tab.href} scroll={false}>

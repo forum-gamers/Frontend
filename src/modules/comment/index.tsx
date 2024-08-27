@@ -21,7 +21,7 @@ export default function Comment({ datas, post, session }: CommentProps) {
         <BackBtn url="/" />
         <PostCard data={post} session={session} as="page" dataAos="fade-up" />
         <Breakline className="mb-4" />
-        <CommentForm postId={post.id} />
+        <CommentForm postId={post.id} disabled={!post.allowComment} />
         <Breakline className="mb-4" />
         <CommentList postId={post.id} />
       </Init>

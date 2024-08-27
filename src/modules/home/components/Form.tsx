@@ -1,7 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useCallback, useMemo, useState, type ChangeEventHandler } from "react";
 import { WindowIcon } from "@/components/icons/HeroIconsOutline";
@@ -15,7 +20,13 @@ import { createPost } from "../action";
 import { swalError } from "@/lib/swal";
 import usePost from "../hooks/usePost";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
 
 export default function CreatePostForm() {
   const privacyValues = useMemo(
@@ -63,13 +74,13 @@ export default function CreatePostForm() {
     []
   );
 
-  const onPrivacyChange: ChangeEventHandler<HTMLSelectElement> = useCallback(
-    (e) => setPrivacy(e.target.value as (typeof privacyValues)[number]),
+  const onPrivacyChange = useCallback(
+    (e: (typeof privacyValues)[number]) => setPrivacy(e),
     [privacyValues, privacy]
   );
 
-  const onCommentChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => setAllowComment(e.target.checked),
+  const onCommentChange = useCallback(
+    () => setAllowComment(!allowComment),
     [allowComment]
   );
 
@@ -77,77 +88,78 @@ export default function CreatePostForm() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         asChild
-        className="sm:max-w-3xl flex items-center bg-background dark:bg-[#1C2541]"
+        className="flex items-center cursor-pointer hover:opacity-85 transition-opacity duration-100 dark:hover:opacity-60 bg-white dark:bg-dark-theme-200 justify-between p-4 rounded-lg bg-gradient-to-br from-white to-light-theme-200 dark:bg-gradient-to-br dark:from-dark-theme-200 dark:to-dark-theme-500"
       >
         <div
           className={cn(
-            "flex h-24 flex-row shadow-blue-300 dark:shadow-blue-900 shadow-sm bg-background border-4 mb-4 justify-evenly items-center max-w-3xl px-8 py-20 gap-4 w-full mx-auto rounded-lg",
-            "bg-background dark:bg-[#1C2541]"
+            "h-auto flex-row shadow-blue-300 dark:shadow-blue-900 shadow-sm bg-white w-full max-w-3xl dark:bg-dark-theme-200  bg-gradient-to-br from-white to-light-theme-200 dark:bg-gradient-to-br dark:from-dark-theme-200 dark:to-dark-theme-500 border-4 mb-4 justify-between items-center px-8 py-4 gap-4 rounded-lg",
+            "inline-flex"
           )}
         >
           <WindowIcon className="w-6 h-6" />
           <Button
             variant="link"
-            className="rounded-md flex-1 justify-start text-neutral-900 dark:text-neutral-300 bg-background dark:bg-[#1C2541]"
+            className="rounded-md justify-start text-neutral-900 dark:text-neutral-300 bg-transparent"
           >
             Create your post
           </Button>
         </div>
       </DialogTrigger>
-      <DialogContent className="flex flex-row justify-center fixed w-[80%] lg:mr-12 mt-10 rounded-md min-h-72 transition-all duration-500 shadow-lg max-w-2xl bg-white dark:bg-black p-0">
-        <form
-          action={actionHandler}
-          id="post-form"
-          className="w-full flex flex-col px-2 py-2 m-2"
-        >
-          <Textarea
-            name="text"
-            value={text}
-            onChange={onChangeHandler}
-            id="text"
-            placeholder="Describe everything about this post here"
-            spellCheck
-            className="p-3 h-60 border border-sm-blue dark:border-d-sm-blue outline-none"
-          />
-          <div className="mt-4">
-            <Label
-              htmlFor="allowComment"
-              className="ml-2 text-gray-700 dark:text-gray-300"
-            >
-              Allow Comments
-            </Label>
-            <Input
-              type="checkbox"
-              id="allowComment"
-              name="allowComment"
-              checked={allowComment}
-              onChange={onCommentChange}
-              className="form-checkbox h-5 w-5 text-blue-600"
+      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-dark-theme-600">
+        <DialogHeader>
+          <p className="font-bold text-lg">Create your post</p>
+        </DialogHeader>
+        <form action={actionHandler} id="post-form" className="grid gap-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="text">Text</Label>
+            <Textarea
+              id="text"
+              placeholder="Write your post..."
+              className="min-h-[150px] p-3 h-60 border outline-none"
+              onChange={onChangeHandler}
+              value={text}
+              name="text"
+              spellCheck
             />
           </div>
-
-          <div className="mt-4">
-            <Label
-              htmlFor="privacy"
-              className="block text-gray-700 dark:text-gray-300 mb-2"
-            >
-              Privacy
-            </Label>
-            <select
-              id="privacy"
-              name="privacy"
-              value={privacy}
-              onChange={onPrivacyChange}
-              className="block w-full mt-1 p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-300 dark:focus:border-blue-300"
-            >
-              {privacyValues.map((value) => (
-                <option key={value} value={value} className="capitalize">
-                  {value}
-                </option>
-              ))}
-            </select>
+          <div className="flex gap-4 items-center justify-between bg-white dark:bg-dark-theme-600">
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="comments"
+                aria-label="Allow comments"
+                onCheckedChange={onCommentChange}
+                checked={allowComment}
+                name="allowComment"
+              />{" "}
+              <Label
+                htmlFor="comments"
+                className="flex items-center gap-2 text-sm font-medium"
+              >
+                Allow Comments
+              </Label>
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex-1">
+                  <span className="capitalize">{privacy}</span>
+                  <ChevronDownIcon className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {privacyValues.map((el) => (
+                  <DropdownMenuItem
+                    key={el}
+                    onClick={() => onPrivacyChange(el)}
+                    className="capitalize"
+                  >
+                    {el}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-          <div className="flex flex-row my-2 py-2 px-2 justify-between items-center hover:cursor-pointer">
+          <div className="space-y-4">
+            <Label htmlFor="image">Upload Image</Label>
             <FileForm
               accept={[
                 "image/png",
@@ -171,15 +183,32 @@ export default function CreatePostForm() {
               name="file"
               className="w-full h-4"
             />
-
-            <SubmitBtn
-              disabled={!text && !files.length}
-              className="flex justify-center items-center shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
-              text="Post"
-            />
           </div>
+          <SubmitBtn
+            text="publish"
+            disabled={!text && !files.length}
+            className="bg-light-theme-200 dark:bg-dark-theme-200 transition-opacity duration-150 hover:opacity-75 h-12 capitalize"
+          />
         </form>
       </DialogContent>
     </Dialog>
+  );
+}
+function ChevronDownIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
   );
 }

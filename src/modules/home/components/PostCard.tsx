@@ -110,7 +110,11 @@ function PostCard({
   );
 
   return (
-    <Card data-aos={dataAos} data-aos-duration="500">
+    <Card
+      data-aos={dataAos}
+      data-aos-duration="500"
+      className="bg-white dark:bg-dark-theme-500"
+    >
       <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
         <ProfilePic
           bio={userBio}
