@@ -17,7 +17,7 @@ function Sidebar({ className, ...rest }: SidebarProps) {
           </div>
         </div>
       </section>
-      <nav className="mb-6 mt-4 flex flex-col gap-3 border-t border-neutral-300 pt-4">
+      <nav className="mb-6 mt-4 flex flex-col gap-1 border-t w-full border-neutral-300 pt-4 text-xl h-auto">
         {SIDEBAR_MENUS.map((el) => (
           <MenuItem key={el.title} menu={el} />
         ))}

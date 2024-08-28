@@ -12,7 +12,7 @@ export interface SidebarMenu {
   icon: ReactNode;
 }
 
-const className = "h-4 w-4";
+const className = "h-6 w-6";
 
 const SIDEBAR_MENUS: SidebarMenu[] = [
   {

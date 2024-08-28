@@ -9,6 +9,8 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import InitPage from "@/layouts/Init";
 import type { UserAttributes } from "@/interfaces/model";
+import LoadGPT from "@/components/scripts/gpt";
+import LoadGtm from "@/components/scripts/gtm";
 
 const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -20,6 +22,8 @@ function RootLayout({ children, user }: RootLayoutProps) {
   return (
     <html lang="id-ID" suppressContentEditableWarning suppressHydrationWarning>
       <head>
+        <LoadGPT />
+        <LoadGtm />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <title>Forum Gamers</title>
       </head>
