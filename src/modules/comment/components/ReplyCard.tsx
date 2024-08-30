@@ -2,15 +2,18 @@ import ProfilePic from "@/components/common/ProfilePic";
 import Timestamp from "@/components/common/Timestamp";
 import TruncateCardText from "@/components/common/TruncateCardText";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import type { CustomSession } from "@/interfaces";
 import type { ReplyResponse } from "@/interfaces/model";
 import { memo } from "react";
 
 export interface ReplyCardProps {
   data: ReplyResponse;
+  session?: CustomSession | null;
 }
 
 function ReplyCard({
   data: { imageUrl, username, bio, userId, createdAt, text },
+  session,
 }: ReplyCardProps) {
   return (
     <Card data-aos="fade-down" className="w-9/10 ml-12">
@@ -21,6 +24,7 @@ function ReplyCard({
           username={username}
           id={userId}
           bio={bio}
+          session={session}
         />
         <hgroup className="antialiased w-full text-xs">
           <p>{username}</p>

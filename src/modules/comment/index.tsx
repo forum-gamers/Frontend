@@ -23,7 +23,7 @@ export default function Comment({ datas, post, session }: CommentProps) {
         <Breakline className="mb-4" />
         <CommentForm postId={post.id} disabled={!post.allowComment} />
         <Breakline className="mb-4" />
-        <CommentList postId={post.id} />
+        <CommentList postId={post.id} session={session} />
       </Init>
     </Container>
   );

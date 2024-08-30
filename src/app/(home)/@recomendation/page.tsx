@@ -1,8 +1,12 @@
+import { getServerSideSession } from "@/helpers/global";
 import { getFollowRecomendation } from "@/modules/user/action";
 import RecomendationSection from "@/modules/user/components/RecomendationSection";
 
 export default async function Page() {
-  const { data = [] } = await getFollowRecomendation();
+  const [{ data = [] }, session] = await Promise.all([
+    getFollowRecomendation(),
+    getServerSideSession(),
+  ]);
 
-  return <RecomendationSection data={data} />;
+  return <RecomendationSection data={data} session={session} />;
 }

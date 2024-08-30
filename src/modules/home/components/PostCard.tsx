@@ -122,6 +122,7 @@ function PostCard({
           alt={`${username} profile picture`}
           username={username}
           id={userId}
+          session={session}
         />
         <hgroup className="w-full text-xs antialiased">
           <p>{username}</p>

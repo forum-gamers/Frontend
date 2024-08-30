@@ -2,12 +2,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import UserRecomendationCard from "./UserRecomendationCard";
 import type { UserRecomendationAttributes } from "@/interfaces/model";
 import { memo } from "react";
+import type { CustomSession } from "@/interfaces";
 
 export interface RecomendationSectionProps {
   data: UserRecomendationAttributes[];
+  session: CustomSession | null;
 }
 
-function RecomendationSection({ data = [] }: RecomendationSectionProps) {
+function RecomendationSection({
+  data = [],
+  session,
+}: RecomendationSectionProps) {
   return (
     <section className="w-full" id="recomendation">
       <h4 className="mb-4 text-sm font-medium leading-none">You may know</h4>
@@ -23,6 +28,7 @@ function RecomendationSection({ data = [] }: RecomendationSectionProps) {
                 source={el.source}
                 key={el.userId}
                 isFollower={el.followerStatus === "follower"}
+                session={session}
               />
             ))}
         </div>
