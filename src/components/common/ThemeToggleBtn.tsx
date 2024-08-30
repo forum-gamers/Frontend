@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "@/components/icons/HeroIconsOutline";
 import { useCallback } from "react";
+import useMount from "@/hooks/useMounted";
 
 export default function ThemeToggleBtn() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -11,6 +12,10 @@ export default function ThemeToggleBtn() {
   const toggleTheme = useCallback(() => {
     setTheme(resolvedTheme === "light" ? "dark" : "light");
   }, [resolvedTheme, setTheme]);
+
+  const mounted = useMount();
+
+  if (!mounted) return null;
 
   return (
     <motion.button

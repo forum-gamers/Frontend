@@ -5,6 +5,7 @@ import PriorityImage from "@/components/common/PriorityImage";
 import { GUEST } from "@/components/images";
 import Link from "next/link";
 import { memo } from "react";
+import { useRouter } from "next/navigation";
 
 export interface ProfileImageProps {
   wrapperClass?: string;
@@ -19,20 +20,20 @@ function ProfileImage({
   h = 80,
   w = 80,
 }: ProfileImageProps) {
+  const { prefetch } = useRouter();
   const { me } = useProfile();
 
   return (
-    <Link prefetch href="/profile" passHref>
-      <figure className={wrapperClass}>
-        <PriorityImage
-          height={h}
-          width={w}
-          className={imageClass}
-          alt="profile"
-          src={me?.imageUrl || GUEST}
-        />
-      </figure>
-    </Link>
+    <figure className={wrapperClass}>
+      <PriorityImage
+        height={h}
+        width={w}
+        className={imageClass}
+        alt="profile"
+        src={me?.imageUrl || GUEST}
+        onClick={() => prefetch("/profile")}
+      />
+    </figure>
   );
 }
 

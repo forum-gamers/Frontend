@@ -3,6 +3,7 @@ import Script from "next/script";
 export default function LoadGtm() {
   return (
     <Script
+      id="gtm-script"
       dangerouslySetInnerHTML={{
         __html: `
           window.googletag = window.googletag || {cmd: []};

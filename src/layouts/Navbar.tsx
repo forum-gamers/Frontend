@@ -1,10 +1,10 @@
-import PriorityImage from "@/components/common/PriorityImage";
 import { LOGO_BLUE } from "@/components/images";
 import NavbarSearch from "@/components/ui/NavbarSearch";
 import { searchHandler } from "@/action/search";
 import { memo, Suspense } from "react";
 import ProfileImage from "@/modules/user/components/ProfileImage";
 import ThemeToggleBtn from "@/components/common/ThemeToggleBtn";
+import LazyLoadImg from "@/components/common/LazyLoadImage";
 
 function Navbar() {
   const placeholders = [
@@ -18,7 +18,7 @@ function Navbar() {
     <header className="fixed z-10 w-full bg-light-theme-100 bg-gradient-to-tr dark:bg-gradient-to-tr from-light-theme-100 to-light-theme-200 dark:bg-dark-theme-300 dark:from-dark-theme-300 dark:to-dark-theme-500 p-5 shadow-sm dark:border-b dark:border-neutral-800">
       <div className="w-full max-w-7xl mx-auto flex justify-between gap-4 items-center">
         <div className="hidden lg:block">
-          <PriorityImage
+          <LazyLoadImg
             height={50}
             width={50}
             className="lg:hover:scale-105 cursor-pointer transition-all duration-100 hover:animate-pulse"
@@ -36,7 +36,9 @@ function Navbar() {
           <NavbarSearch onAction={searchHandler} placeholders={placeholders} />
         </Suspense>
         <div className="block lg:hidden">
-          <ThemeToggleBtn />
+          <Suspense>
+            <ThemeToggleBtn />
+          </Suspense>
         </div>
         {/* <ChatBubbleLeftEllipsisIcon className="md:hidden h-12 w-12" /> */}
       </div>
