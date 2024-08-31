@@ -9,22 +9,26 @@ import { memo } from "react";
 export interface ReplyCardProps {
   data: ReplyResponse;
   session?: CustomSession | null;
+  toggleFollow: () => void;
 }
 
 function ReplyCard({
-  data: { imageUrl, username, bio, userId, createdAt, text },
+  data: { imageUrl, username, bio, userId, createdAt, text, isFollowed, id },
   session,
+  toggleFollow,
 }: ReplyCardProps) {
   return (
     <Card data-aos="fade-down" className="w-9/10 ml-12">
       <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
         <ProfilePic
+          toggleFollow={toggleFollow}
           src={imageUrl}
           alt={`${username} profile picture`}
           username={username}
           id={userId}
           bio={bio}
           session={session}
+          isFollowed={isFollowed}
         />
         <hgroup className="antialiased w-full text-xs">
           <p>{username}</p>

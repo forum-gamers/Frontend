@@ -61,12 +61,17 @@ function PostCard({
     countComment,
     editedText,
     countBookmark,
+    isFollowed,
   },
   session,
   as = "card",
   dataAos,
 }: PostCardProps) {
-  const { deletePost: deletePostFromCtx, editPostText } = usePost();
+  const {
+    deletePost: deletePostFromCtx,
+    editPostText,
+    toogleFollow,
+  } = usePost();
   const [editable, setEditable] = useState<boolean>(false);
   const [postText, setPostText] = useState<string>(text);
 
@@ -109,6 +114,10 @@ function PostCard({
     [editPostText, id]
   );
 
+  const handleFollow = useCallback(() => {
+    toogleFollow(userId);
+  }, []);
+
   return (
     <Card
       data-aos={dataAos}
@@ -117,6 +126,8 @@ function PostCard({
     >
       <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
         <ProfilePic
+          toggleFollow={handleFollow}
+          isFollowed={isFollowed}
           bio={userBio}
           src={userImageUrl}
           alt={`${username} profile picture`}

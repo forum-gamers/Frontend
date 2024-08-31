@@ -94,6 +94,7 @@ export interface PostResponse {
   userImageUrl?: string;
   userBio: string;
   communityId?: number | null;
+  isFollowed: boolean;
 }
 
 export interface CommentResponse {
@@ -107,6 +108,7 @@ export interface CommentResponse {
   imageUrl?: string;
   bio?: string;
   replies: ReplyResponse[];
+  isFollowed: boolean;
 }
 
 export interface ReplyResponse {
@@ -120,6 +122,7 @@ export interface ReplyResponse {
   username: string;
   imageUrl?: string;
   bio?: string;
+  isFollowed: boolean;
 }
 
 export interface UserAttributes {

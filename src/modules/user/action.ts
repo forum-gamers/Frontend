@@ -70,3 +70,45 @@ export const getFollowRecomendation = async () => {
 
   return { error: null, data };
 };
+
+export const follow = async (id: string) => {
+  const {
+    status,
+    data: { message },
+  } = await request.Mutation({
+    url: `/follow/${id}`,
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message };
+
+  return { error: null };
+};
+
+export const unFollow = async (id: string) => {
+  const {
+    status,
+    data: { message },
+  } = await request.Mutation({
+    url: `/follow/${id}`,
+    method: "DELETE",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message };
+
+  return { error: null };
+};

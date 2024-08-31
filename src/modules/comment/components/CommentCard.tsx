@@ -1,7 +1,7 @@
 "use client";
 
 import type { CommentResponse } from "@/interfaces/model";
-import { memo, useState, type MouseEventHandler } from "react";
+import { memo, useCallback, useState, type MouseEventHandler } from "react";
 import {
   Card,
   CardContent,
@@ -15,6 +15,7 @@ import Timestamp from "../../../components/common/Timestamp";
 import { Button } from "@/components/ui/button";
 import ReplyCard from "./ReplyCard";
 import type { CustomSession } from "@/interfaces";
+import useComment from "../hooks/useComment";
 
 export interface CommentCardProps {
   data: CommentResponse;
@@ -22,24 +23,47 @@ export interface CommentCardProps {
 }
 
 function CommentCard({
-  data: { text, username, userId, imageUrl, bio, id, createdAt, replies },
+  data: {
+    text,
+    username,
+    userId,
+    imageUrl,
+    bio,
+    id,
+    createdAt,
+    replies,
+    isFollowed,
+    postId,
+  },
   session,
 }: CommentCardProps) {
   const [open, setOpen] = useState<boolean>(false);
 
-  const onCLickHandler: MouseEventHandler = (e) => setOpen(!open);
+  const onCLickHandler: MouseEventHandler = useCallback(
+    (e) => setOpen(!open),
+    [open]
+  );
+
+  const { toggleFollow } = useComment();
+
+  const handleFollowBtn = useCallback(
+    () => toggleFollow(userId),
+    [userId, isFollowed]
+  );
 
   return (
     <>
       <Card data-aos="fade-left">
         <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
           <ProfilePic
+            toggleFollow={handleFollowBtn}
             src={imageUrl}
             alt={`${username} profile picture`}
             username={username}
             id={userId}
             bio={bio}
             session={session}
+            isFollowed={isFollowed}
           />
           <hgroup className="antialiased w-full text-xs">
             <p>{username}</p>
@@ -68,7 +92,12 @@ function CommentCard({
       {open && (
         <div className="mt-4 space-y-6">
           {replies.map((el) => (
-            <ReplyCard session={session} key={el.id} data={el} />
+            <ReplyCard
+              session={session}
+              key={el.id}
+              data={el}
+              toggleFollow={handleFollowBtn}
+            />
           ))}
         </div>
       )}

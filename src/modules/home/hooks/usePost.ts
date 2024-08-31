@@ -13,6 +13,7 @@ export interface InitialAction {
   deletePost: (postId: number) => void;
   editPostText: (text: string, postId: number) => void;
   updateBookmark: (id: number) => void;
+  toogleFollow: (id: string) => void;
 }
 
 const usePost = create<InitialState & InitialAction>((set) => ({
@@ -67,6 +68,13 @@ const usePost = create<InitialState & InitialAction>((set) => ({
     set(({ datas }) => ({
       datas: datas.map((el) =>
         el.id === postId ? { ...el, text, editedText: true } : el
+      ),
+    })),
+
+  toogleFollow: (id) =>
+    set(({ datas }) => ({
+      datas: datas.map((el) =>
+        el.userId === id ? { ...el, isFollowed: !el.isFollowed } : el
       ),
     })),
 }));

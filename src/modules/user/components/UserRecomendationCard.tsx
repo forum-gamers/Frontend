@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ProfilePic from "@/components/common/ProfilePic";
 import {
   Card,
   CardContent,
@@ -10,6 +9,7 @@ import { getSourceDescription } from "@/helpers/global";
 import type { UserRecomendationSource } from "@/interfaces/model";
 import type { CustomSession, Lang } from "@/interfaces";
 import { memo } from "react";
+import UserRecomendationCardHeader from "./UserRecomendationCardHeader";
 
 export interface UserRecomendationCardProps {
   username: string;
@@ -34,13 +34,13 @@ function UserRecomendationCard({
 }: UserRecomendationCardProps) {
   return (
     <Card className="flex bg-white dark:bg-dark-theme-500 flex-col w-[90%] overflow-x-hidden px-2 items-center justify-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 m-auto max-h-16 h-16 border rounded-lg">
-      <ProfilePic
+      <UserRecomendationCardHeader
         username={username}
         bio={bio}
-        alt={`${username} image`}
-        src={imageUrl}
+        imageUrl={imageUrl}
         id={id}
         session={session}
+        isFollower={isFollower}
       />
       <hgroup className="antialiased flex flex-col w-full">
         <CardTitle

@@ -10,6 +10,7 @@ export interface InitialAction {
   addReply: (reply: ReplyResponse) => void;
   addComment: (comment: CommentResponse) => void;
   resetData: () => void;
+  toggleFollow: (id: string) => void;
 }
 
 const useComment = create<InitialState & InitialAction>((set) => ({
@@ -33,6 +34,22 @@ const useComment = create<InitialState & InitialAction>((set) => ({
   addComment: (comment) =>
     set((state) => ({ datas: [comment, ...state?.datas] })),
   resetData: () => set((prev) => ({ ...prev, datas: [] })),
+  toggleFollow: (id) =>
+    set((state) => ({
+      datas: state.datas.map((data) =>
+        data.userId === id || data.replies.some((el) => el.userId === id)
+          ? {
+              ...data,
+              isFollowed: !data.isFollowed,
+              replies: data.replies.map((reply) =>
+                reply.userId === id
+                  ? { ...reply, isFollowed: !reply.isFollowed }
+                  : reply
+              ),
+            }
+          : data
+      ),
+    })),
 }));
 
 export default useComment;
