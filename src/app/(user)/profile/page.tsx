@@ -18,15 +18,24 @@ export default async function Page() {
 
   return (
     <User
-      username={data.username}
       id={data.id}
+      session={session}
+      followersCount={data.followersCount}
+      followingCount={data.followingCount}
+      username={data.username}
       imageUrl={data.imageUrl}
       backgroundUrl={data.backgroundImageUrl}
       bio={data.bio}
       tabs={ME_TAB}
       activeTab="post"
+      isFollower={false}
     >
-      <UserPostList session={session} posts={posts} fetcher={getMyPost} />
+      <UserPostList
+        session={session}
+        posts={posts}
+        user={data}
+        fetcher={getMyPost}
+      />
     </User>
   );
 }

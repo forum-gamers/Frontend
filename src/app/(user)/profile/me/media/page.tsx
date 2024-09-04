@@ -18,13 +18,17 @@ export default async function Page() {
 
   return (
     <User
+      session={session}
+      followersCount={data.followersCount}
+      followingCount={data.followingCount}
       username={data.username}
-      id={data.id}
       imageUrl={data.imageUrl}
       backgroundUrl={data.backgroundImageUrl}
       bio={data.bio}
       tabs={ME_TAB}
       activeTab="media"
+      id={data.id}
+      isFollower={false}
     >
       <UserPostList
         session={session}
@@ -33,6 +37,7 @@ export default async function Page() {
           "use server";
           return getMyPost(payload, "t");
         }}
+        user={data}
       />
     </User>
   );

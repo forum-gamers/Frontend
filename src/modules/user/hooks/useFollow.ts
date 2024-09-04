@@ -1,16 +1,16 @@
-import type { PostResponse } from "@/interfaces/model";
+import type { FollowAttributes } from "@/interfaces/model";
 import { create } from "zustand";
 
 export interface InitialState {
-  datas: PostResponse[];
+  datas: FollowAttributes[];
 }
 
 export interface InitialAction {
-  setDatas: (datas: PostResponse[]) => void;
-  resetDatas: () => void;
+  setDatas: (datas: FollowAttributes[]) => void;
+  resetData: () => void;
 }
 
-const useUserPost = create<InitialState & InitialAction>((set) => ({
+const useFollow = create<InitialState & InitialAction>((set) => ({
   datas: [],
   setDatas: (datas) =>
     set((state) => ({
@@ -20,7 +20,7 @@ const useUserPost = create<InitialState & InitialAction>((set) => ({
           .values()
       ),
     })),
-  resetDatas: () => set((state) => ({ ...state, datas: [] })),
+  resetData: () => set({ datas: [] }),
 }));
 
-export default useUserPost;
+export default useFollow;

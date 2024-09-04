@@ -5,7 +5,8 @@ import { memo, Suspense } from "react";
 import ProfileImage from "@/modules/user/components/ProfileImage";
 import ThemeToggleBtn from "@/components/common/ThemeToggleBtn";
 import LazyLoadImg from "@/components/common/LazyLoadImage";
-
+import Link from "next/link";
+//TODO useoptmistic on follow btn & update state follow on user profle
 function Navbar() {
   const placeholders = [
     "Search for friends",
@@ -26,12 +27,14 @@ function Navbar() {
             src={LOGO_BLUE}
           />
         </div>
-        <ProfileImage
-          wrapperClass="lg:hidden rounded-full border-2 border-white shadow-md dark:border-neutral-800"
-          imageClass="lg:hover:scale-105 rounded-full"
-          h={50}
-          w={50}
-        />
+        <Link href="/profile" prefetch passHref>
+          <ProfileImage
+            wrapperClass="lg:hidden rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800"
+            imageClass="lg:hover:scale-105 rounded-full"
+            h={50}
+            w={50}
+          />
+        </Link>
         <Suspense>
           <NavbarSearch onAction={searchHandler} placeholders={placeholders} />
         </Suspense>

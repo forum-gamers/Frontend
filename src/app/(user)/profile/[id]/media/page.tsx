@@ -29,6 +29,9 @@ export default async function Page({
   return (
     <User
       id={data.id}
+      session={session}
+      followersCount={data.followersCount}
+      followingCount={data.followingCount}
       username={data.username}
       imageUrl={data.imageUrl}
       backgroundUrl={data.backgroundImageUrl}
@@ -38,8 +41,10 @@ export default async function Page({
         href: el.href.replace("[USER_ID]", data.id),
       }))}
       activeTab="media"
+      isFollower={data.isFollower}
     >
       <UserPostList
+        user={null}
         session={session}
         posts={posts}
         fetcher={async (payload) => {

@@ -1,36 +1,39 @@
 "use client";
 
 import type { CustomSession } from "@/interfaces";
-import type { PostResponse } from "@/interfaces/model";
+import type { PostResponse, UserAttributes } from "@/interfaces/model";
 import { CardContent } from "@/components/ui/card";
 import PostCard from "@/modules/home/components/PostCard";
-import useUserPost from "../hooks/useUserPost";
 import { useEffect } from "react";
-import useScrollPost, {
-  type Fetcher,
-} from "@/modules/home/hooks/useScrollPost";
+import useScroll, { type Fetcher } from "@/hooks/useScroll";
 import SkeletonCard from "@/components/common/SkeletonCard";
+import usePost from "@/modules/home/hooks/usePost";
+import useProfile from "../hooks/useProfile";
 
 export interface UserPostListProps {
   session: CustomSession | null;
   posts: PostResponse[];
-  fetcher: Fetcher;
+  fetcher: Fetcher<PostResponse>;
+  user: UserAttributes | null;
 }
 
 export default function UserPostList({
   session,
   posts,
   fetcher,
+  user,
 }: UserPostListProps) {
-  const { setDatas, resetDatas } = useUserPost();
-  const { datas, ref, pending } = useScrollPost<HTMLDivElement>(
-    useUserPost,
+  const { setDatas, resetDatas } = usePost();
+  const { datas, ref, pending } = useScroll<HTMLDivElement, PostResponse>(
+    usePost,
     fetcher
   );
+  const { setUser } = useProfile();
 
   useEffect(() => {
     resetDatas();
     setDatas(posts);
+    if (user && session?.user?.id !== user?.id) setUser(user);
   }, []);
 
   return (

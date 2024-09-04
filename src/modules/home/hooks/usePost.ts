@@ -14,6 +14,7 @@ export interface InitialAction {
   editPostText: (text: string, postId: number) => void;
   updateBookmark: (id: number) => void;
   toogleFollow: (id: string) => void;
+  resetDatas: () => void;
 }
 
 const usePost = create<InitialState & InitialAction>((set) => ({
@@ -77,6 +78,8 @@ const usePost = create<InitialState & InitialAction>((set) => ({
         el.userId === id ? { ...el, isFollowed: !el.isFollowed } : el
       ),
     })),
+
+  resetDatas: () => set({ datas: [] }),
 }));
 
 export default usePost;

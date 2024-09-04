@@ -1,22 +1,17 @@
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { getSourceDescription } from "@/helpers/global";
 import type { UserRecomendationSource } from "@/interfaces/model";
 import type { CustomSession, Lang } from "@/interfaces";
 import { memo } from "react";
-import UserRecomendationCardHeader from "./UserRecomendationCardHeader";
+import ProfilePic from "@/components/common/ProfilePic";
 
 export interface UserRecomendationCardProps {
   username: string;
   id: string;
   bio?: string;
   imageUrl?: string;
-  source: UserRecomendationSource;
+  source?: UserRecomendationSource;
   isFollower: boolean;
   lang?: Lang;
   session?: CustomSession | null;
@@ -34,20 +29,21 @@ function UserRecomendationCard({
 }: UserRecomendationCardProps) {
   return (
     <Card className="flex bg-white dark:bg-dark-theme-500 flex-col w-[90%] overflow-x-hidden px-2 items-center justify-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 m-auto max-h-16 h-16 border rounded-lg">
-      <UserRecomendationCardHeader
+      <ProfilePic
         username={username}
         bio={bio}
-        imageUrl={imageUrl}
+        alt={`${username} image`}
+        src={imageUrl}
         id={id}
         session={session}
-        isFollower={isFollower}
+        isFollowed={isFollower}
       />
       <hgroup className="antialiased flex flex-col w-full">
         <CardTitle
           className="font-display mb-2 font-semibold text-xs"
           itemProp="author"
         >
-          <Link href={`/profile/${id}`} prefetch rel="author">
+          <Link href={`/profile/${id}`} prefetch>
             {username}
           </Link>
         </CardTitle>
@@ -56,13 +52,12 @@ function UserRecomendationCard({
             {getSourceDescription(source, lang)}
           </CardDescription>
         )}
-        {isFollower && (
+        {isFollower && session?.user?.id !== id && (
           <CardDescription className="text-xs block">
             {lang === "id" ? "Mengikutimu" : "Followingyou"}
           </CardDescription>
         )}
       </hgroup>
-      <CardContent className="flex flex-col text-xs"></CardContent>
     </Card>
   );
 }

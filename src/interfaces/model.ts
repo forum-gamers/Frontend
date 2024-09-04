@@ -13,6 +13,9 @@ export interface UserAttributes {
   createdAt: Date;
   updatedAt: Date;
   phoneNumber: string;
+  followersCount: number;
+  followingCount: number;
+  isFollower: boolean;
 }
 
 export interface PostAttributes {
@@ -156,3 +159,20 @@ export type UserRecomendationSource =
   | "tag"
   | "community"
   | "group";
+
+export interface FollowAttributes {
+  id: number;
+  followerId: string;
+  followedId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  followed: UserFollowAttributes;
+  follower: UserFollowAttributes;
+}
+
+export interface UserFollowAttributes {
+  id: string;
+  username: string;
+  imageUrl: string;
+  bio: string;
+}

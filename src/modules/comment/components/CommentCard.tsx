@@ -15,7 +15,6 @@ import Timestamp from "../../../components/common/Timestamp";
 import { Button } from "@/components/ui/button";
 import ReplyCard from "./ReplyCard";
 import type { CustomSession } from "@/interfaces";
-import useComment from "../hooks/useComment";
 
 export interface CommentCardProps {
   data: CommentResponse;
@@ -33,7 +32,6 @@ function CommentCard({
     createdAt,
     replies,
     isFollowed,
-    postId,
   },
   session,
 }: CommentCardProps) {
@@ -44,19 +42,11 @@ function CommentCard({
     [open]
   );
 
-  const { toggleFollow } = useComment();
-
-  const handleFollowBtn = useCallback(
-    () => toggleFollow(userId),
-    [userId, isFollowed]
-  );
-
   return (
     <>
       <Card data-aos="fade-left">
         <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
           <ProfilePic
-            toggleFollow={handleFollowBtn}
             src={imageUrl}
             alt={`${username} profile picture`}
             username={username}
@@ -92,12 +82,7 @@ function CommentCard({
       {open && (
         <div className="mt-4 space-y-6">
           {replies.map((el) => (
-            <ReplyCard
-              session={session}
-              key={el.id}
-              data={el}
-              toggleFollow={handleFollowBtn}
-            />
+            <ReplyCard session={session} key={el.id} data={el} />
           ))}
         </div>
       )}

@@ -1,26 +1,31 @@
 import PriorityImage from "@/components/common/PriorityImage";
-import { memo } from "react";
+import { memo, Suspense } from "react";
 import { GUEST, BACKDROP } from "@/components/images";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import type { ChildrenProps, Lang } from "@/interfaces";
+import type { ChildrenProps, CustomSession, Lang } from "@/interfaces";
 import TruncateCardText from "@/components/common/TruncateCardText";
 import BackBtn from "@/components/common/BackBtn";
 import TabPost, { type Tab } from "./components/TabPost";
+import FollowSection from "./components/FollowSection";
+import FollowBtn from "@/components/common/FollowBtn";
 
 export interface UserPageProps extends ChildrenProps {
   username: string;
-  id: string;
   imageUrl?: string;
   backgroundUrl?: string;
   lang?: Lang;
   bio?: string;
   tabs: Tab[];
   activeTab: string;
+  followersCount: number;
+  followingCount: number;
+  session: CustomSession | null;
+  id: string;
+  isFollower: boolean;
 }
 
 function UserPage({
   username,
-  id,
   imageUrl,
   backgroundUrl,
   lang = "id",
@@ -28,6 +33,11 @@ function UserPage({
   tabs,
   children,
   activeTab,
+  followersCount = 0,
+  followingCount = 0,
+  session,
+  id,
+  isFollower,
 }: UserPageProps) {
   return (
     <>
@@ -41,17 +51,35 @@ function UserPage({
             src={backgroundUrl || BACKDROP}
             className="w-full rounded-md"
           />
-          <PriorityImage
-            className="rounded-full -mt-10 ml-5"
-            width={100}
-            height={100}
-            alt="profile-photo"
-            src={imageUrl || GUEST}
-          />
+          <div className="flex justify-between items-center -mt-10 px-5">
+            <PriorityImage
+              className="rounded-full"
+              width={100}
+              height={100}
+              alt="profile-photo"
+              src={imageUrl || GUEST}
+            />
+            {session?.user?.id !== id && (
+              <FollowBtn
+                isFollowed={isFollower}
+                id={id}
+                className="ml-4 px-4 py-2"
+              />
+            )}
+          </div>
         </div>
-        <hgroup className="flex flex-col w-full p-4">
-          <p>{username}</p>
-          {/* <p>TODO (TITLE)</p> */}
+        <hgroup className="flex flex-col w-full px-4 text-neutral-900 dark:text-neutral-300 h-8">
+          <div className="flex justify-between items-start w-full">
+            <h2 className="px-8">{username}</h2>
+            <Suspense>
+              <FollowSection
+                id={id}
+                followersCount={followersCount}
+                followingCount={followingCount}
+                session={session}
+              />
+            </Suspense>
+          </div>
         </hgroup>
       </header>
       <Card className="w-full bg-white dark:bg-dark-theme-500">

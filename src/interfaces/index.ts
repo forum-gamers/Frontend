@@ -39,3 +39,5 @@ export interface BasePagination {
 }
 
 export type Lang = "id" | "en";
+
+export type Counter = "decrement" | "increment";

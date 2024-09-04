@@ -2,17 +2,18 @@
 
 import type { CustomSession } from "@/interfaces";
 import PostCard from "@/modules/home/components/PostCard";
-import useScrollPost from "@/modules/home/hooks/useScrollPost";
+import useScroll from "@/hooks/useScroll";
 import SkeletonCard from "@/components/common/SkeletonCard";
 import useBookmark from "../hooks/useBookmark";
 import { fetchBookmark } from "../action";
+import type { PostResponse } from "@/interfaces/model";
 
 export interface PostListProps {
   session: CustomSession | null;
 }
 
 export default function BookmarkList({ session }: PostListProps) {
-  const { datas, ref, pending } = useScrollPost<HTMLDivElement>(
+  const { datas, ref, pending } = useScroll<HTMLDivElement, PostResponse>(
     useBookmark,
     fetchBookmark
   );

@@ -8,3 +8,5 @@ TODOS :
 - [ ] Card Post
 - [ ] Suggestions
 - [ ] Search Input
+- [ ] Connection error page
+- [ ] Not Verified Page

@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState, useTransition } from "react";
-import type { PostResponse } from "@/interfaces/model";
 import type { BasePagination, ServerActionResult } from "@/interfaces";
 
-export type UseScrollPostProps = () => {
-  datas: PostResponse[];
-  setDatas: (posts: PostResponse[]) => void;
+export type UseScrollPostProps<T> = () => {
+  datas: T[];
+  setDatas: (data: T[]) => void;
 };
 
-export type Fetcher = ({
+export type Fetcher<T> = ({
   page,
   limit,
-}: BasePagination) => Promise<ServerActionResult<PostResponse[]>>;
+}: BasePagination) => Promise<ServerActionResult<T[]>>;
 
-export default function useScrollPost<T extends HTMLElement>(
-  handler: UseScrollPostProps,
-  fetcher: Fetcher
+export default function useScroll<T extends HTMLElement, TData>(
+  handler: UseScrollPostProps<TData>,
+  fetcher: Fetcher<TData>
 ) {
   const { setDatas, datas } = handler();
   const [pending, startTransition] = useTransition();

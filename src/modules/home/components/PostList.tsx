@@ -2,17 +2,18 @@
 
 import type { CustomSession } from "@/interfaces";
 import PostCard from "./PostCard";
-import useScrollPost from "../hooks/useScrollPost";
+import useScroll from "../../../hooks/useScroll";
 import SkeletonCard from "@/components/common/SkeletonCard";
 import usePost from "../hooks/usePost";
 import { fetchPosts } from "../action";
+import type { PostResponse } from "@/interfaces/model";
 
 export interface PostListProps {
   session: CustomSession | null;
 }
 
 export default function PostList({ session }: PostListProps) {
-  const { datas, ref, pending } = useScrollPost<HTMLDivElement>(
+  const { datas, ref, pending } = useScroll<HTMLDivElement, PostResponse>(
     usePost,
     fetchPosts
   );
