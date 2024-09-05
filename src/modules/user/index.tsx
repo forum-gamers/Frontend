@@ -8,6 +8,7 @@ import BackBtn from "@/components/common/BackBtn";
 import TabPost, { type Tab } from "./components/TabPost";
 import FollowSection from "./components/FollowSection";
 import FollowBtn from "@/components/common/FollowBtn";
+import UpdateBio from "./components/UpdateBio";
 
 export interface UserPageProps extends ChildrenProps {
   username: string;
@@ -87,13 +88,16 @@ function UserPage({
           <CardHeader>{lang === "id" ? "Tentang" : "About"}</CardHeader>
         )}
         <CardContent>
-          {!!bio && (
-            <TruncateCardText
-              text={bio}
-              className="antialiased"
-              as="blockquote"
-            />
-          )}
+          {!!bio &&
+            (session?.user?.id !== id ? (
+              <TruncateCardText
+                text={bio}
+                className="antialiased"
+                as="blockquote"
+              />
+            ) : (
+              <UpdateBio bio={bio} />
+            ))}
         </CardContent>
       </Card>
       <Card

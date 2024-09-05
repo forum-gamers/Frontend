@@ -224,3 +224,26 @@ export const getUserFollowing = async (
 
   return { error: null, data };
 };
+
+export const updateBio = async (bio: string) => {
+  const {
+    data: { message },
+    status,
+  } = await request.Mutation({
+    method: "PATCH",
+    url: "/user/bio",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    data: {
+      bio,
+    },
+  });
+  if (status !== 200) return { error: message, data: null };
+
+  return { data: null, error: null };
+};

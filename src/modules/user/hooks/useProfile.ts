@@ -11,6 +11,7 @@ export interface InitialAction {
   resetUser: () => void;
   updateUserFollowing: (props: Counter) => void;
   updateUserFollower: (props: Counter) => void;
+  updateBio: (bio: string) => void;
 }
 
 const useProfile = create<InitialState & InitialAction>((set) => ({
@@ -39,6 +40,9 @@ const useProfile = create<InitialState & InitialAction>((set) => ({
           }
         : null,
     })),
+
+  updateBio: (bio) =>
+    set((prev) => ({ ...prev, me: prev?.me ? { ...prev.me, bio } : null })),
 }));
 
 export default useProfile;
