@@ -28,7 +28,7 @@ function UserRecomendationCard({
   session,
 }: UserRecomendationCardProps) {
   return (
-    <Card className="flex bg-white dark:bg-dark-theme-500 flex-col w-[90%] overflow-x-hidden px-2 items-center justify-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6 m-auto max-h-16 h-16 border rounded-lg">
+    <Card className="flex bg-white dark:bg-dark-theme-500 w-[90%] overflow-x-hidden px-2 items-center justify-start flex-row space-x-6 m-auto max-h-16 h-16 border rounded-lg">
       <ProfilePic
         username={username}
         bio={bio}
