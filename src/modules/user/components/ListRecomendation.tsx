@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import useRecomendation from "../hooks/useRecomendation";
 import UserRecomendationCard from "./UserRecomendationCard";
 import type { CustomSession } from "@/interfaces";
+import useMount from "@/hooks/useMounted";
 
 export interface ListRecomendationProps {
   initialData: UserRecomendationAttributes[];
@@ -20,6 +21,9 @@ export default function ListRecomendation({
     setDatas(initialData);
   }, []);
 
+  const mount = useMount();
+  if (!mount) return null;
+
   return (
     <div className="space-y-4 my-4">
       {!!datas?.length &&
@@ -31,7 +35,7 @@ export default function ListRecomendation({
             imageUrl={el.userImageUrl}
             source={el.source}
             key={el.userId}
-            isFollower={el.followerStatus === "follower"}
+            isFollower={false}
             session={session}
           />
         ))}

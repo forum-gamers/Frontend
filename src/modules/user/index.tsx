@@ -1,6 +1,6 @@
 import PriorityImage from "@/components/common/PriorityImage";
 import { memo, Suspense } from "react";
-import { GUEST, BACKDROP } from "@/components/images";
+import { BACKDROP, GUEST } from "@/components/images";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import type { ChildrenProps, CustomSession, Lang } from "@/interfaces";
 import TruncateCardText from "@/components/common/TruncateCardText";
@@ -9,39 +9,32 @@ import TabPost, { type Tab } from "./components/TabPost";
 import FollowSection from "./components/FollowSection";
 import FollowBtn from "@/components/common/FollowBtn";
 import UpdateBio from "./components/UpdateBio";
+import Init from "./components/Init";
+import type { UserAttributes } from "@/interfaces/model";
 
 export interface UserPageProps extends ChildrenProps {
-  username: string;
-  imageUrl?: string;
-  backgroundUrl?: string;
   lang?: Lang;
-  bio?: string;
+  isFollower: boolean;
   tabs: Tab[];
   activeTab: string;
-  followersCount: number;
-  followingCount: number;
   session: CustomSession | null;
-  id: string;
-  isFollower: boolean;
+  user: UserAttributes;
 }
 
 function UserPage({
-  username,
-  imageUrl,
-  backgroundUrl,
   lang = "id",
-  bio,
   tabs,
   children,
-  activeTab,
-  followersCount = 0,
-  followingCount = 0,
   session,
-  id,
+  activeTab,
+  user,
   isFollower,
 }: UserPageProps) {
+  const { username, id, imageUrl, bio, backgroundImageUrl } = user;
+
   return (
     <>
+      <Init target={user} session={session} />
       <BackBtn url="/" />
       <header className="w-full rounded-md bg-white dark:bg-dark-theme-500">
         <div className="w-full">
@@ -49,55 +42,51 @@ function UserPage({
             width={450}
             height={150}
             alt="banner"
-            src={backgroundUrl || BACKDROP}
+            src={backgroundImageUrl || BACKDROP}
             className="w-full rounded-md"
           />
           <div className="flex justify-between items-center -mt-10 px-5">
-            <PriorityImage
-              className="rounded-full"
-              width={100}
-              height={100}
-              alt="profile-photo"
-              src={imageUrl || GUEST}
-            />
-            {session?.user?.id !== id && (
-              <FollowBtn
-                isFollowed={isFollower}
-                id={id}
-                className="ml-4 px-4 py-2"
+            <figure className="rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 flex justify-center items-center">
+              <PriorityImage
+                className="lg:hover:scale-105 rounded-full"
+                width={100}
+                height={100}
+                alt={`${username} image`}
+                src={imageUrl || GUEST}
               />
+            </figure>
+            {session?.user?.id !== id && (
+              <Suspense>
+                <FollowBtn
+                  isFollowed={isFollower}
+                  id={id}
+                  className="ml-4 px-4 py-2"
+                />
+              </Suspense>
             )}
           </div>
         </div>
         <hgroup className="flex flex-col w-full px-4 text-neutral-900 dark:text-neutral-300 h-8">
           <div className="flex justify-between items-start w-full">
-            <h2 className="px-8">{username}</h2>
+            <h2 className="px-8 text-center">{username}</h2>
             <Suspense>
-              <FollowSection
-                id={id}
-                followersCount={followersCount}
-                followingCount={followingCount}
-                session={session}
-              />
+              <FollowSection id={id} session={session} />
             </Suspense>
           </div>
         </hgroup>
       </header>
       <Card className="w-full bg-white dark:bg-dark-theme-500">
-        {!!bio && (
-          <CardHeader>{lang === "id" ? "Tentang" : "About"}</CardHeader>
-        )}
+        {<CardHeader>{lang === "id" ? "Tentang" : "About"}</CardHeader>}
         <CardContent>
-          {!!bio &&
-            (session?.user?.id !== id ? (
-              <TruncateCardText
-                text={bio}
-                className="antialiased"
-                as="blockquote"
-              />
-            ) : (
-              <UpdateBio bio={bio} />
-            ))}
+          {session?.user?.id !== id ? (
+            <TruncateCardText
+              text={bio || "Write a short bio about yourself"}
+              className="antialiased"
+              as="blockquote"
+            />
+          ) : (
+            <UpdateBio bio={bio || "Write a short bio about yourself"} />
+          )}
         </CardContent>
       </Card>
       <Card

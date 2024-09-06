@@ -168,6 +168,7 @@ export interface FollowAttributes {
   updatedAt: Date;
   followed: UserFollowAttributes;
   follower: UserFollowAttributes;
+  isFollowed?: boolean;
 }
 
 export interface UserFollowAttributes {

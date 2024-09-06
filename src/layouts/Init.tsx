@@ -11,7 +11,7 @@ export interface InitPageProps extends ChildrenProps {
 }
 
 export default function InitPage({ children, user }: InitPageProps) {
-  const { setUser, me } = useProfile();
+  const { setUser, resetUser } = useProfile();
   useEffect(() => {
     Aos.init({
       duration: 800,
@@ -20,7 +20,8 @@ export default function InitPage({ children, user }: InitPageProps) {
   }, []);
 
   useEffect(() => {
-    if (!me && user) setUser(user);
-  }, [me, user]);
+    resetUser();
+    if (user) setUser(user);
+  }, [user]);
   return children;
 }

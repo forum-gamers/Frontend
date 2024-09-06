@@ -27,27 +27,24 @@ import type { BaseQuery } from "@/interfaces/request";
 import SkeletonCard from "@/components/common/SkeletonCard";
 import type { FollowAttributes } from "@/interfaces/model";
 import useProfile from "../hooks/useProfile";
+import useTargetProfile from "../hooks/useTargetProfile";
 
 export interface FollowSectionProps {
-  followersCount: number;
-  followingCount: number;
   session: CustomSession | null;
   id: string;
 }
 
-function FollowSection({
-  followersCount,
-  followingCount,
-  session,
-  id,
-}: FollowSectionProps) {
+function FollowSection({ session, id }: FollowSectionProps) {
   const { me } = useProfile();
+  const { target } = useTargetProfile();
   const data = useMemo(
     () => ({
-      followersCount: me?.id === id ? me?.followersCount ?? 0 : followersCount,
-      followingCount: me?.id === id ? me?.followingCount ?? 0 : followingCount,
+      followersCount:
+        me?.id === id ? me?.followersCount ?? 0 : target?.followersCount ?? 0,
+      followingCount:
+        me?.id === id ? me?.followingCount ?? 0 : target?.followingCount ?? 0,
     }),
-    [id, me, session]
+    [id, me, session, target]
   );
   const [open, setOpen] = useState<boolean>(false);
   const [pending, startTransition] = useTransition();

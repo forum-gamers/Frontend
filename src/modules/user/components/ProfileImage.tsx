@@ -24,7 +24,10 @@ function ProfileImage({
   const { me } = useProfile();
 
   return (
-    <figure className={wrapperClass}>
+    <figure
+      className={wrapperClass}
+      style={{ height: h, width: w, overflow: "hidden" }}
+    >
       <PriorityImage
         height={h}
         width={w}

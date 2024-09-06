@@ -9,9 +9,9 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import type { FormAction } from "@/interfaces";
 import PasswordInput from "@/components/common/PasswordForm";
-import EmailForm from "@/components/common/EmailForm";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import GoogleLoginBtn from "./GoogleLoginBtn";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -95,14 +95,20 @@ export default function LoginForm() {
           Forgot password?
         </Link>
       </div>
-
+      <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300 dark:before:border-neutral-500 dark:after:border-neutral-500">
+        <p className="mx-4 mb-0 text-center text-sm dark:text-neutral-200">
+          OR
+        </p>
+      </div>
+      <div className="container mt-2 cursor-pointer align-middle mx-auto flex justify-center items-center">
+        <GoogleLoginBtn />
+      </div>
       <SubmitBtn
         type="submit"
         text="sign in"
         disabled={!identifier || !password}
         className="w-full flex justify-center items-center shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
       />
-
       <p className="text-sm text-center text-gray-500 dark:text-gray-400">
         Not a register yet?{" "}
         <Link

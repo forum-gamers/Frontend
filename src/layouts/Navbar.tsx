@@ -6,7 +6,8 @@ import ProfileImage from "@/modules/user/components/ProfileImage";
 import ThemeToggleBtn from "@/components/common/ThemeToggleBtn";
 import LazyLoadImg from "@/components/common/LazyLoadImage";
 import Link from "next/link";
-//TODO useoptmistic on follow btn & update state follow on user profle
+import LogoutBtn from "@/components/common/LogoutBtn";
+
 function Navbar() {
   const placeholders = [
     "Search for friends",
@@ -29,7 +30,7 @@ function Navbar() {
         </div>
         <Link href="/profile" prefetch passHref>
           <ProfileImage
-            wrapperClass="lg:hidden rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800"
+            wrapperClass="lg:hidden rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 flex justify-center items-center"
             imageClass="lg:hover:scale-105 rounded-full"
             h={50}
             w={50}
@@ -43,7 +44,7 @@ function Navbar() {
             <ThemeToggleBtn />
           </Suspense>
         </div>
-        {/* <ChatBubbleLeftEllipsisIcon className="md:hidden h-12 w-12" /> */}
+        <LogoutBtn />
       </div>
     </header>
   );

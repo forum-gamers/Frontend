@@ -1,19 +1,9 @@
 "use client";
 
-import {
-  memo,
-  useCallback,
-  useOptimistic,
-  useTransition,
-  type MouseEventHandler,
-} from "react";
+import { memo } from "react";
 import { Button } from "../ui/button";
-import useProfile from "@/modules/user/hooks/useProfile";
-import { follow, unFollow } from "@/modules/user/action";
 import { cn } from "@/lib/utils";
-import useRecomendation from "@/modules/user/hooks/useRecomendation";
-import usePost from "@/modules/home/hooks/usePost";
-import useComment from "@/modules/comment/hooks/useComment";
+import useFollowBtn from "@/hooks/useFollowBtn";
 
 export interface FollowBtnProps {
   isFollowed: boolean;
@@ -22,31 +12,10 @@ export interface FollowBtnProps {
 }
 
 function FollowBtn({ isFollowed, id, className = "" }: FollowBtnProps) {
-  const { updateFollow } = useRecomendation();
-  const { toogleFollow: postToggle } = usePost();
-  const { toggleFollow: commentToggle } = useComment();
-
-  const [pending, startTransition] = useTransition();
-
-  const [optimisticIsFollowed, optimisticIsFollowedHandler] = useOptimistic(
+  const { pending, optimisticIsFollowed, handleFollowBtn } = useFollowBtn({
+    id,
     isFollowed,
-    (newState: boolean) => newState
-  );
-  const { updateUserFollowing } = useProfile();
-
-  const handleFollowBtn: MouseEventHandler = useCallback(
-    (e) => {
-      startTransition(async () => {
-        optimisticIsFollowedHandler(!isFollowed);
-        isFollowed ? await unFollow(id) : await follow(id);
-        updateUserFollowing(isFollowed ? "decrement" : "increment");
-        updateFollow(id);
-        postToggle(id);
-        commentToggle(id);
-      });
-    },
-    [isFollowed, id]
-  );
+  });
 
   return (
     <Button

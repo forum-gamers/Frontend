@@ -19,6 +19,10 @@ const nextConfig = {
   compiler: {
     reactRemoveProperties: { properties: ["renderNode"] },
   },
+  env: {
+    GOOGLE_OAUTH_CLIENTID: process.env.GOOGLE_OAUTH_CLIENTID,
+    GOOGLE_OAUTH_CLIENTSECRET: process.env.GOOGLE_OAUTH_CLIENTSECRET,
+  },
 };
 
 export default nextConfig;

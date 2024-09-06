@@ -43,18 +43,11 @@ function UserRecomendationCard({
           className="font-display mb-2 font-semibold text-xs"
           itemProp="author"
         >
-          <Link href={`/profile/${id}`} prefetch>
-            {username}
-          </Link>
+          <Link href={`/profile/${id}`}>{username}</Link>
         </CardTitle>
         {!!source && source !== "non_followed" && (
           <CardDescription className="text-xs">
             {getSourceDescription(source, lang)}
-          </CardDescription>
-        )}
-        {isFollower && session?.user?.id !== id && (
-          <CardDescription className="text-xs block">
-            {lang === "id" ? "Mengikutimu" : "Followingyou"}
           </CardDescription>
         )}
       </hgroup>

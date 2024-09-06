@@ -8,6 +8,7 @@ import type {
   UserRecomendationAttributes,
 } from "@/interfaces/model";
 import request from "@/lib/axios";
+import { revalidatePath } from "next/cache";
 
 export const getMe = async () => {
   const {
@@ -90,6 +91,7 @@ export const follow = async (id: string) => {
   });
 
   if (status !== 200) return { error: message };
+  revalidatePath(`/user/${id}`);
 
   return { error: null };
 };
@@ -112,6 +114,7 @@ export const unFollow = async (id: string) => {
 
   if (status !== 200) return { error: message };
 
+  revalidatePath(`/user/${id}`);
   return { error: null };
 };
 

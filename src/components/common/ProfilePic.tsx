@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useMemo, useState } from "react";
+import { memo, Suspense, useMemo, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { GUEST } from "../images";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -87,7 +87,9 @@ function ProfilePicture({
                 </Link>
               )}
               {session?.user?.id !== id && (
-                <FollowBtn id={id} isFollowed={isFollowed} />
+                <Suspense>
+                  <FollowBtn id={id} isFollowed={isFollowed} />
+                </Suspense>
               )}
             </div>
             <hgroup className="antialiased font-sans">

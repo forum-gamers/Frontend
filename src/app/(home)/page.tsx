@@ -3,10 +3,12 @@ import { fetchPosts } from "@/modules/home/action";
 import { getServerSideSession } from "@/helpers/global";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
+import { revalidatePath } from "next/cache";
 
 export default async function Page() {
   const session = await getServerSideSession();
   if (!session) redirect("/login");
+  revalidatePath("/");
 
   const { data } = await fetchPosts({});
 

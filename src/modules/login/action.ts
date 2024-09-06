@@ -25,3 +25,25 @@ export const loginHandler: ServerAction<string> = async (formData) => {
     error: null,
   };
 };
+
+export const googleLogin = async (token: string) => {
+  const {
+    status,
+    data: { data, message },
+  } = await request.Mutation<string>({
+    url: "/user/google-login",
+    method: "POST",
+    headers: {
+      "google-token": token,
+    },
+  });
+
+  if (status !== 200) return { data: null, error: message };
+
+  revalidatePath("/login");
+
+  return {
+    data,
+    error: null,
+  };
+};

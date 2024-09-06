@@ -7,18 +7,14 @@ import AppThemeProvider from "@/providers/Theme";
 import type { ChildrenProps } from "@/interfaces";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import InitPage from "@/layouts/Init";
-import type { UserAttributes } from "@/interfaces/model";
 import LoadGPT from "@/components/scripts/gpt";
 import LoadGtm from "@/components/scripts/gtm";
 
 const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
-export interface RootLayoutProps extends ChildrenProps {
-  user: UserAttributes | null;
-}
+export interface RootLayoutProps extends ChildrenProps {}
 
-function RootLayout({ children, user }: RootLayoutProps) {
+function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="id-ID" suppressContentEditableWarning suppressHydrationWarning>
       <head>
@@ -44,7 +40,7 @@ function RootLayout({ children, user }: RootLayoutProps) {
                 speed={200}
                 shadow="0 0 10px #05b6d3,0 0 5px #45c6c0"
               />
-              <InitPage user={user}>{children}</InitPage>
+              {children}
             </AppThemeProvider>
           </SessionProvider>
         </Suspense>

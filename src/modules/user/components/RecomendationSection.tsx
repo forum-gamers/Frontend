@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import UserRecomendationCard from "./UserRecomendationCard";
 import type { UserRecomendationAttributes } from "@/interfaces/model";
-import { memo } from "react";
+import { memo, Suspense } from "react";
 import type { CustomSession } from "@/interfaces";
 import ListRecomendation from "./ListRecomendation";
 
@@ -18,7 +18,9 @@ function RecomendationSection({
     <section className="w-full" id="recomendation">
       <h4 className="mb-4 text-sm font-medium leading-none">You may know</h4>
       <ScrollArea className="h-72 w-full rounded-md flex items-center no-scrollbar scroll-smooth">
-        <ListRecomendation initialData={data} session={session} />
+        <Suspense>
+          <ListRecomendation initialData={data} session={session} />
+        </Suspense>
       </ScrollArea>
     </section>
   );

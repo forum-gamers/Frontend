@@ -28,14 +28,8 @@ export default async function Page({
 
   return (
     <User
-      id={data.id}
       session={session}
-      followersCount={data.followersCount}
-      followingCount={data.followingCount}
-      username={data.username}
-      imageUrl={data.imageUrl}
-      backgroundUrl={data.backgroundImageUrl}
-      bio={data.bio}
+      user={data}
       tabs={USER_TAB.map((el) => ({
         ...el,
         href: el.href.replace("[USER_ID]", data.id),

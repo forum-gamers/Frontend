@@ -60,7 +60,9 @@ export default function FollowList({
                     ?.imageUrl ?? GUEST
                 }
                 session={session}
-                isFollower
+                isFollower={
+                  type === "following" ? true : el?.isFollowed ?? false
+                }
               />
             </div>
             <div ref={ref}></div>

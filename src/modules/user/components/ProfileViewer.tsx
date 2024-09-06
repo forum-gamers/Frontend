@@ -21,11 +21,11 @@ function ProfileViewer() {
         <ProfileImage
           h={80}
           w={80}
-          imageClass="lg:hover:scale-105 rounded-full"
-          wrapperClass="-mt-11 rounded-full border-2 border-white shadow-md dark:border-neutral-800"
+          imageClass="lg:hover:scale-105 rounded-full overflow-hidden"
+          wrapperClass="-mt-11 rounded-full border-2 border-white shadow-md dark:border-neutral-800 flex justify-center items-center"
         />
         <hgroup className="mt-1 flex items-center gap-2 justify-center">
-          <UsernameViewer className="whitespace-nowrap text-lg font-medium lg:text-xl" />
+          <UsernameViewer className="whitespace-nowrap text-lg text-center font-medium lg:text-xl" />
         </hgroup>
       </Link>
     </div>
