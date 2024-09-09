@@ -9,7 +9,6 @@ import { registerHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
 import PasswordInput from "@/components/common/PasswordForm";
-import { signIn } from "next-auth/react";
 import EmailForm from "@/components/common/EmailForm";
 
 export default function RegisterForm() {
@@ -36,11 +35,7 @@ export default function RegisterForm() {
     }
 
     if (data) {
-      await signIn("credentials", {
-        access_token: data.token,
-        redirect: false,
-      });
-      router.push("/");
+      router.push("/login");
       return;
     }
 

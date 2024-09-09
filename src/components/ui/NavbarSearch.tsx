@@ -29,6 +29,7 @@ import usePlaceHolder from "@/hooks/usePlaceholder";
 import useCanvaAnimation from "@/hooks/useCanvaAnimation";
 import type { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import AnimateParagraph from "../common/AnimateParagraph";
+import useProfile from "@/modules/user/hooks/useProfile";
 
 export interface PlaceholdersAndVanishInputProps
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -45,6 +46,7 @@ export default function PlaceholdersAndVanishInput({
   className,
   ...rest
 }: PlaceholdersAndVanishInputProps) {
+  const { me } = useProfile();
   const params = useSearchParams();
   const { replace, push } = useRouter();
   const pathname = usePathname() as string;
@@ -118,6 +120,7 @@ export default function PlaceholdersAndVanishInput({
             "w-full relative text-sm sm:text-base z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-20",
             animating && "text-transparent dark:text-transparent"
           )}
+          disabled={!me?.isVerified}
         />
 
         <button
