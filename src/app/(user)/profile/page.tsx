@@ -33,3 +33,5 @@ export default async function Page() {
     </User>
   );
 }
+
+export const dynamic = "force-dynamic";
