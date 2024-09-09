@@ -1,6 +1,4 @@
-import PriorityImage from "@/components/common/PriorityImage";
 import { memo, Suspense } from "react";
-import { BACKDROP, GUEST } from "@/components/images";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import type { ChildrenProps, CustomSession, Lang } from "@/interfaces";
 import TruncateCardText from "@/components/common/TruncateCardText";
@@ -11,6 +9,10 @@ import FollowBtn from "@/components/common/FollowBtn";
 import UpdateBio from "./components/UpdateBio";
 import Init from "./components/Init";
 import type { UserAttributes } from "@/interfaces/model";
+import EditableProfileImage from "./components/EditableProfileImage";
+import EditableCoverImage from "./components/EditableCoverImage";
+import PriorityImage from "@/components/common/PriorityImage";
+import { BACKDROP, GUEST } from "@/components/images";
 
 export interface UserPageProps extends ChildrenProps {
   lang?: Lang;
@@ -38,23 +40,35 @@ function UserPage({
       <BackBtn url="/" />
       <header className="w-full rounded-md bg-white dark:bg-dark-theme-500">
         <div className="w-full">
-          <PriorityImage
-            width={450}
-            height={150}
-            alt="banner"
-            src={backgroundImageUrl || BACKDROP}
-            className="w-full rounded-md"
-          />
+          {session?.user?.id !== id ? (
+            <PriorityImage
+              width={450}
+              height={150}
+              alt="banner"
+              src={backgroundImageUrl || BACKDROP}
+              className="w-full rounded-md"
+            />
+          ) : (
+            <Suspense>
+              <EditableCoverImage />
+            </Suspense>
+          )}
           <div className="flex justify-between items-center -mt-10 px-5">
-            <figure className="rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 flex justify-center items-center">
-              <PriorityImage
-                className="lg:hover:scale-105 rounded-full"
-                width={100}
-                height={100}
-                alt={`${username} image`}
-                src={imageUrl || GUEST}
-              />
-            </figure>
+            {session?.user?.id !== id ? (
+              <figure className="rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 flex justify-center items-center">
+                <PriorityImage
+                  className="lg:hover:scale-105 rounded-full"
+                  width={100}
+                  height={100}
+                  alt={`${username} image`}
+                  src={imageUrl || GUEST}
+                />
+              </figure>
+            ) : (
+              <Suspense>
+                <EditableProfileImage />
+              </Suspense>
+            )}
             {session?.user?.id !== id && (
               <Suspense>
                 <FollowBtn

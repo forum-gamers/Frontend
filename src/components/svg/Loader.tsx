@@ -1,9 +1,11 @@
-import { memo } from "react";
+import { cn } from "@/lib/utils";
+import { memo, type SVGProps } from "react";
 
-function LoaderSvg() {
+function LoaderSvg({ className, ...rest }: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      className="absolute w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+      {...rest}
+      className={cn("absolute w-5 h-5 text-white animate-spin", className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

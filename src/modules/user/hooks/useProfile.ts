@@ -12,6 +12,7 @@ export interface InitialAction {
   updateUserFollowing: (props: Counter) => void;
   updateUserFollower: (props: Counter) => void;
   updateBio: (bio: string) => void;
+  updateImage: (type: "imageUrl" | "backgroundImageUrl", src: string) => void;
 }
 
 const useProfile = create<InitialState & InitialAction>((set) => ({
@@ -43,6 +44,12 @@ const useProfile = create<InitialState & InitialAction>((set) => ({
 
   updateBio: (bio) =>
     set((prev) => ({ ...prev, me: prev?.me ? { ...prev.me, bio } : null })),
+
+  updateImage: (type, src) =>
+    set((prev) => ({
+      ...prev,
+      me: prev?.me ? { ...prev.me, [type]: src } : null,
+    })),
 }));
 
 export default useProfile;

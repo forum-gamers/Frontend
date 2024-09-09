@@ -55,7 +55,9 @@ function UpdatableBio({ bio, max = 60 }: UpdateBioProps) {
 
       if (e.key === "Enter" && !e.shiftKey)
         startTransition(async () => {
-          const { error } = await updateBio(text);
+          const formdata = new FormData();
+          formdata.append("bio", text);
+          const { error } = await updateBio(formdata);
           if (error) {
             swalError(error || "Unexpected error");
             return;

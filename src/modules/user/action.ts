@@ -1,7 +1,7 @@
 "use server";
 
 import { getServerSideSession } from "@/helpers/global";
-import type { BasePagination } from "@/interfaces";
+import type { BasePagination, ServerAction } from "@/interfaces";
 import type {
   FollowAttributes,
   UserAttributes,
@@ -228,7 +228,7 @@ export const getUserFollowing = async (
   return { error: null, data };
 };
 
-export const updateBio = async (bio: string) => {
+export const updateBio: ServerAction = async (formData) => {
   const {
     data: { message },
     status,
@@ -243,10 +243,32 @@ export const updateBio = async (bio: string) => {
       }`,
     },
     data: {
-      bio,
+      bio: formData.get("bio"),
     },
   });
   if (status !== 200) return { error: message, data: null };
 
   return { data: null, error: null };
+};
+
+export const updateImg: ServerAction = async (formData) => {
+  const {
+    data: { message, data },
+    status,
+  } = await request.Mutation<string>({
+    method: "PATCH",
+    url: "/user/image",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    data: formData,
+    params: { field: formData.get("field") },
+  });
+  if (status !== 200) return { error: message, data: null };
+
+  return { data, error: null };
 };
