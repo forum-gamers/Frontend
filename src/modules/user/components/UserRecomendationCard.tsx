@@ -14,7 +14,9 @@ export interface UserRecomendationCardProps {
   source?: UserRecomendationSource;
   isFollower: boolean;
   lang?: Lang;
+  createdAt: Date | string;
   session?: CustomSession | null;
+  backgroundUrl?: string;
 }
 
 function UserRecomendationCard({
@@ -26,6 +28,8 @@ function UserRecomendationCard({
   source,
   lang = "id",
   session,
+  createdAt,
+  backgroundUrl,
 }: UserRecomendationCardProps) {
   return (
     <Card className="flex bg-white dark:bg-dark-theme-500 w-[90%] overflow-x-hidden px-2 items-center justify-start flex-row space-x-6 m-auto max-h-16 h-16 border rounded-lg">
@@ -37,6 +41,8 @@ function UserRecomendationCard({
         id={id}
         session={session}
         isFollowed={isFollower}
+        createdAt={createdAt}
+        backgroundUrl={backgroundUrl}
       />
       <hgroup className="antialiased flex flex-col w-full">
         <CardTitle

@@ -98,6 +98,8 @@ export interface PostResponse {
   userBio: string;
   communityId?: number | null;
   isFollowed: boolean;
+  userBackgroundImageUrl?: string;
+  userCreatedAt: Date | string;
 }
 
 export interface CommentResponse {
@@ -112,6 +114,8 @@ export interface CommentResponse {
   bio?: string;
   replies: ReplyResponse[];
   isFollowed: boolean;
+  backgroundImageUrl?: string;
+  userCreatedAt: Date | string;
 }
 
 export interface ReplyResponse {
@@ -126,6 +130,8 @@ export interface ReplyResponse {
   imageUrl?: string;
   bio?: string;
   isFollowed: boolean;
+  backgroundImageUrl?: string;
+  userCreatedAt: Date | string;
 }
 
 export interface UserAttributes {
@@ -152,6 +158,8 @@ export interface UserRecomendationAttributes {
   userId: string;
   followerStatus: "non-follower" | "follower";
   source: UserRecomendationSource;
+  userBackgroundImageUrl?: string;
+  userCreatedAt: Date | string;
 }
 
 export type UserRecomendationSource =
@@ -174,6 +182,8 @@ export interface FollowAttributes {
 export interface UserFollowAttributes {
   id: string;
   username: string;
-  imageUrl: string;
+  imageUrl?: string;
   bio: string;
+  backgroundUrl?: string;
+  createdAt: Date | string;
 }

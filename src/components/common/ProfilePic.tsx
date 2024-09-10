@@ -2,13 +2,16 @@
 
 import { memo, Suspense, useMemo, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { GUEST } from "../images";
+import { BACKDROP, GUEST } from "../images";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import Link from "next/link";
 import TruncateCardText from "./TruncateCardText";
 import type { CustomSession } from "@/interfaces";
 import useMount from "@/hooks/useMounted";
 import FollowBtn from "./FollowBtn";
+import LazyLoadImg from "./LazyLoadImage";
+import {} from "date-fns";
+import Timestamp from "./Timestamp";
 
 export interface ProfilePicProps {
   src?: string;
@@ -18,6 +21,8 @@ export interface ProfilePicProps {
   bio?: string;
   session?: CustomSession | null;
   isFollowed: boolean;
+  backgroundUrl?: string;
+  createdAt: Date | string;
 }
 
 const AvatarPic = memo(
@@ -27,7 +32,7 @@ const AvatarPic = memo(
     username,
   }: Omit<
     ProfilePicProps,
-    "bio" | "id" | "isFollowed" | "toggleFollow" | "postId"
+    "bio" | "id" | "isFollowed" | "toggleFollow" | "postId" | "createdAt"
   >) => {
     const initials = useMemo(
       () =>
@@ -56,6 +61,8 @@ function ProfilePicture({
   bio,
   session,
   isFollowed,
+  backgroundUrl,
+  createdAt,
 }: ProfilePicProps) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -75,11 +82,20 @@ function ProfilePicture({
         <AvatarPic username={username} src={src} alt={alt} />
       </PopoverTrigger>
       {!!session && session?.user?.id !== id && (
-        <PopoverContent {...trigger} className="dark:bg-dark-theme-600">
+        <PopoverContent {...trigger} asChild>
           <article
             data-popover="profile-info-popover"
-            className="transition-all duration-200 max-w-[24rem] whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-background p-4 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none dark:bg-dark-theme-500"
+            className="transition-all duration-200 max-w-[24rem] sm:max-w-[425px] p-0 whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-background font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none dark:bg-dark-theme-500"
           >
+            <header className="relative h-36">
+              <LazyLoadImg
+                src={backgroundUrl || BACKDROP}
+                alt="Profile banner"
+                className="object-cover"
+                width={385}
+                height={200}
+              />
+            </header>
             <div className="flex items-center justify-between gap-4 mb-2">
               {mount && (
                 <Link href={`/profile/${id}`}>
@@ -92,15 +108,25 @@ function ProfilePicture({
                 </Suspense>
               )}
             </div>
-            <hgroup className="antialiased font-sans">
-              <h6 className="flex items-center gap-2 mb-2 text-base font-medium leading-relaxed tracking-normal text-blue-gray-900">
+            <hgroup className="antialiased font-sans space-y-2">
+              <h2 className="flex items-center mt-4 gap-2 mb-2 font-medium leading-relaxed tracking-normal text-neutral-900 dark:text-neutral-300 text-sm text-muted-foreground">
                 <span>{username}</span>
-              </h6>
+              </h2>
+
+              <div className="mt-4 space-y-1">
+                <h3 className="font-semibold">Member Since</h3>
+                <Timestamp
+                  as="h6"
+                  timestamp={createdAt}
+                  className="flex items-center gap-2 mb-2 font-medium leading-relaxed tracking-normal text-neutral-900 dark:text-neutral-300 text-sm text-muted-foreground"
+                />
+              </div>
               {!!bio && (
                 <TruncateCardText
                   text={bio}
                   max={30}
-                  className="block text-sm font-normal leading-normal text-neutral-900 dark:text-neutral-300"
+                  hideBtn
+                  className="block font-normal mt-4 leading-normal text-neutral-900 dark:text-neutral-300 text-sm text-muted-foreground"
                 />
               )}
             </hgroup>

@@ -37,6 +37,8 @@ export default function ListRecomendation({
             key={el.userId}
             isFollower={false}
             session={session}
+            createdAt={el.userCreatedAt}
+            backgroundUrl={el.userBackgroundImageUrl}
           />
         ))}
     </div>

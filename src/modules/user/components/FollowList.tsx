@@ -8,7 +8,7 @@ import useScroll from "@/hooks/useScroll";
 import useFollow from "../hooks/useFollow";
 import SkeletonCard from "@/components/common/SkeletonCard";
 import { useEffect } from "react";
-import { GUEST } from "@/components/images";
+import { BACKDROP, GUEST } from "@/components/images";
 
 export interface FollowListProps {
   session: CustomSession | null;
@@ -57,11 +57,19 @@ export default function FollowList({
                 }
                 imageUrl={
                   el?.[type === "following" ? "followed" : "follower"]
-                    ?.imageUrl ?? GUEST
+                    ?.imageUrl ?? GUEST.src
                 }
                 session={session}
                 isFollower={
                   type === "following" ? true : el?.isFollowed ?? false
+                }
+                backgroundUrl={
+                  el?.[type === "following" ? "followed" : "follower"]
+                    ?.backgroundUrl ?? BACKDROP.src
+                }
+                createdAt={
+                  el?.[type === "following" ? "followed" : "follower"]
+                    ?.createdAt ?? new Date()
                 }
               />
             </div>

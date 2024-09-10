@@ -32,6 +32,8 @@ function CommentCard({
     createdAt,
     replies,
     isFollowed,
+    userCreatedAt,
+    backgroundImageUrl,
   },
   session,
 }: CommentCardProps) {
@@ -54,6 +56,8 @@ function CommentCard({
             bio={bio}
             session={session}
             isFollowed={isFollowed}
+            createdAt={userCreatedAt}
+            backgroundUrl={backgroundImageUrl}
           />
           <hgroup className="antialiased w-full text-xs">
             <p>{username}</p>

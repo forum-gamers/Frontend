@@ -21,7 +21,7 @@ function ProfileViewer() {
         <ProfileImage
           h={80}
           w={80}
-          imageClass="lg:hover:scale-105 rounded-full overflow-hidden"
+          imageClass="lg:hover:scale-105 rounded-full overflow-hidden object-center object-cover"
           wrapperClass="-mt-11 rounded-full border-2 border-white shadow-md dark:border-neutral-800 flex justify-center items-center"
         />
         <hgroup className="mt-1 flex items-center gap-2 justify-center">

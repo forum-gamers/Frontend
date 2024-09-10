@@ -7,6 +7,7 @@ import SkeletonCard from "@/components/common/SkeletonCard";
 import usePost from "../hooks/usePost";
 import { fetchPosts } from "../action";
 import type { PostResponse } from "@/interfaces/model";
+import NoDataState from "@/components/common/NoDataState";
 
 export interface PostListProps {
   session: CustomSession | null;
@@ -20,7 +21,7 @@ export default function PostList({ session }: PostListProps) {
 
   return (
     <div className="overflow-y-scroll space-y-6 no-scrollbar mx-auto max-w-lg">
-      {!!datas?.length &&
+      {!!datas?.length ? (
         datas.map((data, idx) => (
           <PostCard
             session={session}
@@ -28,7 +29,10 @@ export default function PostList({ session }: PostListProps) {
             data={data}
             dataAos={idx % 2 === 0 ? "fade-right" : "fade-left"}
           />
-        ))}
+        ))
+      ) : (
+        <NoDataState />
+      )}
       <div ref={ref}></div>
       {pending && <SkeletonCard />}
     </div>

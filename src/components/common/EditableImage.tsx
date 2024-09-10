@@ -48,7 +48,7 @@ function EditableImage({
 
     const file = e.target.files[0];
     const formData = new FormData(formRef.current);
-    formData.forEach((value, key) => console.log({ [key]: value }));
+
     formData.append("file", file);
     formRef.current.requestSubmit();
   };
@@ -62,7 +62,7 @@ function EditableImage({
         alt={alt}
         width={w}
         height={h}
-        className={imageClassName}
+        className={cn(imageClassName, "max-w-full max-h-full object-cover")}
       />
       <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         {disable ? (

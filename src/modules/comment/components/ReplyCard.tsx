@@ -12,7 +12,17 @@ export interface ReplyCardProps {
 }
 
 function ReplyCard({
-  data: { imageUrl, username, bio, userId, createdAt, text, isFollowed, id },
+  data: {
+    imageUrl,
+    username,
+    bio,
+    userId,
+    createdAt,
+    text,
+    isFollowed,
+    userCreatedAt,
+    backgroundImageUrl,
+  },
   session,
 }: ReplyCardProps) {
   return (
@@ -25,6 +35,8 @@ function ReplyCard({
           id={userId}
           bio={bio}
           session={session}
+          createdAt={userCreatedAt}
+          backgroundUrl={backgroundImageUrl}
           isFollowed={isFollowed}
         />
         <hgroup className="antialiased w-full text-xs">

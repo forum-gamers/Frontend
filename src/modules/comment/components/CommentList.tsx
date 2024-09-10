@@ -4,6 +4,7 @@ import SkeletonCard from "@/components/common/SkeletonCard";
 import useScrollComment from "../hooks/useScrollComment";
 import CommentCard from "./CommentCard";
 import type { CustomSession } from "@/interfaces";
+import NoDataState from "@/components/common/NoDataState";
 
 export interface CommentListProps {
   postId: number;
@@ -15,10 +16,13 @@ export default function CommentList({ postId, session }: CommentListProps) {
 
   return (
     <div className="overflow-y-scroll space-y-6 no-scrollbar">
-      {!!datas?.length &&
+      {!!datas?.length ? (
         datas.map((el) => (
           <CommentCard session={session} key={el.id} data={el} />
-        ))}
+        ))
+      ) : (
+        <NoDataState />
+      )}
       <div ref={ref}></div>
       {pending && <SkeletonCard />}
     </div>

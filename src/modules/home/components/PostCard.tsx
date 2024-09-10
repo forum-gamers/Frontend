@@ -62,6 +62,8 @@ function PostCard({
     editedText,
     countBookmark,
     isFollowed,
+    userCreatedAt,
+    userBackgroundImageUrl,
   },
   session,
   as = "card",
@@ -118,6 +120,8 @@ function PostCard({
     >
       <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
         <ProfilePic
+          createdAt={userCreatedAt}
+          backgroundUrl={userBackgroundImageUrl}
           isFollowed={isFollowed}
           bio={userBio}
           src={userImageUrl}
