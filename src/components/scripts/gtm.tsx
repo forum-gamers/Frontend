@@ -4,6 +4,7 @@ export default function LoadGtm() {
   return (
     <Script
       id="gtm-script"
+      strategy="afterInteractive"
       dangerouslySetInnerHTML={{
         __html: `
           window.googletag = window.googletag || {cmd: []};

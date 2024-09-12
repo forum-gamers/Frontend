@@ -8,7 +8,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { useCallback, useMemo, useState, type ChangeEventHandler } from "react";
+import {
+  memo,
+  useCallback,
+  useMemo,
+  useState,
+  type ChangeEventHandler,
+} from "react";
 import { WindowIcon } from "@/components/icons/HeroIconsOutline";
 import type { FormAction } from "@/interfaces";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,8 +33,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
+import ChevronDown from "@/components/svg/ChevronDown";
 
-export default function CreatePostForm() {
+function CreatePostForm() {
   const privacyValues = useMemo(
     () => ["public", "private", "friend-only"] as const,
     []
@@ -51,6 +58,7 @@ export default function CreatePostForm() {
 
     const { error, data } = await createPost(formData);
     if (error) {
+      setOpen(false);
       swalError(error || "unexpected error");
       return;
     }
@@ -88,11 +96,11 @@ export default function CreatePostForm() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         asChild
-        className="flex items-center cursor-pointer hover:opacity-85 transition-opacity duration-100 dark:hover:opacity-60 bg-white dark:bg-dark-theme-200 justify-between p-4 rounded-lg bg-gradient-to-br from-white to-light-theme-200 dark:bg-gradient-to-br dark:from-dark-theme-200 dark:to-dark-theme-500"
+        className="flex items-center cursor-pointer hover:opacity-85 transition-opacity duration-100 dark:hover:opacity-60 bg-white dark:bg-[#202225] justify-between p-4 rounded-lg"
       >
         <div
           className={cn(
-            "h-auto flex-row shadow-blue-300 dark:shadow-blue-900 shadow-sm bg-white w-full max-w-3xl dark:bg-dark-theme-200  bg-gradient-to-br from-white to-light-theme-200 dark:bg-gradient-to-br dark:from-dark-theme-200 dark:to-dark-theme-500 border-4 mb-4 justify-between items-center px-8 py-4 gap-4 rounded-lg",
+            "h-auto flex-row shadow-white dark:shadow-black shadow-sm bg-white dark:bg-[#202225] w-full max-w-3xl  border-4 mb-4 justify-between items-center px-8 py-4 gap-4 rounded-lg",
             "inline-flex"
           )}
         >
@@ -105,7 +113,7 @@ export default function CreatePostForm() {
           </Button>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-dark-theme-600">
+      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-[#202225]">
         <DialogHeader>
           <p className="font-bold text-lg">Create your post</p>
         </DialogHeader>
@@ -122,7 +130,7 @@ export default function CreatePostForm() {
               spellCheck
             />
           </div>
-          <div className="flex gap-4 items-center justify-between bg-white dark:bg-dark-theme-600">
+          <div className="flex gap-4 items-center justify-between bg-white dark:bg-[#202225]">
             <div className="flex items-center space-x-2">
               <Switch
                 id="comments"
@@ -130,6 +138,7 @@ export default function CreatePostForm() {
                 onCheckedChange={onCommentChange}
                 checked={allowComment}
                 name="allowComment"
+                value={allowComment.toString()}
               />{" "}
               <Label
                 htmlFor="comments"
@@ -142,7 +151,7 @@ export default function CreatePostForm() {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="flex-1">
                   <span className="capitalize">{privacy}</span>
-                  <ChevronDownIcon className="w-4 h-4" />
+                  <ChevronDown className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -194,21 +203,5 @@ export default function CreatePostForm() {
     </Dialog>
   );
 }
-function ChevronDownIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m6 9 6 6 6-6" />
-    </svg>
-  );
-}
+
+export default memo(CreatePostForm);

@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "@/components/icons/HeroIconsOutline";
 import { useCallback } from "react";
 import useMount from "@/hooks/useMounted";
+import { cn } from "@/lib/utils";
 
 export default function ThemeToggleBtn() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -22,17 +23,20 @@ export default function ThemeToggleBtn() {
       id="dark-mode-switcher"
       aria-label="Toggle Theme"
       onClick={toggleTheme}
-      className={`rounded-xl p-2 ${
-        resolvedTheme === "light" ? "bg-white" : "bg-neutral-800"
-      }`}
+      className={cn(
+        resolvedTheme === "light" ? "bg-white" : "bg-neutral-800",
+        "rounded-xl p-2",
+        "border shadow-sm shadow-gray-200 top-32 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100",
+        "hover:cursor-pointer"
+      )}
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.5 }}
     >
       {resolvedTheme === "light" ? (
-        <SunIcon className="h-4 w-4" />
+        <SunIcon className="h-4 w-4 hover:opacity-75" />
       ) : (
-        <MoonIcon className="h-4 w-4" />
+        <MoonIcon className="h-4 w-4 hover:opacity-75" />
       )}
     </motion.button>
   );

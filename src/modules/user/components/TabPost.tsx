@@ -16,7 +16,7 @@ export interface TabPostProps {
 
 function TabPost({ activeTab, tabs }: TabPostProps) {
   return (
-    <CardHeader className="flex flex-row h-4 items-center justify-evenly gap-4 bg-white dark:bg-dark-theme-500 rounded-sm">
+    <CardHeader className="flex flex-row h-4 items-center border shadow-md justify-evenly gap-4 bg-white dark:bg-[#202225] rounded-sm">
       {tabs.map((tab) => (
         <Button
           asChild

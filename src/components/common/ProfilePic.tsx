@@ -10,7 +10,6 @@ import type { CustomSession } from "@/interfaces";
 import useMount from "@/hooks/useMounted";
 import FollowBtn from "./FollowBtn";
 import LazyLoadImg from "./LazyLoadImage";
-import {} from "date-fns";
 import Timestamp from "./Timestamp";
 
 export interface ProfilePicProps {
@@ -45,7 +44,11 @@ const AvatarPic = memo(
 
     return (
       <Avatar>
-        <AvatarImage src={src || GUEST.src} alt={alt} />
+        <AvatarImage
+          className="rounded-full bg-white"
+          src={src || GUEST.src}
+          alt={alt}
+        />
         <AvatarFallback>{initials}</AvatarFallback>
       </Avatar>
     );
@@ -85,7 +88,7 @@ function ProfilePicture({
         <PopoverContent {...trigger} asChild>
           <article
             data-popover="profile-info-popover"
-            className="transition-all duration-200 max-w-[24rem] sm:max-w-[425px] p-0 whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-background font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none dark:bg-dark-theme-500"
+            className="transition-all duration-200 max-w-[24rem] sm:max-w-[425px] p-0 whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-background font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none bg-white dark:bg-gray-800"
           >
             <header className="relative h-36">
               <LazyLoadImg

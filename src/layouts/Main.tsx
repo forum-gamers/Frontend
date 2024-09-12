@@ -17,17 +17,15 @@ function MainLayout({ children, rightSection, user }: MainLayoutProps) {
       <Navbar />
       <div className="flex flex-col w-full max-w-7xl mx-auto gap-8">
         <section className="flex mt-24 justify-between">
-          <Sidebar className="xl:w-1/5 sm:w-1/5 lg:w-1/6 fixed bg-light-theme-100 bg-gradient-to-r dark:bg-gradient-to-r dark:from-dark-theme-300 dark:to-dark-theme-500 from-light-theme-100 to-light-theme-200 dark:bg-dark-theme-300 left-4 shadow-blue-300 top-24 dark:shadow-blue-900 shadow-lg h-[75%] p-4 hidden lg:flex justify-start flex-col rounded-sm" />
+          <Sidebar className="sm:w-1/5 lg:w-[23%] xl:w-1/4 fixed bg-white dark:bg-[#202225] left-4 xl:left-8 shadow-gray-200 top-32 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100  shadow-lg h-[75%] p-4 hidden lg:flex justify-start flex-col rounded-lg" />
 
-          <InitPage user={user}>
-            <main className="w-full lg:flex-grow mx-auto p-4 max-w-xl xl:max-w-2xl bg-light-theme-100 dark:bg-dark-theme-300 shadow-md shadow-blue-300 top-24 dark:shadow-blue-900 rounded-sm">
-              {children}
-            </main>
-          </InitPage>
+          <main className="w-full lg:flex-grow mx-auto p-4 max-w-xl xl:max-w-2xl">
+            <InitPage user={user}>{children}</InitPage>
+          </main>
 
           <aside
             id="right-sidebar"
-            className="fixed shadow-blue-300 bg-light-theme-100 bg-gradient-to-r dark:bg-gradient-to-br dark:from-dark-theme-300 dark:to-dark-theme-500 from-light-theme-100 to-light-theme-200 dark:bg-dark-theme-300 dark:shadow-blue-900 top-24 right-4 xl:w-1/5 sm:w-1/5 lg:w-1/6 h-[75%] shadow-lg p-4 hidden lg:flex justify-start flex-col rounded-sm"
+            className="fixed bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100 top-32 right-4 xl:right-8 sm:w-1/5 lg:w-[23%] xl:w-1/4 h-[75%] shadow-lg p-4 hidden lg:flex justify-start flex-col rounded-lg"
           >
             {!!rightSection && rightSection}
           </aside>

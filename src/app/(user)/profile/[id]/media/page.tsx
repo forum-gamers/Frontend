@@ -66,7 +66,7 @@ export async function generateMetadata({
       index: true,
       follow: true,
     },
-    keywords: [data.username, ...data.bio.split(" ")],
+    keywords: [data.username, ...(data?.bio ?? "").split(" ")],
     creator: data.username,
     publisher: data.username,
   };

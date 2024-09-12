@@ -9,7 +9,7 @@ function Sidebar({ className, ...rest }: SidebarProps) {
   return (
     <aside {...rest} id="left-sidebar" className={className}>
       <section className="flex items-center h-64">
-        <div className="fixed w-full bg-white p-5 shadow-sm dark:border-b dark:border-neutral-800 dark:bg-dark lg:relative lg:border-none lg:!bg-transparent lg:p-0 xl:shadow-none pb-0">
+        <div className="fixed w-full bg-white dark:bg-gray-800 p-5 shadow-sm dark:border-b dark:border-neutral-800 dark:bg-dark lg:relative lg:border-none lg:!bg-transparent lg:p-0 xl:shadow-none pb-0">
           <div className="flex items-start justify-between lg:flex-col lg:space-y-4">
             <div className="flex w-full flex-grow gap-4 lg:flex-col lg:gap-0.5 flex-col items-start">
               <ProfileViewer />

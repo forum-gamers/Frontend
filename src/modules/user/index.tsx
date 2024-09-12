@@ -38,7 +38,7 @@ function UserPage({
     <>
       <Init target={user} session={session} />
       <BackBtn url="/" />
-      <header className="w-full rounded-md bg-white dark:bg-dark-theme-500">
+      <header className="w-full rounded-md bg-white dark:bg-[#202225]">
         <div className="w-full">
           {session?.user?.id !== id ? (
             <PriorityImage
@@ -82,14 +82,14 @@ function UserPage({
         </div>
         <hgroup className="flex flex-col w-full px-4 text-neutral-900 dark:text-neutral-300 h-8">
           <div className="flex justify-between items-start w-full">
-            <h2 className="px-8 text-center">{username}</h2>
+            <h2 className="px-2 text-center">{username}</h2>
             <Suspense>
               <FollowSection id={id} session={session} />
             </Suspense>
           </div>
         </hgroup>
       </header>
-      <Card className="w-full bg-white dark:bg-dark-theme-500">
+      <Card className="w-full bg-white dark:bg-[#202225]">
         {<CardHeader>{lang === "id" ? "Tentang" : "About"}</CardHeader>}
         <CardContent>
           {session?.user?.id !== id ? (
@@ -104,7 +104,7 @@ function UserPage({
         </CardContent>
       </Card>
       <Card
-        className="w-full bg-light-theme-100 dark:bg-dark-theme-300 !border-none"
+        className="w-full !border-none bg-gray-100 dark:bg-[#36393f] !shadow-none"
         id="post-section"
       >
         <TabPost tabs={tabs} activeTab={activeTab} />

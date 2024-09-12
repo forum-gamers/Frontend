@@ -39,7 +39,7 @@ function EditableProfile() {
       src={me?.imageUrl || GUEST}
       alt="profile"
       onAction={handleUpload}
-      imageClassName="lg:hover:scale-105 rounded-full"
+      imageClassName="lg:hover:scale-105 rounded-full mx-auto"
       w={100}
       h={100}
       name="file"

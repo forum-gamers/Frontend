@@ -24,9 +24,12 @@ function FollowBtn({ isFollowed, id, className = "" }: FollowBtnProps) {
       className={cn(
         "hover:cursor-pointer hover:scale-105 select-none rounded-lg py-2 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md",
         className,
-        "bg-light-theme-100 hover:bg-light-theme-200 dark:bg-dark-theme-300 hover:dark:bg-dark-theme-200",
+        optimisticIsFollowed
+          ? "bg-blue-300 hover:bg-blue-400"
+          : "bg-blue-500 hover:bg-blue-600",
         "transition-colors duration-100",
-        "shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        "shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none",
+        "z-30"
       )}
     >
       {optimisticIsFollowed ? "Unfollow" : "Follow"}

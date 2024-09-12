@@ -24,7 +24,10 @@ function RootLayout({ children }: RootLayoutProps) {
         <title>Forum Gamers</title>
       </head>
       <body
-        className={cn(font.variable, `bg-background dark:bg-dark-theme-600`)}
+        className={cn(
+          font.variable,
+          `bg-gray-100 dark:bg-[#36393f] transition-colors duration-150`
+        )}
       >
         <Suspense>
           <SessionProvider>

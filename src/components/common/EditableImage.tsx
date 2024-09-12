@@ -64,7 +64,7 @@ function EditableImage({
         height={h}
         className={cn(imageClassName, "max-w-full max-h-full object-cover")}
       />
-      <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="absolute inset-0 bg-black/50 p-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         {disable ? (
           <Loader />
         ) : (

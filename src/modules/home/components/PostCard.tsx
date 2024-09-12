@@ -115,8 +115,8 @@ function PostCard({
   return (
     <Card
       data-aos={dataAos}
-      data-aos-duration="500"
-      className="bg-white dark:bg-dark-theme-500"
+      data-aos-duration="300"
+      className="bg-white dark:bg-[#202225] shadow-md shadow-gray-200 top-32 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100"
     >
       <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
         <ProfilePic
@@ -172,7 +172,10 @@ function PostCard({
             <TruncateCardText text={postText} />
           ))}
         {editedText && (
-          <Badge className="h-4 w-[3.75rem]" variant="outline">
+          <Badge
+            className="h-5 w-[3.75rem] flex items-center justify-center"
+            variant="outline"
+          >
             <span className="text-xs p-0">(edited)</span>
           </Badge>
         )}
