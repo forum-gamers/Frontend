@@ -5,6 +5,7 @@ import type { UserRecomendationSource } from "@/interfaces/model";
 import type { CustomSession, Lang } from "@/interfaces";
 import { memo } from "react";
 import ProfilePic from "@/components/common/ProfilePic";
+import { cn } from "@/lib/utils";
 
 export interface UserRecomendationCardProps {
   username: string;
@@ -32,7 +33,14 @@ function UserRecomendationCard({
   backgroundUrl,
 }: UserRecomendationCardProps) {
   return (
-    <Card className="flex bg-white dark:bg-[#202225] dark:border-black w-[90%] overflow-x-hidden px-2 items-center justify-start flex-row space-x-6 m-auto max-h-16 h-16 border rounded-lg">
+    <Card
+      className={cn(
+        "flex bg-white dark:bg-[#202225] dark:border-black w-[90%] overflow-x-hidden px-2 items-center justify-start flex-row space-x-6 m-auto max-h-16 h-16 border rounded-lg",
+        "shadow-lg stroke-slate-50 dark:stroke-slate-800 shadow-gray-100 dark:shadow-gray-900",
+        "hover:shadow-gray-200 dark:hover:shadow-slate-950 hover:opacity-85 hover:scale-[102.5%]",
+        "transition-all duration-100"
+      )}
+    >
       <ProfilePic
         username={username}
         bio={bio}

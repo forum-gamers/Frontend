@@ -30,8 +30,8 @@ function Navbar() {
         </div>
         <Link href="/profile" prefetch passHref>
           <ProfileImage
-            wrapperClass="lg:hidden rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 flex justify-center items-center rounded-lg shadow-md p-6 "
-            imageClass="lg:hover:scale-105 rounded-full mx-auto mb-4 object-cover object-center"
+            wrapperClass="lg:hidden !rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 shadow-md"
+            imageClass="lg:hover:scale-105 rounded-full mt-2 mx-auto object-cover object-center"
             h={50}
             w={50}
           />

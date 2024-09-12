@@ -2,8 +2,8 @@
 
 import { memo, useState, type ChangeEventHandler } from "react";
 import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import PasswordToggleBtn from "./PasswordToogleBtn";
+import AnimateInput from "./AnimateInput";
 
 export interface PasswordInputProps {
   required?: boolean;
@@ -47,7 +47,7 @@ function PasswordInput({
         {label}
       </Label>
       <div className="relative">
-        <Input
+        <AnimateInput
           pattern={pattern}
           title={title}
           id={id}

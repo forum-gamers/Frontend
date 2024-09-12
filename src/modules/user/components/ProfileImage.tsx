@@ -6,6 +6,7 @@ import { GUEST } from "@/components/images";
 import Link from "next/link";
 import { memo } from "react";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export interface ProfileImageProps {
   wrapperClass?: string;
@@ -31,7 +32,7 @@ function ProfileImage({
       <PriorityImage
         height={h}
         width={w}
-        className={imageClass}
+        className={cn(imageClass, "object-cover")}
         alt="profile"
         src={me?.imageUrl || GUEST}
         onClick={() => prefetch("/profile")}

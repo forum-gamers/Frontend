@@ -32,8 +32,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Switch } from "@/components/ui/switch";
 import ChevronDown from "@/components/svg/ChevronDown";
+import { Input } from "@/components/ui/input";
 
 function CreatePostForm() {
   const privacyValues = useMemo(
@@ -94,10 +94,7 @@ function CreatePostForm() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger
-        asChild
-        className="flex items-center cursor-pointer hover:opacity-85 transition-opacity duration-100 dark:hover:opacity-60 bg-white dark:bg-[#202225] justify-between p-4 rounded-lg"
-      >
+      <DialogTrigger asChild>
         <div
           className={cn(
             "h-auto flex-row shadow-white dark:shadow-black shadow-sm bg-white dark:bg-[#202225] w-full max-w-3xl  border-4 mb-4 justify-between items-center px-8 py-4 gap-4 rounded-lg",
@@ -123,43 +120,70 @@ function CreatePostForm() {
             <Textarea
               id="text"
               placeholder="Write your post..."
-              className="min-h-[150px] p-3 h-60 border outline-none"
+              rows={6}
+              className={cn(
+                "min-h-[150px] p-3 h-60 outline-none w-full px-3 py-2 focus:ring-opacity-50 transition-all duration-200 ease-in-out",
+                "text-white bg-gray-100 dark:bg-gray-600 rounded-md border border-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-500",
+                "shadow-sm stroke-slate-50 dark:stroke-slate-900 shadow-white dark:shadow-gray-900"
+              )}
               onChange={onChangeHandler}
               value={text}
               name="text"
               spellCheck
             />
           </div>
-          <div className="flex gap-4 items-center justify-between bg-white dark:bg-[#202225]">
+          <div className="flex gap-4 items-center justify-between">
             <div className="flex items-center space-x-2">
-              <Switch
-                id="comments"
-                aria-label="Allow comments"
-                onCheckedChange={onCommentChange}
-                checked={allowComment}
-                name="allowComment"
-                value={allowComment.toString()}
-              />{" "}
               <Label
                 htmlFor="comments"
-                className="flex items-center gap-2 text-sm font-medium"
+                className="flex items-center gap-2 text-sm font-medium cursor-pointer"
               >
+                <div className="relative">
+                  <Input
+                    type="checkbox"
+                    className="sr-only"
+                    checked={allowComment}
+                    onChange={onCommentChange}
+                    value={allowComment.toString()}
+                    id="comments"
+                    name="allowComment"
+                  />
+                  <div
+                    className={cn(
+                      "block w-10 h-6 rounded-full transition-colors duration-200 ease-in-out",
+                      allowComment ? "bg-blue-600" : "bg-gray-600"
+                    )}
+                  />
+                  <div
+                    className={cn(
+                      allowComment && "transform translate-x-4",
+                      "absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-200 ease-in-out"
+                    )}
+                  />
+                </div>
                 Allow Comments
               </Label>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className={cn(
+                    "flex-1 inline-flex justify-center items-center w-full rounded-md border bg-gray-100 border-gray-700 shadow-sm px-4 py-2 dark:bg-gray-600 text-sm font-medium text-neutral-900 dark:text-neutral-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500",
+                    "shadow-sm stroke-slate-50 dark:stroke-slate-900 shadow-white dark:shadow-gray-900"
+                  )}
+                >
                   <span className="capitalize">{privacy}</span>
                   <ChevronDown className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent className="w-full" align="center">
                 {privacyValues.map((el) => (
                   <DropdownMenuItem
                     key={el}
                     onClick={() => onPrivacyChange(el)}
-                    className="capitalize"
+                    className="capitalize w-full"
                   >
                     {el}
                   </DropdownMenuItem>
@@ -196,7 +220,7 @@ function CreatePostForm() {
           <SubmitBtn
             text="publish"
             disabled={!text && !files.length}
-            className="bg-light-theme-200 dark:bg-dark-theme-200 transition-opacity duration-150 hover:opacity-75 h-12 capitalize"
+            className="bg-blue-500 transition-opacity duration-150 hover:opacity-75 h-12 capitalize"
           />
         </form>
       </DialogContent>

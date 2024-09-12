@@ -2,7 +2,7 @@
 
 import { type ChangeEventHandler, memo } from "react";
 import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import AnimateInput from "./AnimateInput";
 
 export interface EmailFormProps {
   id: string;
@@ -35,7 +35,7 @@ function EmailForm({
       >
         {label}
       </Label>
-      <Input
+      <AnimateInput
         type="email"
         name={name}
         id={id}

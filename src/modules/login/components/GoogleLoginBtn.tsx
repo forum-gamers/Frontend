@@ -47,6 +47,7 @@ function GoogleLoginBtn() {
         text="signin_with"
         shape="circle"
         size="medium"
+        context="signin"
       />
     </GoogleOauth>
   );

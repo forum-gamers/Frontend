@@ -26,7 +26,7 @@ export default function ThemeToggleBtn() {
       className={cn(
         resolvedTheme === "light" ? "bg-white" : "bg-neutral-800",
         "rounded-xl p-2",
-        "border shadow-sm shadow-gray-200 top-32 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100",
+        "border dark:stroke-slate-950 stroke-gray-100",
         "hover:cursor-pointer"
       )}
       initial={{ opacity: 0, scale: 0.5 }}

@@ -2,6 +2,7 @@
 
 import { ArrowLeftStartOnRectangleIcon } from "@/components/icons/HeroIconsSolid";
 import useProfile from "@/modules/user/hooks/useProfile";
+import { googleLogout } from "@react-oauth/google";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { memo, useCallback, type MouseEventHandler } from "react";
@@ -12,6 +13,7 @@ function LogoutBtn() {
   const logout: MouseEventHandler = useCallback(
     async (e) => {
       await signOut();
+      googleLogout();
       router.replace("/login");
       resetUser();
     },

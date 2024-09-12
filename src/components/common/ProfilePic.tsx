@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, Suspense, useMemo, useState } from "react";
+import { memo, Suspense, useMemo, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { BACKDROP, GUEST } from "../images";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -11,6 +11,7 @@ import useMount from "@/hooks/useMounted";
 import FollowBtn from "./FollowBtn";
 import LazyLoadImg from "./LazyLoadImage";
 import Timestamp from "./Timestamp";
+import { cn } from "@/lib/utils";
 
 export interface ProfilePicProps {
   src?: string;
@@ -29,10 +30,11 @@ const AvatarPic = memo(
     src,
     alt,
     username,
+    withBackground = false,
   }: Omit<
     ProfilePicProps,
     "bio" | "id" | "isFollowed" | "toggleFollow" | "postId" | "createdAt"
-  >) => {
+  > & { withBackground?: boolean }) => {
     const initials = useMemo(
       () =>
         username
@@ -45,7 +47,12 @@ const AvatarPic = memo(
     return (
       <Avatar>
         <AvatarImage
-          className="rounded-full bg-white"
+          className={cn(
+            "rounded-full",
+            withBackground
+              ? "bg-slate-200 dark:bg-slate-800 shadow-sm shadow-slate-400 dark:shadow-slate-900 stroke-white dark:stroke-black"
+              : "bg-inherit"
+          )}
           src={src || GUEST.src}
           alt={alt}
         />
@@ -68,11 +75,18 @@ function ProfilePicture({
   createdAt,
 }: ProfilePicProps) {
   const [open, setOpen] = useState<boolean>(false);
+  const timeOutRef = useRef<Timer | null>(null);
 
   const trigger = useMemo(
     () => ({
-      onMouseEnter: () => setOpen(true),
-      onMouseLeave: () => setOpen(false),
+      onMouseEnter: () => {
+        if (timeOutRef.current) clearTimeout(timeOutRef.current);
+        timeOutRef.current = setTimeout(() => setOpen(true), 100);
+      },
+      onMouseLeave: () => {
+        if (timeOutRef.current) clearTimeout(timeOutRef.current);
+        timeOutRef.current = setTimeout(() => setOpen(false), 100);
+      },
     }),
     []
   );
@@ -88,7 +102,11 @@ function ProfilePicture({
         <PopoverContent {...trigger} asChild>
           <article
             data-popover="profile-info-popover"
-            className="transition-all duration-200 max-w-[24rem] sm:max-w-[425px] p-0 whitespace-normal break-words rounded-lg border border-blue-gray-50 bg-background font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none bg-white dark:bg-gray-800"
+            className={cn(
+              "shadow-lg shadow-slate-400 dark:shadow-slate-900 focus:outline-none bg-white dark:bg-[#202225] stroke-white dark:stroke-black",
+              "max-w-[24rem] sm:max-w-[425px] p-0 whitespace-normal break-words rounded-lg border bg-background font-sans text-sm font-normal",
+              "hover:shadow-xl transition-all duration-200 hover:z-50 border-2"
+            )}
           >
             <header className="relative h-36">
               <LazyLoadImg
@@ -102,7 +120,12 @@ function ProfilePicture({
             <div className="flex items-center justify-between gap-4 mb-2">
               {mount && (
                 <Link href={`/profile/${id}`}>
-                  <AvatarPic username={username} src={src} alt={alt} />
+                  <AvatarPic
+                    withBackground
+                    username={username}
+                    src={src}
+                    alt={alt}
+                  />
                 </Link>
               )}
               {session?.user?.id !== id && (

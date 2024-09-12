@@ -28,7 +28,7 @@ function FollowBtn({ isFollowed, id, className = "" }: FollowBtnProps) {
           ? "bg-blue-300 hover:bg-blue-400"
           : "bg-blue-500 hover:bg-blue-600",
         "transition-colors duration-100",
-        "shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none",
+        "shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:shadow-none active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none",
         "z-30"
       )}
     >

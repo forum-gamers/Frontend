@@ -22,6 +22,7 @@ class ThirdPartyRequest {
     this.client = axios.create({
       baseURL: process.env.BACKEND_BASE_URL,
       validateStatus: (s) => s >= 200,
+      withXSRFToken: true,
     });
   }
 

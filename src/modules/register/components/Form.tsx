@@ -2,7 +2,6 @@
 
 import SubmitBtn from "@/components/common/SubmitBtn";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import type { FormAction } from "@/interfaces";
 import { useState, type ChangeEventHandler } from "react";
 import { registerHandler } from "../action";
@@ -10,6 +9,7 @@ import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
 import PasswordInput from "@/components/common/PasswordForm";
 import EmailForm from "@/components/common/EmailForm";
+import AnimateInput from "@/components/common/AnimateInput";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -57,7 +57,7 @@ export default function RegisterForm() {
           Username
         </Label>
         <div className="mt-1 relative rounded-md shadow-sm">
-          <Input
+          <AnimateInput
             id="username"
             name="username"
             placeholder="John Doe"
