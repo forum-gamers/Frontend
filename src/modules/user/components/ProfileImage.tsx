@@ -3,7 +3,6 @@
 import useProfile from "@/modules/user/hooks/useProfile";
 import PriorityImage from "@/components/common/PriorityImage";
 import { GUEST } from "@/components/images";
-import Link from "next/link";
 import { memo } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -25,14 +24,11 @@ function ProfileImage({
   const { me } = useProfile();
 
   return (
-    <figure
-      className={wrapperClass}
-      style={{ height: h, width: w, overflow: "hidden" }}
-    >
+    <figure className={cn(wrapperClass, "overflow-hidden")}>
       <PriorityImage
         height={h}
         width={w}
-        className={cn(imageClass, "object-cover")}
+        className={cn(imageClass, "object-cover aspect-square")}
         alt="profile"
         src={me?.imageUrl || GUEST}
         onClick={() => prefetch("/profile")}

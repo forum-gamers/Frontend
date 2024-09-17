@@ -16,15 +16,11 @@ export interface Mutation {
 }
 
 class ThirdPartyRequest {
-  private readonly client: AxiosInstance;
-
-  constructor() {
-    this.client = axios.create({
-      baseURL: process.env.BACKEND_BASE_URL,
-      validateStatus: (s) => s >= 200,
-      withXSRFToken: true,
-    });
-  }
+  private readonly client: AxiosInstance = axios.create({
+    baseURL: process.env.BACKEND_BASE_URL,
+    validateStatus: (s) => s >= 200,
+    withXSRFToken: true,
+  });
 
   public async Query<T = any>({
     url,

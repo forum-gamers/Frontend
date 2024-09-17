@@ -59,7 +59,7 @@ function BookmarkBtn({
                   {
                     ...data,
                     isBookmarked: true,
-                    countBookmark: data.countBookmark + 1,
+                    countBookmark: Number(data.countBookmark) + 1,
                   },
                 ]);
             })();

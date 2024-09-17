@@ -7,6 +7,7 @@ export declare global {
       DOMAIN: string;
       GOOGLE_OAUTH_CLIENTID: string;
       GOOGLE_OAUTH_CLIENT_SECRET: string;
+      DISCORD_CLIENT_ID: string;
     }
   }
 }

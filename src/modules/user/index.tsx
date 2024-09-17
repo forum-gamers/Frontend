@@ -55,9 +55,9 @@ function UserPage({
           )}
           <div className="flex justify-between items-center -mt-10 px-5">
             {session?.user?.id !== id ? (
-              <figure className="rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 flex justify-center items-center">
+              <figure className="rounded-full overflow-hidden border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 flex justify-center items-center">
                 <PriorityImage
-                  className="lg:hover:scale-105 rounded-full"
+                  className="lg:hover:scale-105 rounded-full mx-auto object-cover aspect-square"
                   width={100}
                   height={100}
                   alt={`${username} image`}

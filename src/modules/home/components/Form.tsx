@@ -123,7 +123,7 @@ function CreatePostForm() {
               rows={6}
               className={cn(
                 "min-h-[150px] p-3 h-60 outline-none w-full px-3 py-2 focus:ring-opacity-50 transition-all duration-200 ease-in-out",
-                "text-white bg-gray-100 dark:bg-gray-600 rounded-md border border-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-500",
+                "text-neutral-900 dark:text-neutral-300 bg-gray-100 dark:bg-gray-600 rounded-md border border-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-500",
                 "shadow-sm stroke-slate-50 dark:stroke-slate-900 shadow-white dark:shadow-gray-900"
               )}
               onChange={onChangeHandler}

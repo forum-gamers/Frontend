@@ -22,7 +22,10 @@ const nextConfig = {
   env: {
     GOOGLE_OAUTH_CLIENTID: process.env.GOOGLE_OAUTH_CLIENTID,
     GOOGLE_OAUTH_CLIENTSECRET: process.env.GOOGLE_OAUTH_CLIENTSECRET,
+    DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
+    DOMAIN: process.env.DOMAIN,
   },
+  reactStrictMode: false,
 };
 
 export default nextConfig;

@@ -39,11 +39,11 @@ function EditableProfile() {
       src={me?.imageUrl || GUEST}
       alt="profile"
       onAction={handleUpload}
-      imageClassName="lg:hover:scale-105 rounded-full mx-auto"
+      imageClassName="lg:hover:scale-105 rounded-full mx-auto object-cover aspect-square"
       w={100}
       h={100}
       name="file"
-      wrapperClassName="rounded-full border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 flex justify-center items-center"
+      wrapperClassName="rounded-full overflow-hidden border-2 cursor-pointer border-white shadow-md dark:border-neutral-800 flex justify-center items-center"
     />
   );
 }

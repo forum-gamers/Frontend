@@ -106,7 +106,7 @@ function FollowSection({ session, id }: FollowSectionProps) {
           </Button>
         </div>
       </DialogTrigger>
-      <DialogContent className="bg-light-theme-100 dark:bg-dark-theme-300 shadow-md shadow-blue-300 dark:shadow-blue-900">
+      <DialogContent className="bg-white dark:bg-[#202225] shadow-md shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100">
         {!pending ? (
           <>
             <DialogTitle className="capitalize">{type}</DialogTitle>

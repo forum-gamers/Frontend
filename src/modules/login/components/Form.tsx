@@ -12,6 +12,7 @@ import PasswordInput from "@/components/common/PasswordForm";
 import { Label } from "@/components/ui/label";
 import GoogleLoginBtn from "./GoogleLoginBtn";
 import AnimateInput from "@/components/common/AnimateInput";
+import DiscordLoginBtn from "./DiscordLoginBtn";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -101,8 +102,9 @@ export default function LoginForm() {
           OR
         </p>
       </div>
-      <div className="container mt-2 cursor-pointer align-middle mx-auto flex justify-center items-center">
+      <div className="container mt-2 cursor-pointer align-middle mx-auto flex justify-center items-center gap-3">
         <GoogleLoginBtn />
+        <DiscordLoginBtn />
       </div>
       <SubmitBtn
         type="submit"
@@ -111,7 +113,7 @@ export default function LoginForm() {
         className="w-full flex justify-center items-center shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
       />
       <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-        Not a register yet?{" "}
+        Not register yet?{" "}
         <Link
           prefetch
           href="/register"
