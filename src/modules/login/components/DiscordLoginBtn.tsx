@@ -8,8 +8,13 @@ import {
 import Link from "next/link";
 import Discord from "@/components/svg/Discord";
 
-function DiscordLoginBtn() {
-  console.log(process.env.DOMAIN);
+export interface DiscordLoginBtnProps {
+  text?: string;
+}
+
+function DiscordLoginBtn({
+  text = "Login with Discord",
+}: DiscordLoginBtnProps) {
   return (
     <TooltipProvider>
       <Tooltip>
@@ -27,7 +32,7 @@ function DiscordLoginBtn() {
           </Link>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Login with Discord</p>
+          <p>{text}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

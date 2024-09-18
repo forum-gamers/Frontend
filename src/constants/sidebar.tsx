@@ -3,6 +3,7 @@ import {
   HomeIcon,
   // ChatBubbleLeftIcon,
   // UsersIcon,
+  UserGroupIcon,
   BookmarkIcon,
 } from "@/components/icons/HeroIconsSolid";
 
@@ -35,6 +36,11 @@ const SIDEBAR_MENUS: SidebarMenu[] = [
   //   href: "/chat",
   //   icon: <ChatBubbleLeftIcon className={className} />,
   // },
+  {
+    title: "Community",
+    href: "/community",
+    icon: <UserGroupIcon className={className} />,
+  },
 ];
 
 export default SIDEBAR_MENUS;

@@ -187,3 +187,25 @@ export interface UserFollowAttributes {
   backgroundUrl?: string;
   createdAt: Date | string;
 }
+
+export interface DiscordGuild {
+  id: string;
+  name: string;
+  icon: null | string;
+  banner: null | string;
+  owner: boolean;
+  permissions: string;
+  features: string[];
+}
+
+export interface CommunityAttributes {
+  id: number;
+  name: string;
+  description?: string;
+  imageUrl?: string;
+  imageId?: string;
+  owner: string;
+  createdAt: Date;
+  updatedAt: Date;
+  isDiscordServer: boolean;
+}
