@@ -1,12 +1,13 @@
-import type { CommunityAttributes } from "@/interfaces/model";
+import type { CommunityListAttributes } from "@/interfaces/model";
 import { create } from "zustand";
 
 export interface InitialState {
-  datas: CommunityAttributes[];
+  datas: CommunityListAttributes[];
 }
 
 export interface InitialAction {
-  setDatas: (datas: CommunityAttributes[]) => void;
+  setDatas: (datas: CommunityListAttributes[]) => void;
+  resetDatas: () => void;
 }
 
 const useCommunity = create<InitialState & InitialAction>((set) => ({
@@ -20,6 +21,8 @@ const useCommunity = create<InitialState & InitialAction>((set) => ({
           .values()
       ),
     })),
+
+  resetDatas: () => set({ datas: [] }),
 }));
 
 export default useCommunity;

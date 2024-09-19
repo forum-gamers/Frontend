@@ -39,7 +39,7 @@ function UserPage({
       <Init target={user} session={session} />
       <BackBtn url="/" />
       <header className="w-full rounded-md bg-white dark:bg-[#202225]">
-        <div className="w-full">
+        <figure className="w-full">
           {session?.user?.id !== id ? (
             <PriorityImage
               width={450}
@@ -79,7 +79,7 @@ function UserPage({
               </Suspense>
             )}
           </div>
-        </div>
+        </figure>
         <hgroup className="flex flex-col w-full px-4 text-neutral-900 dark:text-neutral-300 h-8">
           <div className="flex justify-between items-start w-full">
             <h2 className="px-2 text-center">{username}</h2>

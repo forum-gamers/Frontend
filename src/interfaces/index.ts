@@ -5,10 +5,10 @@ export interface ChildrenProps {
   readonly children: ReactNode;
 }
 
-export type ServerActionResult<T = any> = {
+export type ServerActionResult<T = any, O extends object = {}> = {
   data: T | null;
   error?: string | null;
-};
+} & O;
 
 export type ServerAction<T = any> = (
   formData: FormData

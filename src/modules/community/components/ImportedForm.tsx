@@ -77,7 +77,17 @@ function ImportedForm() {
           redirect: false,
         });
 
-      if (data?.community) setDatas([data.community]);
+      if (data?.community)
+        setDatas([
+          {
+            ...data.community,
+            totalMember: 1,
+            totalPost: 0,
+            isMember: true,
+            createdAt: data.community.createdAt.toString(),
+            updatedAt: data.community.updatedAt.toString(),
+          },
+        ]);
       setOpen(false);
       return;
     }

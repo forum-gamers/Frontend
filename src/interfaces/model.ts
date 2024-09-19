@@ -208,4 +208,20 @@ export interface CommunityAttributes {
   createdAt: Date;
   updatedAt: Date;
   isDiscordServer: boolean;
+  totalMembers: number;
+}
+
+export interface CommunityListAttributes {
+  id: number;
+  name: string;
+  description?: string;
+  imageUrl?: string;
+  imageId?: string;
+  isDiscordServer: boolean;
+  owner: string;
+  totalMember: number;
+  totalPost: number;
+  createdAt: string;
+  updatedAt: string;
+  isMember: boolean;
 }

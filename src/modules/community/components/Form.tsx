@@ -56,7 +56,16 @@ function CreateCommunityForm() {
 
     if (data) {
       setOpen(false);
-      setDatas([data]);
+      setDatas([
+        {
+          ...data,
+          totalMember: 1,
+          totalPost: 0,
+          isMember: true,
+          createdAt: data.createdAt.toString(),
+          updatedAt: data.updatedAt.toString(),
+        },
+      ]);
       return;
     }
 

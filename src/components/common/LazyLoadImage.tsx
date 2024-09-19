@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import Image, { type StaticImageData, type ImageProps } from "next/image";
 import { useState } from "react";
 
@@ -31,11 +32,14 @@ export default function LazyLoadImg({
         loading="lazy"
         onLoad={() => setLoading(false)}
         quality={100}
-        className={`duration-700 ease-in-out ${
+        className={cn(
+          "duration-700 ease-in-out",
           loading
             ? "scale-[1.02] blur-xl grayscale"
-            : "scale-100 blur-0 grayscale-0"
-        } ${!!rounded ? rounded : ""} ${className}`}
+            : "scale-100 blur-0 grayscale-0",
+          !!rounded && rounded,
+          className
+        )}
         {...rest}
       />
     </figure>

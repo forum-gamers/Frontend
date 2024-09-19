@@ -12,3 +12,10 @@ export interface SearchResultDto {
 export interface SearchResultContextDto {
   postId?: number;
 }
+
+export interface PaginationRespProps {
+  page: number;
+  limit: number;
+  totalData: number;
+  totalPage: number;
+}

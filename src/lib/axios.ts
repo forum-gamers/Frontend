@@ -1,5 +1,6 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
 import type { BaseResponse } from "@/interfaces/request";
+import type { PaginationRespProps } from "@/interfaces/response";
 
 export interface Query {
   url: string;
@@ -26,9 +27,11 @@ class ThirdPartyRequest {
     url,
     headers,
     params,
-  }: Query): Promise<AxiosResponse<BaseResponse<T>>> {
+  }: Query): Promise<
+    AxiosResponse<BaseResponse<T> & Partial<PaginationRespProps>>
+  > {
     const { signal } = new AbortController();
-    return this.client<BaseResponse<T>>({
+    return this.client<BaseResponse<T> & Partial<PaginationRespProps>>({
       url,
       headers,
       method: "GET",
