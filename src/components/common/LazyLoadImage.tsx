@@ -22,11 +22,15 @@ export default function LazyLoadImg({
 
   return (
     <figure
-      className={`overflow-hidden ${!!rounded ? rounded : ""} ${
-        loading ? "animate-pulse" : ""
-      }`}
+      className={cn(
+        "overflow-hidden",
+        className,
+        loading && "animate-pulse",
+        !!rounded && rounded
+      )}
     >
       <Image
+        {...rest}
         alt={alt}
         src={src}
         loading="lazy"
@@ -40,7 +44,6 @@ export default function LazyLoadImg({
           !!rounded && rounded,
           className
         )}
-        {...rest}
       />
     </figure>
   );

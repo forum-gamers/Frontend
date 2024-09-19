@@ -1,5 +1,5 @@
 export interface SearchResultDto {
-  source: "user" | "post" | "comment" | "reply";
+  source: "user" | "post" | "comment" | "reply" | "community";
   id: string;
   text: string;
   imageUrl?: string | null;

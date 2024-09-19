@@ -34,7 +34,7 @@ export default function usePagination<T, Opts extends BaseQuery = {}>(
         data = [],
         error,
         totalData = 0,
-        totalPage = 0,
+        totalPage = 1,
       } = await fetcher({
         page,
         limit,
@@ -54,7 +54,7 @@ export default function usePagination<T, Opts extends BaseQuery = {}>(
         totalPage,
       });
     });
-  }, [page, setPage]);
+  }, [page]);
 
   return {
     datas,
