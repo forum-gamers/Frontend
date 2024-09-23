@@ -34,8 +34,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ChevronDown from "@/components/svg/ChevronDown";
 import { Input } from "@/components/ui/input";
+import type { PostResponse } from "@/interfaces/model";
 
-function CreatePostForm() {
+export interface CreatePostFormProps {
+  communityId?: number;
+  onSuccess?: (props: PostResponse) => void;
+}
+
+function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
   const privacyValues = useMemo(
     () => ["public", "private", "friend-only"] as const,
     []
@@ -51,6 +57,7 @@ function CreatePostForm() {
   const actionHandler: FormAction = async (formData) => {
     if (!text && !files.length) return;
 
+    if (communityId) formData.append("communityId", String(communityId));
     formData.append("text", text);
     formData.append("allowComment", String(allowComment));
     formData.append("privacy", privacy);
@@ -68,6 +75,7 @@ function CreatePostForm() {
       setOpen(false);
       setText("");
       setFiles([]);
+      if (onSuccess && typeof onSuccess === "function") onSuccess(data);
       return;
     }
   };

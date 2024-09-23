@@ -12,7 +12,6 @@ export interface UserAttributes {
   status: string;
   createdAt: Date;
   updatedAt: Date;
-  phoneNumber: string;
   followersCount: number;
   followingCount: number;
   isFollower: boolean;
@@ -224,4 +223,30 @@ export interface CommunityListAttributes {
   createdAt: string;
   updatedAt: string;
   isMember: boolean;
+  totalEvent: number;
 }
+
+export type CommunityEventStatus =
+  | "scheduled"
+  | "ongoing"
+  | "completed"
+  | "cancelled";
+
+export interface CommunityEventAttributes {
+  id: number;
+  communityId: number;
+  title: string;
+  description?: string;
+  location: string;
+  startTime: Date;
+  endTime: Date | null;
+  createdBy: string;
+  isPublic: boolean;
+  status: CommunityEventStatus;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export type CommunityEventWithCreator = CommunityEventAttributes & {
+  creator: UserFollowAttributes & { isFollowed: boolean };
+};

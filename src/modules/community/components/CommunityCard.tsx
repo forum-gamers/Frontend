@@ -2,7 +2,6 @@ import LazyLoadImg from "@/components/common/LazyLoadImage";
 import { GUEST } from "@/components/images";
 import Discord from "@/components/svg/Discord";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -12,10 +11,10 @@ import {
 } from "@/components/ui/card";
 import type { CommunityListAttributes } from "@/interfaces/model";
 import { cn } from "@/lib/utils";
-import { Users, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Users } from "lucide-react";
 import { memo } from "react";
 import sanitize from "sanitize-html";
+import ButtonSeeCommunity from "./ButtonSeeCommunity";
 
 export interface CommunityCardProps {
   community: CommunityListAttributes;
@@ -65,20 +64,7 @@ function CommunityCard({ community }: CommunityCardProps) {
         )}
       </CardContent>
       <CardFooter className="p-4 pt-0 mb-0">
-        <Button
-          asChild
-          className={cn(
-            "bg-blue-500 hover:bg-blue-600",
-            "transition-all duration-300 hover:opacity-75 hover:scale-[98.5%]",
-            "text-neutral-900 dark:text-neutral-300",
-            "w-full"
-          )}
-        >
-          <Link prefetch href={`/communities/${community.id}`}>
-            <span>Join Community</span>
-            <ArrowRight size={16} className="ml-2" />
-          </Link>
-        </Button>
+        <ButtonSeeCommunity id={community.id} />
       </CardFooter>
     </Card>
   );

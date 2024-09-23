@@ -52,6 +52,7 @@ export const createPost: ServerAction<PostResponse> = async (formData) => {
   payload.append("text", formData.get("text") as string);
   payload.append("privacy", formData.get("privacy") as string);
   payload.append("allowComment", formData.get("allowComment") as string);
+  payload.append("communityId", formData.get("communityId") as string);
   for (const file of formData.getAll("files"))
     payload.append("files", file as File);
 
