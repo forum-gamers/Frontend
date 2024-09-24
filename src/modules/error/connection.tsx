@@ -25,7 +25,8 @@ export default function ConnectionError({ reset }: ConnectionErrorProps) {
         <CardContent className="text-center">
           <WifiOff className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
           <p className="text-lg mb-4">
-            Oops! It looks like we're having trouble connecting to the server.
+            Oops! It looks like we&apos;re having trouble connecting to the
+            server.
           </p>
           <p className="text-muted-foreground">
             Please check your internet connection and try again.

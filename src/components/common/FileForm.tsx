@@ -93,7 +93,7 @@ export default function FileForm({
           name={name}
           required={required}
           onChange={onchangeHandler}
-          disabled={selectedFiles.length >= 4}
+          disabled={selectedFiles.length >= (max ?? 4)}
           placeholder={placeHolder}
           size={10 * 1024 * 1024}
         />

@@ -8,15 +8,13 @@ import {
   CardFooter,
   CardDescription,
 } from "@/components/ui/card";
-import { Edit, User } from "lucide-react";
+import { User } from "lucide-react";
 import Discord from "@/components/svg/Discord";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
 import CommunityTab from "./components/CommunityTab";
 import type { ChildrenProps, CustomSession } from "@/interfaces";
-import TruncateCardText from "@/components/common/TruncateCardText";
 import type {
   CommunityListAttributes,
   UserAttributes,
@@ -26,6 +24,10 @@ import CommunityImage from "./components/CommunityImage";
 import CommunityName from "./components/CommunityName";
 import CommunityTotalMember from "./components/CommunityTotalMember";
 import CommunityTotalEvent from "./components/CommunityTotalEvent";
+import ButtonEdit from "./components/ButtonEdit";
+import CommunityDescription from "./components/CommunityDescription";
+import ButtonJoin from "./components/ButtonJoin";
+import CommunityTotalPost from "./components/CommunityTotalPost";
 
 export interface CommunityDetailProps extends ChildrenProps {
   members: UserAttributes[];
@@ -67,38 +69,28 @@ export default function CommunityDetail({
                     <User className="mr-1 h-4 w-4" />
                     <CommunityTotalMember asChild /> {"  "} members
                   </span>
-                  {data?.isDiscordServer && (
-                    <Badge
-                      variant="secondary"
-                      className="mb-2 bg-[#5865F2] hover:bg-[#4752C4] ml-2"
-                    >
-                      <Discord className="h-4 w-4" />
-                    </Badge>
-                  )}
                 </CardDescription>
+                {data?.isDiscordServer && (
+                  <Badge
+                    variant="secondary"
+                    className="mb-2 bg-[#5865F2] hover:bg-[#4752C4] ml-2"
+                  >
+                    <Discord className="h-4 w-4" />
+                  </Badge>
+                )}
               </div>
             </div>
           </CardHeader>
           <CardContent className="mt-4">
-            {data?.description && (
-              <TruncateCardText
-                className="text-neutral-900 dark:text-neutral-300 text-3xl"
-                text={data?.description}
-                max={60}
-              />
-            )}
+            <CommunityDescription />
           </CardContent>
           <CardFooter className="flex justify-between w-full flex-wrap gap-2 mt-auto">
-            <Button className="bg-blue-500 hover:bg-blue-600 text-neutral-900 dark:text-neutral-300">
-              Join Community
-            </Button>
-            <Button
-              variant="outline"
-              className="border-none text-neutral-900 dark:text-neutral-300"
-            >
-              <Edit className="mr-2 h-4 w-4" />
-              Edit Community
-            </Button>
+            {data?.isMember &&
+              data?.role &&
+              ["admin", "owner"].includes(data.role) && (
+                <ButtonEdit communityId={data.id} />
+              )}
+            <ButtonJoin session={session} communityId={data.id} />
           </CardFooter>
         </Card>
 
@@ -109,12 +101,16 @@ export default function CommunityDetail({
               <CardTitle>Community Stats</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex justify-between items-center">
-                <hgroup className="text-center">
+              <div className="grid grid-cols-6">
+                <hgroup className="text-center col-span-2">
                   <CommunityTotalMember className="text-xl font-bold" />
                   <p className="text-xs text-gray-500">Members</p>
                 </hgroup>
-                <hgroup className="text-center">
+                <hgroup className="text-center col-span-2">
+                  <CommunityTotalPost className="text-xl font-bold" />
+                  <p className="text-xs text-gray-500">Posts</p>
+                </hgroup>
+                <hgroup className="text-center col-span-2">
                   <CommunityTotalEvent className="text-xl font-bold" />
                   <p className="text-xs text-gray-500">Upcoming Events</p>
                 </hgroup>
@@ -127,7 +123,7 @@ export default function CommunityDetail({
               <CardTitle>Members</CardTitle>
             </CardHeader>
             <CardContent className="overflow-hidden">
-              <div className="flex flex-col p-0 overflow-y-scroll">
+              <div className="flex flex-col p-0 overflow-y-scroll space-y-2">
                 {members.map((member) => (
                   <UserRecomendationCard
                     key={member.id}

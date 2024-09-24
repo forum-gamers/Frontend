@@ -35,6 +35,7 @@ import {
 import ChevronDown from "@/components/svg/ChevronDown";
 import { Input } from "@/components/ui/input";
 import type { PostResponse } from "@/interfaces/model";
+import { SUPPORTED_IMAGE_TYPE, SUPPORTED_VIDEO_TYPE } from "@/constants/global";
 
 export interface CreatePostFormProps {
   communityId?: number;
@@ -202,20 +203,7 @@ function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
           <div className="space-y-4">
             <Label htmlFor="image">Upload Image</Label>
             <FileForm
-              accept={[
-                "image/png",
-                "image/jpg",
-                "image/jpeg",
-                "image/gif",
-                "image/bmp",
-                "video/mp4",
-                "video/avi",
-                "video/mpeg",
-                "video/quicktime",
-                "video/webm",
-                "video/3gp",
-                "video/mp3",
-              ]}
+              accept={[...SUPPORTED_IMAGE_TYPE, ...SUPPORTED_VIDEO_TYPE]}
               multiple
               id="file"
               max={4}

@@ -224,6 +224,7 @@ export interface CommunityListAttributes {
   updatedAt: string;
   isMember: boolean;
   totalEvent: number;
+  role?: CommunityMemberRole | null;
 }
 
 export type CommunityEventStatus =
@@ -250,3 +251,12 @@ export interface CommunityEventAttributes {
 export type CommunityEventWithCreator = CommunityEventAttributes & {
   creator: UserFollowAttributes & { isFollowed: boolean };
 };
+
+export interface CommunityMembersAttributes {
+  id: number;
+  userId: string;
+  communityId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  role: CommunityMemberRole;
+}

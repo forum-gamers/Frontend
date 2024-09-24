@@ -11,6 +11,7 @@ import type {
   CommunityEventAttributes,
   CommunityEventWithCreator,
   CommunityListAttributes,
+  CommunityMembersAttributes,
   DiscordGuild,
   PostResponse,
   UserAttributes,
@@ -19,6 +20,7 @@ import request from "@/lib/axios";
 import type { ImportedDiscordServerResponse } from "./interface";
 import type { PaginationRespProps } from "@/interfaces/response";
 import type { BaseQuery } from "@/interfaces/request";
+import { revalidatePath } from "next/cache";
 
 export const createCommunity: ServerAction<CommunityAttributes> = async (
   formData
@@ -273,4 +275,72 @@ export const getCommunityById = async (communityId: number) => {
   if (status !== 200) return { error: message, data: null };
 
   return { data, error: null };
+};
+
+export const updateCommunity: ServerAction<CommunityAttributes> = async (
+  formData
+) => {
+  const {
+    data: { data, message },
+    status,
+  } = await request.Mutation<CommunityAttributes>({
+    url: `/community/${formData.get("communityId")}`,
+    method: "PUT",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    data: formData,
+  });
+
+  if (status !== 200) return { error: message, data: null };
+
+  return { data, error: null };
+};
+
+export const joinCommunity = async (communityId: number) => {
+  const {
+    data: { data, message },
+    status,
+  } = await request.Mutation<CommunityMembersAttributes>({
+    url: `/community-member/${communityId}`,
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 201) return { error: message, data: null };
+
+  revalidatePath(`/community/${communityId}`);
+  return { data, error: null };
+};
+
+export const leaveCommunity = async (communityId: number) => {
+  const {
+    data: { message },
+    status,
+  } = await request.Mutation({
+    url: `/community-member/${communityId}`,
+    method: "DELETE",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message };
+
+  revalidatePath(`/community/${communityId}`);
+  return { error: null };
 };

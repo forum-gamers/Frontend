@@ -14,6 +14,7 @@ import FileForm, {
 } from "@/components/common/FileForm";
 import useCommunity from "../hooks/useCommunity";
 import useForm from "../hooks/useForm";
+import { SUPPORTED_IMAGE_TYPE } from "@/constants/global";
 
 function CreateCommunityForm() {
   const { setDatas } = useCommunity();
@@ -64,6 +65,7 @@ function CreateCommunityForm() {
           isMember: true,
           createdAt: data.createdAt.toString(),
           updatedAt: data.updatedAt.toString(),
+          totalEvent: 0,
         },
       ]);
       return;
@@ -122,13 +124,7 @@ function CreateCommunityForm() {
       <div className="space-y-4">
         <Label htmlFor="image">Upload Image</Label>
         <FileForm
-          accept={[
-            "image/png",
-            "image/jpg",
-            "image/jpeg",
-            "image/gif",
-            "image/bmp",
-          ]}
+          accept={SUPPORTED_IMAGE_TYPE}
           multiple
           id="file"
           max={4}

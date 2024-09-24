@@ -73,4 +73,6 @@ const AnimatedInput = forwardRef<
   );
 });
 
+AnimatedInput.displayName = "AnimatedInput";
+
 export default memo(AnimatedInput);
