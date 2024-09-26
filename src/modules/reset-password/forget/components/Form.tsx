@@ -3,7 +3,13 @@
 import EmailForm from "@/components/common/EmailForm";
 import SubmitBtn from "@/components/common/SubmitBtn";
 import type { CustomSession, FormAction } from "@/interfaces";
-import { useEffect, useState, type ChangeEventHandler } from "react";
+import {
+  memo,
+  useEffect,
+  useId,
+  useState,
+  type ChangeEventHandler,
+} from "react";
 import { forgetPasswordHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
@@ -13,7 +19,8 @@ export interface ForgetFormProps {
   session: CustomSession | null;
 }
 
-export default function ForgetForm({ session }: ForgetFormProps) {
+function ForgetForm({ session }: ForgetFormProps) {
+  const csrf = useId();
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [inIndonesia, setInIndonesia] = useState<boolean>(false);
@@ -27,7 +34,7 @@ export default function ForgetForm({ session }: ForgetFormProps) {
   }, []);
 
   const actionHandler: FormAction = async (formData) => {
-    if (!email && !session) return;
+    if ((!email && !session) || formData.get("csrf") !== csrf) return;
 
     formData.append("email", email);
     formData.append("lang", inIndonesia ? "id" : "en");
@@ -45,6 +52,7 @@ export default function ForgetForm({ session }: ForgetFormProps) {
 
   return (
     <form id="forget-password-form" action={actionHandler}>
+      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="grid gap-y-4">
         {!session && (
           <EmailForm
@@ -68,3 +76,5 @@ export default function ForgetForm({ session }: ForgetFormProps) {
     </form>
   );
 }
+
+export default memo(ForgetForm);

@@ -3,7 +3,7 @@
 import SubmitBtn from "@/components/common/SubmitBtn";
 import { Label } from "@/components/ui/label";
 import type { FormAction } from "@/interfaces";
-import { useState, type ChangeEventHandler } from "react";
+import { memo, useId, useState, type ChangeEventHandler } from "react";
 import { registerHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
@@ -11,8 +11,9 @@ import PasswordInput from "@/components/common/PasswordForm";
 import EmailForm from "@/components/common/EmailForm";
 import AnimateInput from "@/components/common/AnimateInput";
 
-export default function RegisterForm() {
+function RegisterForm() {
   const router = useRouter();
+  const csrf = useId();
   const [{ username, email, password, confirmPassword }, setData] = useState({
     username: "",
     email: "",
@@ -21,7 +22,14 @@ export default function RegisterForm() {
   });
 
   const actionHandler: FormAction = async (formData) => {
-    if (!username || !email || !password || !confirmPassword) return;
+    if (
+      !username ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      formData.get("csrf") !== csrf
+    )
+      return;
 
     formData.append("username", username);
     formData.append("email", email);
@@ -49,6 +57,7 @@ export default function RegisterForm() {
 
   return (
     <form action={actionHandler} id="register-form">
+      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label
           htmlFor="username"
@@ -133,3 +142,5 @@ export default function RegisterForm() {
     </form>
   );
 }
+
+export default memo(RegisterForm);

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import {
   HomeIcon,
   // ChatBubbleLeftIcon,
-  // UsersIcon,
+  UsersIcon,
   UserGroupIcon,
   BookmarkIcon,
 } from "@/components/icons/HeroIconsSolid";
@@ -18,7 +18,7 @@ const className = "h-6 w-6";
 const SIDEBAR_MENUS: SidebarMenu[] = [
   {
     title: "Home",
-    href: "/",
+    href: "/feed",
     icon: <HomeIcon className={className} />,
   },
   {
@@ -26,11 +26,11 @@ const SIDEBAR_MENUS: SidebarMenu[] = [
     href: "/bookmark",
     icon: <BookmarkIcon className={className} />,
   },
-  // {
-  //   title: "Team",
-  //   href: "/team",
-  //   icon: <UsersIcon className={className} />,
-  // },
+  {
+    title: "Team",
+    href: "/team",
+    icon: <UsersIcon className={className} />,
+  },
   // {
   //   title: "Chat",
   //   href: "/chat",

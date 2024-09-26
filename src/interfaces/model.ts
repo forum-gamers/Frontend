@@ -260,3 +260,36 @@ export interface CommunityMembersAttributes {
   updatedAt: Date;
   role: CommunityMemberRole;
 }
+
+export interface TeamAttributes {
+  id: number;
+  name: string;
+  code: string;
+  imageUrl: string;
+  imageId: string;
+  minPlayer: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface GetTeamDto {
+  id: string;
+  name: string;
+  description?: string;
+  imageUrl?: string;
+  owner: string;
+  totalMember: number;
+  gameId: number;
+  maxMember: number;
+  isPublic: boolean;
+  isJoined: boolean;
+  createdAt: string;
+  gameName: string;
+  gameImageUrl: string;
+  gameCode: string;
+  ownerUsername: string;
+  ownerImageUrl?: string;
+  ownerBio?: string;
+  ownerCreatedAt: string;
+  ownerBackgroundImageUrl?: string;
+}

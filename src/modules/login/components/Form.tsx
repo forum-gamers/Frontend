@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ChangeEventHandler } from "react";
+import { memo, useId, useState, type ChangeEventHandler } from "react";
 import { loginHandler } from "../action";
 import SubmitBtn from "@/components/common/SubmitBtn";
 import Link from "next/link";
@@ -14,7 +14,8 @@ import GoogleLoginBtn from "./GoogleLoginBtn";
 import AnimateInput from "@/components/common/AnimateInput";
 import DiscordLoginBtn from "./DiscordLoginBtn";
 
-export default function LoginForm() {
+function LoginForm() {
+  const csrf = useId();
   const router = useRouter();
   const [{ identifier, password }, setdata] = useState({
     identifier: "",
@@ -22,7 +23,7 @@ export default function LoginForm() {
   });
 
   const actionHandler: FormAction = async (formData) => {
-    if (!identifier || !password) return;
+    if (!identifier || !password || formData.get("csrf") !== csrf) return;
 
     formData.append("identifier", identifier);
     formData.append("password", password);
@@ -53,6 +54,7 @@ export default function LoginForm() {
       action={actionHandler}
       id="login-form"
     >
+      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label
           htmlFor="identifier"
@@ -125,3 +127,5 @@ export default function LoginForm() {
     </form>
   );
 }
+
+export default memo(LoginForm);

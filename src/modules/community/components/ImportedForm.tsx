@@ -15,7 +15,14 @@ import {
 import type { FormAction } from "@/interfaces";
 import type { DiscordGuild } from "@/interfaces/model";
 import { cn } from "@/lib/utils";
-import { memo, useCallback, useEffect, useState, useTransition } from "react";
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useId,
+  useState,
+  useTransition,
+} from "react";
 import { getMyGuild, importDiscordServer } from "../action";
 import Loader from "@/components/svg/Loader";
 import { swalError } from "@/lib/swal";
@@ -24,6 +31,7 @@ import useCommunity from "../hooks/useCommunity";
 import useForm from "../hooks/useForm";
 
 function ImportedForm() {
+  const csrf = useId();
   const { setDatas } = useCommunity();
   const { setOpen } = useForm();
   const [pending, startTransition] = useTransition();
@@ -57,7 +65,7 @@ function ImportedForm() {
   }, []);
 
   const actionHandler: FormAction = async (formData) => {
-    if (!selectedServer) return;
+    if (!selectedServer || formData.get("csrf") !== csrf) return;
 
     formData.delete("discordServerId");
     formData.append("discordServerId", selectedServer);
@@ -86,6 +94,7 @@ function ImportedForm() {
             isMember: true,
             createdAt: data.community.createdAt.toString(),
             updatedAt: data.community.updatedAt.toString(),
+            totalEvent: 0,
           },
         ]);
       setOpen(false);
@@ -101,6 +110,7 @@ function ImportedForm() {
       className="space-y-4 min-h-[414px] flex flex-col justify-between"
       action={actionHandler}
     >
+      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="space-y-2">
         <Label htmlFor="discord-server">Select Discord Server</Label>
         <Select defaultValue={selectedServer} onValueChange={onChangeHandler}>

@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import {
   memo,
   useCallback,
+  useId,
   useMemo,
   useState,
   type ChangeEventHandler,
@@ -43,6 +44,7 @@ export interface CreatePostFormProps {
 }
 
 function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
+  const csrf = useId();
   const privacyValues = useMemo(
     () => ["public", "private", "friend-only"] as const,
     []
@@ -56,7 +58,7 @@ function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
   const [allowComment, setAllowComment] = useState<boolean>(true);
 
   const actionHandler: FormAction = async (formData) => {
-    if (!text && !files.length) return;
+    if ((!text && !files.length) || formData.get("csrf") !== csrf) return;
 
     if (communityId) formData.append("communityId", String(communityId));
     formData.append("text", text);
@@ -123,6 +125,7 @@ function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
         <DialogHeader>
           <p className="font-bold text-lg">Create your post</p>
         </DialogHeader>
+        <input type="hidden" name="csrf" value={csrf} id="csrf" />
         <form action={actionHandler} id="post-form" className="grid gap-4 py-4">
           <div className="space-y-2">
             <Label htmlFor="text">Text</Label>

@@ -7,7 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { memo, useCallback, useState, type ChangeEventHandler } from "react";
+import {
+  memo,
+  useCallback,
+  useId,
+  useState,
+  type ChangeEventHandler,
+} from "react";
 import type { CreateCommunityEventProps } from "../interface";
 import type { FormAction } from "@/interfaces";
 import { Label } from "@/components/ui/label";
@@ -34,6 +40,7 @@ export interface CreateEventFormProps {
 }
 
 function CreateEventForm({ communityId }: CreateEventFormProps) {
+  const csrf = useId();
   const [open, setOpen] = useState<boolean>(false);
   const [
     { title, description, location, startTime, endTime, isPublic },
@@ -75,7 +82,8 @@ function CreateEventForm({ communityId }: CreateEventFormProps) {
   }, []);
 
   const actionHandler: FormAction = async (formData) => {
-    if (!title || !location || !startTime) return;
+    if (!title || !location || !startTime || formData.get("csrf") !== csrf)
+      return;
 
     formData.delete("description");
     formData.delete("title");
@@ -127,6 +135,7 @@ function CreateEventForm({ communityId }: CreateEventFormProps) {
           id="create-event-form"
           className="space-y-4"
         >
+          <input type="hidden" name="csrf" value={csrf} id="csrf" />
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <AnimateInput

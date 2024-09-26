@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import useComment from "@/modules/comment/hooks/useComment";
 import type { FormAction } from "@/interfaces";
-import { useState, type ChangeEventHandler } from "react";
+import { useId, useState, type ChangeEventHandler } from "react";
 import { postAComment } from "../action";
 import { swalError } from "@/lib/swal";
 import usePost from "@/modules/home/hooks/usePost";
@@ -19,12 +19,13 @@ export default function CommentForm({
   postId,
   disabled = false,
 }: CommentFormProps) {
+  const csrf = useId();
   const { addComment } = useComment();
   const { updateCountComment } = usePost();
   const [text, setText] = useState<string>("");
 
   const actionHandler: FormAction = async (formData) => {
-    if (!text) return;
+    if (!text || formData.get("csrf") !== csrf) return;
 
     formData.append("text", text);
     formData.append("postId", postId.toString());
@@ -50,6 +51,7 @@ export default function CommentForm({
 
   return (
     <form action={actionHandler} id="comment-form" className="mb-6">
+      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="py-2 px-4 mb-4 bg-white dark:bg-[#202225] rounded-lg rounded-t-lg border border-gray-200 dark:border-gray-700">
         <Label htmlFor="comment" className="sr-only">
           Add a comment

@@ -15,7 +15,9 @@ export interface ConnectionErrorProps {
   reset: () => void;
 }
 
-export default function ConnectionError({ reset }: ConnectionErrorProps) {
+export default function ConnectionError({
+  reset,
+}: Partial<ConnectionErrorProps>) {
   return (
     <Container className="flex items-center justify-center">
       <Card className="w-full max-w-md bg-white dark:bg-[#202225]">
@@ -32,12 +34,14 @@ export default function ConnectionError({ reset }: ConnectionErrorProps) {
             Please check your internet connection and try again.
           </p>
         </CardContent>
-        <CardFooter className="flex justify-center">
-          <Button onClick={() => reset()} className="w-full sm:w-auto">
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Retry Connection
-          </Button>
-        </CardFooter>
+        {reset && typeof `reset` === "function" && (
+          <CardFooter className="flex justify-center">
+            <Button onClick={() => reset()} className="w-full sm:w-auto">
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Retry Connection
+            </Button>
+          </CardFooter>
+        )}
       </Card>
     </Container>
   );

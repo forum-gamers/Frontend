@@ -3,7 +3,7 @@
 import PasswordForm from "@/components/common/PasswordForm";
 import SubmitBtn from "@/components/common/SubmitBtn";
 import type { FormAction } from "@/interfaces";
-import { useState, type ChangeEventHandler } from "react";
+import { memo, useId, useState, type ChangeEventHandler } from "react";
 import { resetPasswordHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,8 @@ export interface ResetFormProps {
   token: string;
 }
 
-export default function ResetForm({ token }: ResetFormProps) {
+function ResetForm({ token }: ResetFormProps) {
+  const csrf = useId();
   const router = useRouter();
   const [{ password, confirmPassword }, setData] = useState({
     password: "",
@@ -20,7 +21,7 @@ export default function ResetForm({ token }: ResetFormProps) {
   });
 
   const actionHandler: FormAction = async (formData) => {
-    if (!password || !confirmPassword) return;
+    if (!password || !confirmPassword || formData.get("csrf") !== token) return;
 
     formData.append("password", password);
     formData.append("confirmPassword", confirmPassword);
@@ -44,6 +45,7 @@ export default function ResetForm({ token }: ResetFormProps) {
       className="mt-4 space-y-4 lg:mt-5 md:space-y-5"
       action={actionHandler}
     >
+      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <PasswordForm
         id="password"
         name="password"
@@ -83,3 +85,5 @@ export default function ResetForm({ token }: ResetFormProps) {
     </form>
   );
 }
+
+export default memo(ResetForm);

@@ -1,32 +1,29 @@
 "use client";
 
-import { memo } from "react";
-import useCommunity from "../hooks/useCommunity";
-import type { CommunityListAttributes } from "@/interfaces/model";
 import usePagination from "@/hooks/usePagination";
-import { getCommunities } from "../action";
+import type { GetTeamDto } from "@/interfaces/model";
 import type { BaseQuery } from "@/interfaces/request";
-import CommunityCard from "./CommunityCard";
+import { memo } from "react";
+import useTeam from "../hooks/useTeam";
+import { getTeam } from "../action";
 import NoDataState from "@/components/common/NoDataState";
-import Pagination from "../../../components/common/Pagination";
-import SkeletonCard from "@/components/common/SkeletonCard";
+import Pagination from "@/components/common/Pagination";
 import { cn } from "@/lib/utils";
+import SkeletonCard from "@/components/common/SkeletonCard";
+import TeamCard from "./TeamCard";
 
-function CommunityList() {
+function TeamList() {
   const { datas, setPage, pending, hasMore, page, totalPage } = usePagination<
-    CommunityListAttributes,
+    GetTeamDto,
     BaseQuery & { q?: string }
-  >(useCommunity, getCommunities, { page: 1, limit: 10, q: "" });
+  >(useTeam, getTeam, { page: 1, limit: 10, q: "" });
 
   return (
-    <section
-      id="community-list"
-      className="overflow-y-hidden h-[calc(100vh-300px)]"
-    >
+    <section id="team-list" className="overflow-y-hidden h-[calc(100vh-200px)]">
       {!!datas?.length ? (
         <div
           className={cn(
-            "grid grid-cols-1 md:grid-cols-2 gap-6 h-[80%] overflow-y-scroll",
+            "grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 overflow-y-scroll",
             pending && "space-y-4 my-4"
           )}
         >
@@ -34,9 +31,7 @@ function CommunityList() {
             ? Array.from({ length: 4 }).map((_, idx) => (
                 <SkeletonCard key={idx} />
               ))
-            : datas.map((data) => (
-                <CommunityCard key={data.id} community={data} />
-              ))}
+            : datas.map((data) => <TeamCard key={data.id} team={data} />)}
         </div>
       ) : (
         <div className="flex justify-center items-center">
@@ -54,4 +49,4 @@ function CommunityList() {
   );
 }
 
-export default memo(CommunityList);
+export default memo(TeamList);

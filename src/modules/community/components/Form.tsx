@@ -6,7 +6,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { FormAction } from "@/interfaces";
 import { cn } from "@/lib/utils";
-import { memo, useCallback, useState, type ChangeEventHandler } from "react";
+import {
+  memo,
+  useCallback,
+  useId,
+  useState,
+  type ChangeEventHandler,
+} from "react";
 import { createCommunity } from "../action";
 import { swalError } from "@/lib/swal";
 import FileForm, {
@@ -17,6 +23,7 @@ import useForm from "../hooks/useForm";
 import { SUPPORTED_IMAGE_TYPE } from "@/constants/global";
 
 function CreateCommunityForm() {
+  const csrf = useId();
   const { setDatas } = useCommunity();
   const { setOpen } = useForm();
   const [{ name, description }, setData] = useState({
@@ -36,7 +43,11 @@ function CreateCommunityForm() {
   );
 
   const formAction: FormAction = async (formData) => {
-    if ((!name && name.length < 3) || (!!description && description.length < 3))
+    if (
+      (!name && name.length < 3) ||
+      (!!description && description.length < 3) ||
+      formData.get("csrf") !== csrf
+    )
       return;
 
     formData.delete("description");
@@ -81,6 +92,7 @@ function CreateCommunityForm() {
 
   return (
     <form id="create-community-form" className="space-y-4" action={formAction}>
+      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="space-y-2">
         <Label
           className="block mb-2 text-sm font-medium text-neutral-900 dark:text-neutral-300 after:content-['*'] after:ml-0.5 after:text-red-500"

@@ -9,6 +9,7 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import LoadGPT from "@/components/scripts/gpt";
 import LoadGtm from "@/components/scripts/gtm";
+import GlobalListener from "./GlobalListener";
 
 const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -43,6 +44,9 @@ function RootLayout({ children }: RootLayoutProps) {
                 speed={200}
                 shadow="0 0 10px #05b6d3,0 0 5px #45c6c0"
               />
+              <Suspense>
+                <GlobalListener />
+              </Suspense>
               {children}
             </AppThemeProvider>
           </SessionProvider>
