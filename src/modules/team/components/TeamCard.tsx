@@ -3,6 +3,12 @@ import { GUEST } from "@/components/images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { GetTeamDto } from "@/interfaces/model";
 import { cn } from "@/lib/utils";
 import { UserIcon } from "lucide-react";
@@ -15,7 +21,7 @@ export interface TeamCardProps {
 
 function TeamCard({ team }: TeamCardProps) {
   return (
-    <Card className="overflow-hidden min-h-[375px] hover:scale-[98.5%] hover:opacity-95 transition-all duration-300 shadow-sm hover:shadow-lg">
+    <Card className="min-h-[375px] hover:scale-[98.5%] hover:opacity-95 transition-all duration-300 shadow-sm hover:shadow-lg">
       <div className="relative aspect-video">
         <LazyLoadImg
           src={team?.imageUrl || GUEST}
@@ -28,14 +34,25 @@ function TeamCard({ team }: TeamCardProps) {
       <CardContent className="p-2">
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-lg font-bold">{team.name}</h3>
-          <div className="relative w-8 h-8">
-            <LazyLoadImg
-              src={team?.gameImageUrl}
-              alt={team.gameName}
-              fill
-              className="object-cover rounded-full hover:opacity-75 transition-opacity duration-300"
-            />
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="relative w-8 h-8">
+                  <LazyLoadImg
+                    src={team?.gameImageUrl}
+                    alt={team.gameName}
+                    fill
+                    className="object-cover rounded-full hover:opacity-75 transition-opacity duration-300"
+                  />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="overflow-visible z-50 absolute right-4">
+                <p className="min-w-max text-sm text-neutral-900 dark:text-neutral-300">
+                  {team.gameName}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <CardDescription className="text-sm text-gray-500 dark:text-gray-400 mb-1">
           Game:{" "}
@@ -47,7 +64,7 @@ function TeamCard({ team }: TeamCardProps) {
           <CardDescription className="flex items-center">
             <UserIcon className="w-4 h-4 mr-2" />
             <span className="text-sm">
-              {team.totalMember ?? 0}/{team.maxMember ?? 0} members
+              {team.totalMember ?? 0} / {team.maxMember ?? 0} members
             </span>
           </CardDescription>
         </div>

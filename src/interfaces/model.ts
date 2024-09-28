@@ -262,12 +262,16 @@ export interface CommunityMembersAttributes {
 }
 
 export interface TeamAttributes {
-  id: number;
+  id: string;
   name: string;
-  code: string;
+  owner: string;
   imageUrl: string;
   imageId: string;
-  minPlayer: number;
+  description?: string;
+  gameId: number;
+  totalMember: number;
+  isPublic: boolean;
+  maxMember: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -276,13 +280,14 @@ export interface GetTeamDto {
   id: string;
   name: string;
   description?: string;
-  imageUrl?: string;
+  imageUrl: string;
   owner: string;
   totalMember: number;
   gameId: number;
   maxMember: number;
   isPublic: boolean;
   isJoined: boolean;
+  status: boolean;
   createdAt: string;
   gameName: string;
   gameImageUrl: string;
@@ -293,3 +298,48 @@ export interface GetTeamDto {
   ownerCreatedAt: string;
   ownerBackgroundImageUrl?: string;
 }
+
+export interface GameAttributes {
+  id: number;
+  name: string;
+  code: string;
+  imageUrl: string;
+  imageId: string;
+  minPlayer: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface GetTeamMemberAttributes {
+  id: number;
+  teamId: string;
+  userId: string;
+  isFollowed: boolean;
+  role: string;
+  status: boolean;
+  createdAt: string;
+  username: string;
+  imageUrl: string;
+  userBio: string;
+  userBackgroundImageUrl: string;
+  userCreatedAt: string;
+  isJoined: boolean;
+}
+
+export interface TeamMemberAttributes {
+  id: number;
+  teamId: string;
+  status: boolean;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  role: TeamRole;
+}
+
+export type TeamRole =
+  | "owner"
+  | "member"
+  | "coach"
+  | "inspector"
+  | "manager"
+  | "admin";

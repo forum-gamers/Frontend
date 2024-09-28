@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { TeamAttributes } from "@/interfaces/model";
+import type { GameAttributes } from "@/interfaces/model";
 import { memo, useEffect, useState, useTransition } from "react";
 import { fetchGame } from "../action";
 import { cn } from "@/lib/utils";
@@ -22,7 +22,7 @@ export interface SelectGameProps {
 
 function SelectGame({ onChangeHandler }: SelectGameProps) {
   const [pending, startTransition] = useTransition();
-  const [games, setGames] = useState<TeamAttributes[]>([]);
+  const [games, setGames] = useState<GameAttributes[]>([]);
 
   useEffect(() => {
     startTransition(async () => {
@@ -36,8 +36,13 @@ function SelectGame({ onChangeHandler }: SelectGameProps) {
 
   return (
     <div className="space-y-2">
-      <Label htmlFor="game">Select Game</Label>
-      <Select onValueChange={onChangeHandler}>
+      <Label
+        className="after:content-['*'] after:ml-0.5 after:text-red-500"
+        htmlFor="game"
+      >
+        Select Game
+      </Label>
+      <Select required onValueChange={onChangeHandler}>
         <SelectTrigger
           id="game"
           className={cn(

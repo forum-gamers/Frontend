@@ -2,7 +2,14 @@
 
 import { getServerSideSession } from "@/helpers/global";
 import type { ServerAction, ServerActionResult } from "@/interfaces";
-import type { GetTeamDto, TeamAttributes } from "@/interfaces/model";
+import type {
+  GameAttributes,
+  GetTeamDto,
+  GetTeamMemberAttributes,
+  TeamAttributes,
+  TeamMemberAttributes,
+  UserAttributes,
+} from "@/interfaces/model";
 import type { BaseQuery } from "@/interfaces/request";
 import type { PaginationRespProps } from "@/interfaces/response";
 import request from "@/lib/axios";
@@ -11,7 +18,7 @@ export const fetchGame = async () => {
   const {
     data: { data = [], message },
     status,
-  } = await request.Query<TeamAttributes[]>({
+  } = await request.Query<GameAttributes[]>({
     url: "/game",
   });
 
@@ -20,11 +27,25 @@ export const fetchGame = async () => {
   return { data, error: null };
 };
 
-export const createTeam: ServerAction<any> = async (formData) => {
+export const createTeam: ServerAction<{
+  team: TeamAttributes;
+  game: GameAttributes;
+  user: Pick<
+    UserAttributes,
+    "id" | "imageUrl" | "backgroundImageUrl" | "bio" | "username"
+  > & { createdAt: string };
+}> = async (formData) => {
   const {
     data: { data, message },
     status,
-  } = await request.Mutation({
+  } = await request.Mutation<{
+    team: TeamAttributes;
+    game: GameAttributes;
+    user: Pick<
+      UserAttributes,
+      "id" | "imageUrl" | "backgroundImageUrl" | "bio" | "username"
+    > & { createdAt: string };
+  }>({
     url: `/team/${formData.get("gameId")}`,
     method: "POST",
     headers: {
@@ -93,4 +114,94 @@ export const getTeam = async ({
     page: currentPage,
     limit: currentLimit,
   };
+};
+
+export const getTeamMember = async (
+  teamId: string,
+  { page = 1, limit = 10, q }: BaseQuery & { q?: string }
+) => {
+  const {
+    data: { data = [], message },
+    status,
+  } = await request.Query<GetTeamMemberAttributes[]>({
+    url: `/team-member/${teamId}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+    params: {
+      page,
+      limit,
+      q,
+    },
+  });
+
+  if (status !== 200) return { error: message, data: [] };
+
+  return { data, error: null };
+};
+
+export const getTeamById = async (id: string) => {
+  const {
+    data: { data = null, message },
+    status,
+  } = await request.Query<GetTeamDto>({
+    url: `/team/${id}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message, data: null };
+
+  return { data, error: null };
+};
+
+export const joinTeam = async (teamId: string) => {
+  const {
+    data: { data = null, message },
+    status,
+  } = await request.Mutation<TeamMemberAttributes>({
+    url: `/team-member/${teamId}`,
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 201) return { error: message, data: null };
+
+  return { data, error: null };
+};
+
+export const leaveTeam = async (teamId: string) => {
+  const {
+    data: { message },
+    status,
+  } = await request.Mutation({
+    url: `/team-member/${teamId}`,
+    method: "DELETE",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message, data: null };
+
+  return { data: null, error: null };
 };

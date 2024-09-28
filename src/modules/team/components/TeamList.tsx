@@ -23,7 +23,7 @@ function TeamList() {
       {!!datas?.length ? (
         <div
           className={cn(
-            "grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 overflow-y-scroll",
+            "grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 overflow-y-scroll h-[80%]",
             pending && "space-y-4 my-4"
           )}
         >

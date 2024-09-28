@@ -23,10 +23,12 @@ import SelectGame from "./SelectGame";
 import { createTeam } from "../action";
 import useForm from "../hooks/useForm";
 import { swalError } from "@/lib/swal";
+import useTeam from "../hooks/useTeam";
 
 function CreateTeamForm() {
   const ref = useRef<HTMLFormElement>(null);
   const { setOpen } = useForm();
+  const { setDatas } = useTeam();
   const csrfToken = useId();
   const [{ name, description, isPublic, gameId }, setData] = useState({
     name: "",
@@ -37,7 +39,7 @@ function CreateTeamForm() {
   const [file, setFile] = useState<File | null>(null);
 
   const actionHandler: FormAction = async (formData) => {
-    if (formData.get("csrf") !== csrfToken || !name || !gameId) return;
+    if (formData.get("csrf") !== csrfToken || !name || !gameId || !file) return;
 
     formData.delete("name");
     formData.delete("description");
@@ -48,17 +50,42 @@ function CreateTeamForm() {
     formData.append("description", description);
     formData.append("isPublic", String(isPublic));
     formData.append("gameId", String(gameId));
-    if (file) formData.append("file", file);
+    formData.append("file", file);
 
     const { error, data } = await createTeam(formData);
+    setOpen(false);
     if (error || !data) {
-      setOpen(false);
       swalError(error || "unexpected error");
       return;
     }
 
     if (ref.current) ref.current.reset();
-    //TODO add data to zustand
+    const { game, team, user } = data;
+    if (game && team && user)
+      setDatas([
+        {
+          id: team.id,
+          name: team.name,
+          description: team.description,
+          imageUrl: team.imageUrl,
+          owner: team.owner,
+          totalMember: 1,
+          gameId: game.id,
+          maxMember: game.minPlayer,
+          isPublic: team.isPublic,
+          createdAt: team.createdAt.toString(),
+          isJoined: true,
+          gameName: game.name,
+          gameImageUrl: game.imageUrl,
+          gameCode: game.code,
+          ownerUsername: user.username,
+          ownerImageUrl: user.imageUrl,
+          ownerBio: user.bio,
+          ownerCreatedAt: user.createdAt,
+          ownerBackgroundImageUrl: user.backgroundImageUrl,
+          status: true,
+        },
+      ]);
   };
 
   const onCheckedChange = useCallback(
@@ -143,17 +170,24 @@ function CreateTeamForm() {
       <SelectGame onChangeHandler={gameOnChangeHandler} />
 
       <div className="space-y-4">
-        <Label htmlFor="image">Upload Image</Label>
+        <Label
+          htmlFor="image"
+          className="after:content-['*'] after:ml-0.5 after:text-red-500"
+        >
+          Upload Image
+        </Label>
         <FileForm
           accept={SUPPORTED_IMAGE_TYPE}
           id="file"
           placeHolder="Add images"
           onFileChange={onFileChange}
           name="file"
+          required
           className="w-full h-4"
         />
       </div>
       <SubmitBtn
+        disabled={!name || !gameId || !file}
         text="Create team"
         type="submit"
         className={cn(
