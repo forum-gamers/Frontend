@@ -4,7 +4,7 @@ import MenuItem from "../components/common/MenuItem";
 
 function Footer() {
   return (
-    <footer className="fixed bottom-0 w-full lg:hidden h-12 p-2 bg-gradient-to-tr from-light-theme-100 to-white dark:bg-gradient-to-br dark:from-dark-theme-300 dark:to-dark-theme-500">
+    <footer className="fixed bottom-0 w-full lg:hidden h-12 p-2 bg-blue-500">
       <nav className="flex justify-around items-center">
         {SIDEBAR_MENUS.map((el) => (
           <MenuItem

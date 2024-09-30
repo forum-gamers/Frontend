@@ -3,17 +3,18 @@
 import PasswordForm from "@/components/common/PasswordForm";
 import SubmitBtn from "@/components/common/SubmitBtn";
 import type { FormAction } from "@/interfaces";
-import { memo, useId, useState, type ChangeEventHandler } from "react";
+import { memo, useState, type ChangeEventHandler } from "react";
 import { resetPasswordHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
+import useCsrf from "@/hooks/useCsrf";
 
 export interface ResetFormProps {
   token: string;
 }
 
 function ResetForm({ token }: ResetFormProps) {
-  const csrf = useId();
+  const csrf = useCsrf();
   const router = useRouter();
   const [{ password, confirmPassword }, setData] = useState({
     password: "",

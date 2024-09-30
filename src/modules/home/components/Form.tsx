@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils";
 import {
   memo,
   useCallback,
-  useId,
   useMemo,
   useState,
   type ChangeEventHandler,
@@ -37,6 +36,7 @@ import ChevronDown from "@/components/svg/ChevronDown";
 import { Input } from "@/components/ui/input";
 import type { PostResponse } from "@/interfaces/model";
 import { SUPPORTED_IMAGE_TYPE, SUPPORTED_VIDEO_TYPE } from "@/constants/global";
+import useCsrf from "@/hooks/useCsrf";
 
 export interface CreatePostFormProps {
   communityId?: number;
@@ -44,7 +44,7 @@ export interface CreatePostFormProps {
 }
 
 function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
-  const csrf = useId();
+  const csrf = useCsrf();
   const privacyValues = useMemo(
     () => ["public", "private", "friend-only"] as const,
     []

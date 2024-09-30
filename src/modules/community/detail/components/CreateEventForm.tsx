@@ -7,13 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  memo,
-  useCallback,
-  useId,
-  useState,
-  type ChangeEventHandler,
-} from "react";
+import { memo, useCallback, useState, type ChangeEventHandler } from "react";
 import type { CreateCommunityEventProps } from "../interface";
 import type { FormAction } from "@/interfaces";
 import { Label } from "@/components/ui/label";
@@ -34,13 +28,14 @@ import SubmitBtn from "@/components/common/SubmitBtn";
 import { WindowIcon } from "@/components/icons/HeroIconsOutline";
 import { createEvent } from "../../action";
 import { swalError } from "@/lib/swal";
+import useCsrf from "@/hooks/useCsrf";
 
 export interface CreateEventFormProps {
   communityId: number;
 }
 
 function CreateEventForm({ communityId }: CreateEventFormProps) {
-  const csrf = useId();
+  const csrf = useCsrf();
   const [open, setOpen] = useState<boolean>(false);
   const [
     { title, description, location, startTime, endTime, isPublic },

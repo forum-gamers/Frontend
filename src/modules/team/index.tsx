@@ -32,16 +32,12 @@ export default function TeamPage({ session, datas }: TeamPageProps) {
               games together.
             </p>
           </hgroup>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div className="flex justify-between items-center gap-2 w-full">
             <Suspense>
-              <div className="md:col-span-1">
-                <DialogWrapper />
-              </div>
+              <DialogWrapper />
             </Suspense>
             <Suspense>
-              <div className="md:col-span-2">
-                <TeamSearch />
-              </div>
+              <TeamSearch />
             </Suspense>
           </div>
         </div>

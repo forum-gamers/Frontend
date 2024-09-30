@@ -5,10 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import useComment from "@/modules/comment/hooks/useComment";
 import type { FormAction } from "@/interfaces";
-import { useId, useState, type ChangeEventHandler } from "react";
+import { useState, type ChangeEventHandler } from "react";
 import { postAComment } from "../action";
 import { swalError } from "@/lib/swal";
 import usePost from "@/modules/home/hooks/usePost";
+import useCsrf from "@/hooks/useCsrf";
 
 export interface CommentFormProps {
   postId: number;
@@ -19,7 +20,7 @@ export default function CommentForm({
   postId,
   disabled = false,
 }: CommentFormProps) {
-  const csrf = useId();
+  const csrf = useCsrf();
   const { addComment } = useComment();
   const { updateCountComment } = usePost();
   const [text, setText] = useState<string>("");

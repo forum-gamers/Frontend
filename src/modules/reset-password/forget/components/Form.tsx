@@ -3,24 +3,19 @@
 import EmailForm from "@/components/common/EmailForm";
 import SubmitBtn from "@/components/common/SubmitBtn";
 import type { CustomSession, FormAction } from "@/interfaces";
-import {
-  memo,
-  useEffect,
-  useId,
-  useState,
-  type ChangeEventHandler,
-} from "react";
+import { memo, useEffect, useState, type ChangeEventHandler } from "react";
 import { forgetPasswordHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
 import { isInIndonesia } from "@/helpers/global";
+import useCsrf from "@/hooks/useCsrf";
 
 export interface ForgetFormProps {
   session: CustomSession | null;
 }
 
 function ForgetForm({ session }: ForgetFormProps) {
-  const csrf = useId();
+  const csrf = useCsrf();
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [inIndonesia, setInIndonesia] = useState<boolean>(false);

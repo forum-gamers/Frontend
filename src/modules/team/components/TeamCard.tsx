@@ -21,7 +21,7 @@ export interface TeamCardProps {
 
 function TeamCard({ team }: TeamCardProps) {
   return (
-    <Card className="min-h-[375px] hover:scale-[98.5%] hover:opacity-95 transition-all duration-300 shadow-sm hover:shadow-lg">
+    <Card className="min-h-[375px] max-w-[350px] max-h-[375px] overflow-visible h-full hover:scale-[98.5%] hover:opacity-95 transition-all duration-300 shadow-sm hover:shadow-lg p-2">
       <div className="relative aspect-video">
         <LazyLoadImg
           src={team?.imageUrl || GUEST}
@@ -56,8 +56,8 @@ function TeamCard({ team }: TeamCardProps) {
         </div>
         <CardDescription className="text-sm text-gray-500 dark:text-gray-400 mb-1">
           Game:{" "}
-          {team.gameName.length > 20
-            ? `${team.gameName.slice(0, 20)}...`
+          {team.gameName.length > 8
+            ? `${team.gameName.slice(0, 8)}...`
             : team.gameName}
         </CardDescription>
         <div className="flex items-center justify-between mb-2">

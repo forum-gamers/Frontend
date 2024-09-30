@@ -15,23 +15,17 @@ import {
 import type { FormAction } from "@/interfaces";
 import type { DiscordGuild } from "@/interfaces/model";
 import { cn } from "@/lib/utils";
-import {
-  memo,
-  useCallback,
-  useEffect,
-  useId,
-  useState,
-  useTransition,
-} from "react";
+import { memo, useCallback, useEffect, useState, useTransition } from "react";
 import { getMyGuild, importDiscordServer } from "../action";
 import Loader from "@/components/svg/Loader";
 import { swalError } from "@/lib/swal";
 import { signIn } from "next-auth/react";
 import useCommunity from "../hooks/useCommunity";
 import useForm from "../hooks/useForm";
+import useCsrf from "@/hooks/useCsrf";
 
 function ImportedForm() {
-  const csrf = useId();
+  const csrf = useCsrf();
   const { setDatas } = useCommunity();
   const { setOpen } = useForm();
   const [pending, startTransition] = useTransition();

@@ -3,7 +3,6 @@
 import {
   memo,
   useCallback,
-  useId,
   useRef,
   useState,
   type ChangeEventHandler,
@@ -24,12 +23,13 @@ import { createTeam } from "../action";
 import useForm from "../hooks/useForm";
 import { swalError } from "@/lib/swal";
 import useTeam from "../hooks/useTeam";
+import useCsrf from "@/hooks/useCsrf";
 
 function CreateTeamForm() {
   const ref = useRef<HTMLFormElement>(null);
   const { setOpen } = useForm();
   const { setDatas } = useTeam();
-  const csrfToken = useId();
+  const csrfToken = useCsrf();
   const [{ name, description, isPublic, gameId }, setData] = useState({
     name: "",
     description: "",

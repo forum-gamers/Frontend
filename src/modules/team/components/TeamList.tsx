@@ -19,11 +19,11 @@ function TeamList() {
   >(useTeam, getTeam, { page: 1, limit: 10, q: "" });
 
   return (
-    <section id="team-list" className="overflow-y-hidden h-[calc(100vh-200px)]">
+    <section id="team-list" className="overflow-y-hidden h-[calc(100vh-300px)]">
       {!!datas?.length ? (
         <div
           className={cn(
-            "grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 overflow-y-scroll h-[80%]",
+            "grid grid-cols-2 gap-6 h-[80%] mt-8 overflow-y-scroll",
             pending && "space-y-4 my-4"
           )}
         >

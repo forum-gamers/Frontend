@@ -3,17 +3,18 @@
 import SubmitBtn from "@/components/common/SubmitBtn";
 import { Label } from "@/components/ui/label";
 import type { FormAction } from "@/interfaces";
-import { memo, useId, useState, type ChangeEventHandler } from "react";
+import { memo, useState, type ChangeEventHandler } from "react";
 import { registerHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
 import PasswordInput from "@/components/common/PasswordForm";
 import EmailForm from "@/components/common/EmailForm";
 import AnimateInput from "@/components/common/AnimateInput";
+import useCsrf from "@/hooks/useCsrf";
 
 function RegisterForm() {
   const router = useRouter();
-  const csrf = useId();
+  const csrf = useCsrf();
   const [{ username, email, password, confirmPassword }, setData] = useState({
     username: "",
     email: "",

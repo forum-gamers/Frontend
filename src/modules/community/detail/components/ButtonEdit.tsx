@@ -14,7 +14,6 @@ import {
   memo,
   useCallback,
   useEffect,
-  useId,
   useRef,
   useState,
   type ChangeEventHandler,
@@ -31,13 +30,14 @@ import FileForm from "@/components/common/FileForm";
 import { SUPPORTED_IMAGE_TYPE } from "@/constants/global";
 import { updateCommunity } from "../../action";
 import { swalError } from "@/lib/swal";
+import useCsrf from "@/hooks/useCsrf";
 
 export interface ButtonEditProps {
   communityId: number;
 }
 
 function ButtonEdit({ communityId }: ButtonEditProps) {
-  const csrf = useId();
+  const csrf = useCsrf();
   const ref = useRef<HTMLFormElement>(null);
   const { data, setDatas } = useTargetCommunity();
   const [open, setOpen] = useState<boolean>(false);

@@ -6,13 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { FormAction } from "@/interfaces";
 import { cn } from "@/lib/utils";
-import {
-  memo,
-  useCallback,
-  useId,
-  useState,
-  type ChangeEventHandler,
-} from "react";
+import { memo, useCallback, useState, type ChangeEventHandler } from "react";
 import { createCommunity } from "../action";
 import { swalError } from "@/lib/swal";
 import FileForm, {
@@ -21,9 +15,10 @@ import FileForm, {
 import useCommunity from "../hooks/useCommunity";
 import useForm from "../hooks/useForm";
 import { SUPPORTED_IMAGE_TYPE } from "@/constants/global";
+import useCsrf from "@/hooks/useCsrf";
 
 function CreateCommunityForm() {
-  const csrf = useId();
+  const csrf = useCsrf();
   const { setDatas } = useCommunity();
   const { setOpen } = useForm();
   const [{ name, description }, setData] = useState({

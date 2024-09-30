@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useId, useState, type ChangeEventHandler } from "react";
+import { memo, useState, type ChangeEventHandler } from "react";
 import { loginHandler } from "../action";
 import SubmitBtn from "@/components/common/SubmitBtn";
 import Link from "next/link";
@@ -13,9 +13,10 @@ import { Label } from "@/components/ui/label";
 import GoogleLoginBtn from "./GoogleLoginBtn";
 import AnimateInput from "@/components/common/AnimateInput";
 import DiscordLoginBtn from "./DiscordLoginBtn";
+import useCsrf from "@/hooks/useCsrf";
 
 function LoginForm() {
-  const csrf = useId();
+  const csrf = useCsrf();
   const router = useRouter();
   const [{ identifier, password }, setdata] = useState({
     identifier: "",
