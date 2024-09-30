@@ -118,11 +118,16 @@ export const getTeam = async ({
 
 export const getTeamMember = async (
   teamId: string,
-  { page = 1, limit = 10, q }: BaseQuery & { q?: string }
+  {
+    page = 1,
+    limit = 10,
+    q,
+    status = true,
+  }: BaseQuery & { q?: string; status?: boolean }
 ) => {
   const {
     data: { data = [], message },
-    status,
+    status: responseStatus,
   } = await request.Query<GetTeamMemberAttributes[]>({
     url: `/team-member/${teamId}`,
     headers: {
@@ -136,10 +141,11 @@ export const getTeamMember = async (
       page,
       limit,
       q,
+      status,
     },
   });
 
-  if (status !== 200) return { error: message, data: [] };
+  if (responseStatus !== 200) return { error: message, data: [] };
 
   return { data, error: null };
 };
@@ -192,6 +198,48 @@ export const leaveTeam = async (teamId: string) => {
   } = await request.Mutation({
     url: `/team-member/${teamId}`,
     method: "DELETE",
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message, data: null };
+
+  return { data: null, error: null };
+};
+
+export const approveTeamMember = async (teamId: string, memberId: string) => {
+  const {
+    data: { message },
+    status,
+  } = await request.Mutation({
+    method: "PATCH",
+    url: `/team/${teamId}/${memberId}`,
+    headers: {
+      authorization: `Bearer ${
+        (
+          await getServerSideSession()
+        )?.user?.access_token
+      }`,
+    },
+  });
+
+  if (status !== 200) return { error: message, data: null };
+
+  return { data: null, error: null };
+};
+
+export const rejectTeamMember = async (teamId: string, memberId: string) => {
+  const {
+    data: { message },
+    status,
+  } = await request.Mutation({
+    method: "DELETE",
+    url: `/team/${teamId}/${memberId}`,
     headers: {
       authorization: `Bearer ${
         (

@@ -2,7 +2,6 @@ import BackBtn from "@/components/common/BackBtn";
 import Container from "@/components/common/Container";
 import NoDataState from "@/components/common/NoDataState";
 import PriorityImage from "@/components/common/PriorityImage";
-import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -10,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import type { CustomSession } from "@/interfaces";
 import type { GetTeamDto, GetTeamMemberAttributes } from "@/interfaces/model";
 import { Trophy, Users } from "lucide-react";
@@ -19,6 +17,8 @@ import type { Fetcher } from "@/hooks/useScroll";
 import InitMemberSection from "./components/InitMemberSection";
 import JoinBtn from "./components/JoinBtn";
 import InitTeamDetail from "./components/InitTeamDetail";
+import SeeJoinListBtn from "./components/SeeJoinListBtn";
+import TotalMemberSection from "./components/TotalMemberSection";
 
 export interface TeamDetailProps {
   session: CustomSession | null;
@@ -37,6 +37,7 @@ export default function TeamDetail({
     <Container as="section" data-aos="fade-up" data-aos-duration="300">
       <InitMemberSection datas={members} />
       <InitTeamDetail data={data} />
+
       <header className="bg-white dark:bg-[#202225] border-b border-r border-l rounded-sm shadow-sm md:w-[95%] md:mx-auto">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <BackBtn />
@@ -59,7 +60,7 @@ export default function TeamDetail({
                     height={100}
                     className="rounded-full mb-4 sm:mb-0 sm:mr-6"
                   />
-                  <hgroup className="text-center sm:text-left">
+                  <hgroup className="text-center sm:text-left antialiased px-1">
                     <h2 className="text-2xl font-bold mb-2">{data.name}</h2>
                     <p className="text-muted-foreground mb-4">
                       {data.gameName}
@@ -71,18 +72,12 @@ export default function TeamDetail({
                     {data.description?.slice(0, 255)}
                   </CardDescription>
 
-                  <div className="flex items-center justify-center sm:justify-start mb-4">
-                    <Users className="w-4 h-4 mr-2" />
-                    <span className="text-sm">
-                      {data.totalMember}/{data.maxMember} members
-                    </span>
-                  </div>
-                  <Progress
-                    value={(data.totalMember / data.maxMember) * 100}
-                    className="mb-4"
-                  />
+                  <TotalMemberSection />
                   <div className="flex justify-end">
-                    <JoinBtn />
+                    {session?.user?.id === data.owner && (
+                      <SeeJoinListBtn session={session} />
+                    )}
+                    {session?.user?.id !== data.owner && <JoinBtn />}
                   </div>
                 </div>
               </CardContent>

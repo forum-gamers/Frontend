@@ -14,6 +14,7 @@ import {
   memo,
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
   type ChangeEventHandler,
@@ -36,6 +37,7 @@ export interface ButtonEditProps {
 }
 
 function ButtonEdit({ communityId }: ButtonEditProps) {
+  const csrf = useId();
   const ref = useRef<HTMLFormElement>(null);
   const { data, setDatas } = useTargetCommunity();
   const [open, setOpen] = useState<boolean>(false);
@@ -73,7 +75,8 @@ function ButtonEdit({ communityId }: ButtonEditProps) {
       (name !== data?.name && name.length < 3) ||
       (description !== data?.description &&
         !!description &&
-        description.length < 3)
+        description.length < 3) ||
+      formData.get("csrf") !== csrf
     )
       return;
 
@@ -133,6 +136,7 @@ function ButtonEdit({ communityId }: ButtonEditProps) {
           className="space-y-4"
           id="edit-community"
         >
+          <input type="hidden" name="csrf" value={csrf} />
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <AnimateInput

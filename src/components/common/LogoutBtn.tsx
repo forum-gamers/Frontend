@@ -28,8 +28,12 @@ function LogoutBtn() {
   );
 
   return (
-    <button id="logout-btn" onClick={logout} className="cursor-pointer">
-      <ArrowLeftStartOnRectangleIcon className="w-6 h-6" />
+    <button
+      id="logout-btn"
+      onClick={logout}
+      className="cursor-pointer hover:opacity-80"
+    >
+      <ArrowLeftStartOnRectangleIcon className="w-6 h-6 hover:scale-90 duration-300 transition-all hover:opacity-80" />
     </button>
   );
 }

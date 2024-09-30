@@ -11,7 +11,7 @@ export default async function Page({
 
   const [session, { data: members = [] }, { data }] = await Promise.all([
     getServerSideSession(),
-    getTeamMember(id, { page: 1, limit: 10 }),
+    getTeamMember(id, { page: 1, limit: 10, status: true }),
     getTeamById(id),
   ]);
 
@@ -24,7 +24,7 @@ export default async function Page({
       members={members}
       fetcher={async (props) => {
         "use server";
-        return getTeamMember(id, props);
+        return getTeamMember(id, { ...props, status: true });
       }}
     />
   );

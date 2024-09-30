@@ -28,7 +28,7 @@ function JoinBtn() {
   const onClickHandler: MouseEventHandler = useCallback(
     (e) => {
       startTransition(async () => {
-        if (!data || mount || !me || me.id === data.owner) return;
+        if (!data || !mount || !me || me.id === data.owner) return;
         optimisticHandler(optimisticIsJoined);
 
         data?.isJoined ? await leaveTeam(data.id) : await joinTeam(data.id);
@@ -37,7 +37,8 @@ function JoinBtn() {
           ...data,
           isJoined: !optimisticIsJoined,
           totalMember: data?.status
-            ? data?.totalMember ?? 0 + (optimisticIsJoined ? -1 : 1)
+            ? data?.totalMember ??
+              0 + (optimisticIsJoined ? (data?.status ? -1 : 0) : 1)
             : data?.totalMember ?? 0,
         });
       });
@@ -52,24 +53,21 @@ function JoinBtn() {
       case optimisticIsJoined && !data?.status:
         return "Waiting for approval";
       default:
-        return "Join Team";
+        return "Request to join Team";
     }
   }, [optimisticIsJoined, data?.status]);
 
   return mount && me?.id !== data?.owner ? (
     <Button
-      disabled={
-        pending ||
-        (optimisticIsJoined && !data?.status) ||
-        me?.id === data?.owner
-      }
+      disabled={pending || me?.id === data?.owner}
       className={cn(
         optimisticIsJoined
           ? "border-2 border-blue-500 hover:border-blue-600 bg-white hover:bg-gray-50 dark:bg-[#202225] dark:hover:bg-slate-900"
           : "bg-blue-500 hover:bg-blue-600",
         "text-neutral-900 dark:text-neutral-300",
         "transition-all duration-300 hover:opacity-75 hover:scale-[98.5%]",
-        me?.id === data?.owner && "cursor-not-allowed"
+        me?.id === data?.owner && "cursor-not-allowed",
+        "min-w-[65%]"
       )}
       onClick={onClickHandler}
     >
