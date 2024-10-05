@@ -51,7 +51,6 @@ export default function useFollowBtn({ isFollowed, id }: UseFollowBtnProps) {
   const handleFollowBtn: MouseEventHandler = useCallback(
     (e) => {
       startTransition(async () => {
-        console.log(followed);
         optimisticIsFollowedHandler(!followed);
         followed ? await unFollow(id) : await follow(id);
         updateTargetFollower(followed ? "decrement" : "increment");

@@ -8,10 +8,7 @@ import {
   useTransition,
   type MouseEventHandler,
 } from "react";
-import {
-  BookmarkIcon,
-  BookmarkSlashIcon,
-} from "@/components/icons/HeroIconsSolid";
+import { BookmarkIcon, BookmarkXIcon } from "lucide-react";
 import { bookmarkPost, unBookmarkPost } from "../action";
 import usePost from "../hooks/usePost";
 import useBookmark from "@/modules/bookmark/hooks/useBookmark";
@@ -90,7 +87,7 @@ function BookmarkBtn({
       disabled={pending}
     >
       {bookmarked ? (
-        <BookmarkSlashIcon className="h-6 w-6" />
+        <BookmarkXIcon className="h-6 w-6" />
       ) : (
         <BookmarkIcon className="h-6 w-6" />
       )}

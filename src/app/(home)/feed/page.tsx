@@ -1,5 +1,4 @@
 import Home from "@/modules/home";
-import { fetchPosts } from "@/modules/home/action";
 import { getServerSideSession } from "@/helpers/global";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
@@ -10,9 +9,7 @@ export default async function Page() {
   if (!session) redirect("/login");
   revalidatePath("/");
 
-  const { data } = await fetchPosts({});
-
-  return <Home datas={data} session={session} />;
+  return <Home datas={[]} session={session} />;
 }
 
 export const metadata: Metadata = {

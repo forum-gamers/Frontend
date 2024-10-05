@@ -1,3 +1,5 @@
+import type { Lang } from "@/interfaces";
+
 export const SUPPORTED_IMAGE_TYPE = [
   "image/png",
   "image/jpg",
@@ -57,3 +59,5 @@ export const SUPPORTED_AUDIO_EXT = [
   ".flac",
   ".midi",
 ];
+
+export const LANGS: Lang[] = ["en", "id"];

@@ -5,30 +5,68 @@ import Sidebar from "./Sidebar";
 import { memo, type ReactNode } from "react";
 import type { UserAttributes } from "@/interfaces/model";
 import InitPage from "./Init";
+import { cn } from "@/lib/utils";
 
 export interface MainLayoutProps extends ChildrenProps {
   readonly rightSection?: ReactNode;
   user: UserAttributes | null;
+  visibleRightSection?: boolean;
 }
 
-function MainLayout({ children, rightSection, user }: MainLayoutProps) {
+function MainLayout({
+  children,
+  rightSection,
+  user,
+  visibleRightSection = true,
+}: MainLayoutProps) {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col w-full max-w-7xl mx-auto gap-8">
-        <section className="flex mt-24 justify-between">
-          <Sidebar className="sm:w-1/5 lg:w-[23%] xl:w-1/4 fixed bg-white dark:bg-[#202225] left-4 xl:left-8 shadow-gray-200 top-32 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100  shadow-lg h-[75%] p-4 hidden lg:flex justify-start flex-col rounded-lg" />
+      <div
+        className={cn(
+          "flex flex-col w-full max-w-7xl",
+          visibleRightSection && "mx-auto gap-8"
+        )}
+      >
+        <section
+          className={cn(
+            "mt-24",
+            visibleRightSection ? "justify-between flex" : "grid grid-cols-10"
+          )}
+        >
+          <Sidebar
+            className={cn(
+              "bg-white dark:bg-[#202225] shadow-gray-200 top-32 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100 shadow-lg h-[75%] max-h-[75vh] p-4 rounded-lg",
+              visibleRightSection
+                ? "sm:w-1/5 lg:w-[23%] xl:w-1/4 fixed"
+                : "lg:col-span-3 mt-8 w-[93.8%] sticky",
+              "hidden lg:flex justify-start flex-col left-4 xl:left-8"
+            )}
+          />
 
-          <main className="w-full lg:flex-grow mx-auto p-4 max-w-xl xl:max-w-2xl">
+          <main
+            className={cn(
+              visibleRightSection
+                ? "lg:flex-grow max-w-xl xl:max-w-2xl mx-auto p-4 "
+                : "lg:col-span-7",
+              "w-full"
+            )}
+          >
             <InitPage user={user}>{children}</InitPage>
           </main>
 
-          <aside
-            id="right-sidebar"
-            className="fixed bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100 top-32 right-4 xl:right-8 sm:w-1/5 lg:w-[23%] xl:w-1/4 h-[75%] shadow-lg p-4 hidden lg:flex justify-start flex-col rounded-lg"
-          >
-            {!!rightSection && rightSection}
-          </aside>
+          {visibleRightSection && (
+            <aside
+              id="right-sidebar"
+              className={cn(
+                "fixed top-32 right-4 xl:right-8 sm:w-1/5 lg:w-[23%] xl:w-1/4 h-[75%] shadow-lg p-4",
+                "bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100",
+                "hidden lg:flex justify-start flex-col rounded-lg"
+              )}
+            >
+              {!!rightSection && rightSection}
+            </aside>
+          )}
         </section>
       </div>
       <Footer />

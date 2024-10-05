@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import { MoonIcon, SunIcon } from "@/components/icons/HeroIconsOutline";
+import { MoonIcon, SunIcon } from "lucide-react";
 import { useCallback } from "react";
 import useMount from "@/hooks/useMounted";
 import { cn } from "@/lib/utils";

@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <article
+  React.HTMLAttributes<HTMLDivElement> & { as?: "article" | "section" | "div" }
+>(({ className, as: Tag = "article", ...props }, ref) => (
+  <Tag
     ref={ref}
     className={cn(
       "rounded-lg border bg-card text-card-foreground shadow-sm",
@@ -19,9 +19,9 @@ Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
+  React.HTMLAttributes<HTMLDivElement> & { as?: "header" | "div" }
+>(({ className, as: Tag = "div", ...props }, ref) => (
+  <Tag
     ref={ref}
     className={cn("flex flex-col space-y-1.5 p-6", className)}
     {...props}

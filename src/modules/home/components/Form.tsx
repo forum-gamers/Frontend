@@ -15,7 +15,7 @@ import {
   useState,
   type ChangeEventHandler,
 } from "react";
-import { WindowIcon } from "@/components/icons/HeroIconsOutline";
+import { AppWindowIcon } from "lucide-react";
 import type { FormAction } from "@/interfaces";
 import { Textarea } from "@/components/ui/textarea";
 import FileForm, {
@@ -112,7 +112,7 @@ function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
             "inline-flex"
           )}
         >
-          <WindowIcon className="w-6 h-6" />
+          <AppWindowIcon className="w-6 h-6" />
           <Button
             variant="link"
             className="rounded-md justify-start text-neutral-900 dark:text-neutral-300 bg-transparent"

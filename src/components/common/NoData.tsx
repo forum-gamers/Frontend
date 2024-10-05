@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, type MouseEventHandler } from "react";
-import { DocumentMagnifyingGlassIcon } from "../icons/HeroIconsOutline";
+import { SearchIcon } from "lucide-react";
 
 export interface NoDataProps {
   wrapperClass?: string;
@@ -14,7 +14,7 @@ function NoData({ wrapperClass, title, description, onClick }: NoDataProps) {
   return (
     <div className={wrapperClass}>
       <div className="flex flex-col w-full max-w-sm px-4 mx-auto">
-        <DocumentMagnifyingGlassIcon className="w-12 h-12 mx-auto" />
+        <SearchIcon className="w-12 h-12 mx-auto" />
         <hgroup className="flex flex-col mx-auto text-center">
           {!!title && (
             <h2 className="mt-3 text-lg text-gray-800 dark:text-white">

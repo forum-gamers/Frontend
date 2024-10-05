@@ -3,12 +3,12 @@
 import EmailForm from "@/components/common/EmailForm";
 import SubmitBtn from "@/components/common/SubmitBtn";
 import type { CustomSession, FormAction } from "@/interfaces";
-import { memo, useEffect, useState, type ChangeEventHandler } from "react";
+import { memo, useState, type ChangeEventHandler } from "react";
 import { forgetPasswordHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
-import { isInIndonesia } from "@/helpers/global";
 import useCsrf from "@/hooks/useCsrf";
+import useInIndonesia from "@/hooks/useInIndonesia";
 
 export interface ForgetFormProps {
   session: CustomSession | null;
@@ -18,15 +18,7 @@ function ForgetForm({ session }: ForgetFormProps) {
   const csrf = useCsrf();
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
-  const [inIndonesia, setInIndonesia] = useState<boolean>(false);
-
-  useEffect(() => {
-    if ("geolocation" in navigator)
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        setInIndonesia(isInIndonesia(latitude, longitude));
-      });
-  }, []);
+  const [pending, inIndonesia] = useInIndonesia();
 
   const actionHandler: FormAction = async (formData) => {
     if ((!email && !session) || formData.get("csrf") !== csrf) return;
@@ -64,7 +56,7 @@ function ForgetForm({ session }: ForgetFormProps) {
         <SubmitBtn
           text="Send email verification"
           type="submit"
-          disabled={!session && !email}
+          disabled={(!session && !email) || pending}
           className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
         />
       </div>

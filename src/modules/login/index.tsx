@@ -3,6 +3,7 @@ import Link from "next/link";
 import LoginForm from "./components/Form";
 import { LOGO_BLUE } from "@/components/images";
 import PriorityImage from "@/components/common/PriorityImage";
+import Init from "./components/Init";
 
 export default function LoginPage() {
   return (
@@ -11,6 +12,7 @@ export default function LoginPage() {
       data-aos="fade-up"
       className="flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 mt-8"
     >
+      <Init />
       <hgroup className="w-full max-w-md flex items-center justify-center flex-col">
         <Link prefetch href="/" className="mx-auto h-10 w-auto">
           <PriorityImage

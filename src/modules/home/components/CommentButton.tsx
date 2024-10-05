@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { memo } from "react";
-import { ChatBubbleLeftIcon } from "../../../components/icons/HeroIconsSolid";
+import { MessageSquareIcon } from "lucide-react";
 import { motion } from "../../../components/common/FramerMotion";
 import { Button } from "../../../components/ui/button";
 
@@ -18,7 +18,7 @@ function CommentButton({
   return (
     <Link prefetch href={`/comment/${postId}`}>
       <Button className={className} variant="ghost">
-        <ChatBubbleLeftIcon className="h-6 w-6" />
+        <MessageSquareIcon className="h-6 w-6" />
         <motion.span
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}

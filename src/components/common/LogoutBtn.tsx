@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeftStartOnRectangleIcon } from "@/components/icons/HeroIconsSolid";
+import { ArrowDownLeftFromSquareIcon } from "lucide-react";
 import useProfile from "@/modules/user/hooks/useProfile";
 import { googleLogout } from "@react-oauth/google";
 import { signOut } from "next-auth/react";
@@ -33,7 +33,7 @@ function LogoutBtn() {
       onClick={logout}
       className="cursor-pointer hover:opacity-80"
     >
-      <ArrowLeftStartOnRectangleIcon className="w-6 h-6 hover:scale-90 duration-300 transition-all hover:opacity-80" />
+      <ArrowDownLeftFromSquareIcon className="w-6 h-6 hover:scale-90 duration-300 transition-all hover:opacity-80" />
     </button>
   );
 }

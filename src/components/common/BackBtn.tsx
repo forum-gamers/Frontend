@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeftCircleIcon } from "../icons/HeroIconsOutline";
+import { ArrowLeftCircleIcon } from "lucide-react";
 import { memo, useCallback } from "react";
 
 export interface BackBtnProps {

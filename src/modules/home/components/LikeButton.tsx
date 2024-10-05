@@ -1,6 +1,6 @@
 "use client";
 
-import { HeartIcon } from "../../../components/icons/HeroIconsSolid";
+import { HeartIcon } from "lucide-react";
 import { Button, type ButtonProps } from "../../../components/ui/button";
 import {
   memo,
@@ -69,6 +69,7 @@ function PostLikeButton({
       disabled={pending}
     >
       <HeartIcon
+        fill={liked ? "red" : "transparent"}
         className={`h-6 w-6 text-[#EE2924] ${
           liked ? "text-[#EE2924]" : "text-transparent stroke-[#EE2924]"
         }`}

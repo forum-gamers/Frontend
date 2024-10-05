@@ -24,7 +24,7 @@ function Container({
       data-testid="container"
       className={cn(
         "mb-10",
-        (readMode || withMarginTop) && "mt-6",
+        (readMode || withMarginTop) && "mt-4",
         "p-4 md:p-8",
         className,
         "max-w-screen",

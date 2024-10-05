@@ -3,6 +3,7 @@ import RegisterForm from "./components/Form";
 import Link from "next/link";
 import { LOGO_BLUE } from "@/components/images";
 import PriorityImage from "@/components/common/PriorityImage";
+import Init from "./components/Init";
 
 export default function RegisterPage() {
   return (
@@ -11,6 +12,7 @@ export default function RegisterPage() {
       as="main"
       className="flex flex-col items-center justify-center w-full max-w-md mx-auto p-6 mt-8"
     >
+      <Init />
       <hgroup className="w-full max-w-md">
         <PriorityImage
           height={40}

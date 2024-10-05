@@ -32,7 +32,7 @@ export default function TeamPage({ session, datas }: TeamPageProps) {
               games together.
             </p>
           </hgroup>
-          <div className="flex justify-between items-center gap-2 w-full">
+          <div className="flex justify-between items-center gap-2 w-full flex-wrap-reverse">
             <Suspense>
               <DialogWrapper />
             </Suspense>

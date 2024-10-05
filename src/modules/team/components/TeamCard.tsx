@@ -21,7 +21,12 @@ export interface TeamCardProps {
 
 function TeamCard({ team }: TeamCardProps) {
   return (
-    <Card className="min-h-[375px] max-w-[350px] max-h-[375px] overflow-visible h-full hover:scale-[98.5%] hover:opacity-95 transition-all duration-300 shadow-sm hover:shadow-lg p-2">
+    <Card
+      className={cn(
+        "min-h-[375px] max-w-[350px] max-h-[375px] overflow-visible h-full hover:scale-[98.5%] hover:opacity-95 transition-all duration-300 shadow-sm hover:shadow-lg p-2",
+        "bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100"
+      )}
+    >
       <div className="relative aspect-video">
         <LazyLoadImg
           src={team?.imageUrl || GUEST}
@@ -33,7 +38,7 @@ function TeamCard({ team }: TeamCardProps) {
       </div>
       <CardContent className="p-2">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-bold">{team.name}</h3>
+          <h3 className="text-lg font-bold truncate">{team.name}</h3>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -47,7 +52,7 @@ function TeamCard({ team }: TeamCardProps) {
                 </div>
               </TooltipTrigger>
               <TooltipContent className="overflow-visible z-50 absolute right-4">
-                <p className="min-w-max text-sm text-neutral-900 dark:text-neutral-300">
+                <p className="min-w-max text-sm text-neutral-900 dark:text-neutral-300 antialiased truncate">
                   {team.gameName}
                 </p>
               </TooltipContent>
@@ -63,7 +68,7 @@ function TeamCard({ team }: TeamCardProps) {
         <div className="flex items-center justify-between mb-2">
           <CardDescription className="flex items-center">
             <UserIcon className="w-4 h-4 mr-2" />
-            <span className="text-sm">
+            <span className="text-xs md:text-sm">
               {team.totalMember ?? 0} / {team.maxMember ?? 0} members
             </span>
           </CardDescription>

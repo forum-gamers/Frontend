@@ -30,7 +30,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { PencilSquareIcon } from "@/components/icons/HeroIconsSolid";
+import { PencilIcon } from "lucide-react";
 import { swalAskDelete, swalError } from "@/lib/swal";
 import { deletePost } from "../action";
 import usePost from "../hooks/usePost";
@@ -137,7 +137,7 @@ function PostCard({
         {session && session?.user?.id === userId && (
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <PencilSquareIcon className="w-5 h-5" />
+              <PencilIcon className="w-5 h-5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>Menu</DropdownMenuLabel>

@@ -25,7 +25,7 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Switch } from "@/components/ui/switch";
 import SubmitBtn from "@/components/common/SubmitBtn";
-import { WindowIcon } from "@/components/icons/HeroIconsOutline";
+import { AppWindowIcon } from "lucide-react";
 import { createEvent } from "../../action";
 import { swalError } from "@/lib/swal";
 import useCsrf from "@/hooks/useCsrf";
@@ -112,7 +112,7 @@ function CreateEventForm({ communityId }: CreateEventFormProps) {
             "inline-flex"
           )}
         >
-          <WindowIcon className="w-6 h-6" />
+          <AppWindowIcon className="w-6 h-6" />
           <Button
             variant="link"
             className="rounded-md justify-start text-neutral-900 dark:text-neutral-300 bg-transparent"

@@ -1,12 +1,4 @@
 TODOS :
 <br>
-[ ] Home Page :
 
-- [ ] Navbar
-- [ ] Sidebar
-- [ ] Post Trigger and dialog
-- [ ] Card Post
-- [ ] Suggestions
-- [ ] Search Input
-- [ ] Connection error page
-- [ ] Not Verified Page
+- [ ] Seperate Me Profile page & Target Profile page (me:csr & target:ssr)

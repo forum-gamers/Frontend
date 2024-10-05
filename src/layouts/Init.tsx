@@ -20,8 +20,10 @@ export default function InitPage({ children, user }: InitPageProps) {
   }, []);
 
   useEffect(() => {
-    resetUser();
-    if (user) setUser(user);
+    if (user) {
+      resetUser();
+      setUser(user);
+    }
   }, [user]);
   return children;
 }

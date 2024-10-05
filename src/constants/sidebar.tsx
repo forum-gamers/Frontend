@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 import {
+  SwordsIcon,
   HomeIcon,
-  // ChatBubbleLeftIcon,
   UsersIcon,
-  UserGroupIcon,
+  UserIcon,
   BookmarkIcon,
-} from "@/components/icons/HeroIconsSolid";
+} from "lucide-react";
 
 export interface SidebarMenu {
   title: string;
@@ -29,17 +29,17 @@ const SIDEBAR_MENUS: SidebarMenu[] = [
   {
     title: "Team",
     href: "/team",
-    icon: <UsersIcon className={className} />,
+    icon: <UserIcon className={className} />,
   },
-  // {
-  //   title: "Chat",
-  //   href: "/chat",
-  //   icon: <ChatBubbleLeftIcon className={className} />,
-  // },
   {
     title: "Community",
     href: "/community",
-    icon: <UserGroupIcon className={className} />,
+    icon: <UsersIcon className={className} />,
+  },
+  {
+    title: "Tournament",
+    href: "/tournament",
+    icon: <SwordsIcon className={className} />,
   },
 ];
 
