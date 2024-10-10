@@ -2,17 +2,10 @@ import Container from "@/components/common/Container";
 import { Suspense } from "react";
 import TeamSearch from "./components/TeamSearch";
 import DialogWrapper from "./components/DialogWrapper";
-import type { CustomSession } from "@/interfaces";
-import type { GetTeamDto } from "@/interfaces/model";
 import InitPage from "./components/Init";
 import TeamList from "./components/TeamList";
 
-export interface TeamPageProps {
-  session: CustomSession | null;
-  datas: GetTeamDto[];
-}
-
-export default function TeamPage({ session, datas }: TeamPageProps) {
+export default function TeamPage() {
   return (
     <Container
       as="section"
@@ -20,7 +13,7 @@ export default function TeamPage({ session, datas }: TeamPageProps) {
       data-aos-duration="300"
       className="w-full"
     >
-      <InitPage datas={datas} />
+      <InitPage datas={[]} />
       <header className="container px-4 md:px-6">
         <div className="flex flex-col items-center space-y-4 text-center">
           <hgroup className="space-y-2">

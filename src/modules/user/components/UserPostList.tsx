@@ -1,40 +1,31 @@
 "use client";
 
-import type { CustomSession } from "@/interfaces";
-import type { PostResponse, UserAttributes } from "@/interfaces/model";
+import type { PostResponse } from "@/interfaces/model";
 import { CardContent } from "@/components/ui/card";
 import PostCard from "@/modules/home/components/PostCard";
 import { useEffect } from "react";
 import useScroll, { type Fetcher } from "@/hooks/useScroll";
 import SkeletonCard from "@/components/common/SkeletonCard";
 import usePost from "@/modules/home/hooks/usePost";
-import useProfile from "../hooks/useProfile";
 import NoDataState from "@/components/common/NoDataState";
+import { useSession } from "next-auth/react";
+import type { CustomSession } from "@/interfaces";
 
 export interface UserPostListProps {
-  session: CustomSession | null;
-  posts: PostResponse[];
   fetcher: Fetcher<PostResponse>;
-  user: UserAttributes | null;
 }
 
-export default function UserPostList({
-  session,
-  posts,
-  fetcher,
-  user,
-}: UserPostListProps) {
+export default function UserPostList({ fetcher }: UserPostListProps) {
   const { setDatas, resetDatas } = usePost();
   const { datas, ref, pending } = useScroll<HTMLDivElement, PostResponse>(
     usePost,
     fetcher
   );
-  const { setUser } = useProfile();
 
+  const { data: session } = useSession();
   useEffect(() => {
     resetDatas();
-    setDatas(posts);
-    if (user && session?.user?.id !== user?.id) setUser(user);
+    setDatas([]);
   }, []);
 
   return (
@@ -44,7 +35,7 @@ export default function UserPostList({
           <PostCard
             key={post.id}
             data={post}
-            session={session}
+            session={session as CustomSession | null}
             dataAos={idx % 2 === 0 ? "fade-right" : "fade-left"}
           />
         ))

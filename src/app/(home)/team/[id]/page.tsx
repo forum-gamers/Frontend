@@ -4,9 +4,8 @@ import { getTeamById, getTeamMember } from "@/modules/team/action";
 import TeamDetail from "@/modules/team/detail";
 import { notFound, redirect } from "next/navigation";
 
-export default async function Page({
-  params: { id },
-}: PageProps<{ id: string }>) {
+export default async function Page({ params }: PageProps<{ id: string }>) {
+  const { id } = await params;
   if (!isValidUUID(id)) redirect("/team");
 
   const [session, { data: members = [] }, { data }] = await Promise.all([
@@ -28,4 +27,12 @@ export default async function Page({
       }}
     />
   );
+}
+
+export const dynamicParams = true;
+
+export const experimental_ppr = true;
+
+export async function generateStaticParams() {
+  return [];
 }

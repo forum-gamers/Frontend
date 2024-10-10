@@ -1,36 +1,24 @@
-import { getServerSideSession, isValidUUID } from "@/helpers/global";
+import { isValidUUID } from "@/helpers/global";
 import type { PageProps } from "@/interfaces";
 import { getPostByUserId } from "@/modules/home/action";
-import User from "@/modules/user";
+import User from "@/modules/user/targetIndex";
 import { getUserById } from "@/modules/user/action";
 import { notFound, redirect } from "next/navigation";
 import { USER_TAB } from "../constant";
 import UserPostList from "@/modules/user/components/UserPostList";
 import type { Metadata } from "next";
 
-export default async function Page({
-  params: { id },
-}: PageProps<{ id: string }>) {
-  const session = await getServerSideSession();
-  if (!session) redirect("/login");
-
-  if (session?.user?.id === id) redirect("/profile");
-
+export default async function Page({ params }: PageProps<{ id: string }>) {
+  const { id } = await params;
   if (!isValidUUID(id)) redirect("/");
 
-  const [{ data, error }, { data: posts = [] }] = await Promise.all([
-    getUserById(id),
-    getPostByUserId(id, {}),
-  ]);
+  const { data, error } = await getUserById(id);
 
   if (error) redirect("/");
-
   if (!data) notFound();
 
   return (
     <User
-      isFollower={data.isFollower}
-      session={session}
       tabs={USER_TAB.map((el) => ({
         ...el,
         href: el.href.replace("[USER_ID]", data.id),
@@ -39,9 +27,6 @@ export default async function Page({
       user={data}
     >
       <UserPostList
-        user={null}
-        session={session}
-        posts={posts}
         fetcher={async (payload) => {
           "use server";
           return getPostByUserId(id, payload);
@@ -52,8 +37,9 @@ export default async function Page({
 }
 
 export async function generateMetadata({
-  params: { id },
+  params,
 }: PageProps<{ id: string }>): Promise<Metadata> {
+  const { id } = await params;
   if (!isValidUUID(id)) return {};
 
   const { error, data } = await getUserById(id);
@@ -73,3 +59,9 @@ export async function generateMetadata({
 }
 
 export const dynamicParams = true;
+
+export const experimental_ppr = true;
+
+export async function generateStaticParams() {
+  return [];
+}

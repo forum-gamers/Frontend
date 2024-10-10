@@ -176,7 +176,6 @@ export const getUserFollower = async (
   userId: string,
   { page = 1, limit = 15 }: BasePagination
 ) => {
-  console.log(userId, "userFollower");
   const {
     data: { data = [], message },
     status,

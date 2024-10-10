@@ -7,7 +7,7 @@ export interface InitialState {
 }
 
 export interface InitialAction {
-  setTarget: (target: UserAttributes) => void;
+  setTarget: (target: UserAttributes | null) => void;
   updateUserFollowing: (props: Counter) => void;
   updateUserFollower: (props: Counter) => void;
 }

@@ -9,3 +9,5 @@ export const metadata: Metadata = {
 export default function Layout({ children }: Readonly<ChildrenProps>) {
   return <RootLayout>{children}</RootLayout>;
 }
+
+export const experimental_ppr = true;

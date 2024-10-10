@@ -25,3 +25,5 @@ export default async function HomeLayout({
     </MainLayout>
   );
 }
+
+export const experimental_ppr = true;

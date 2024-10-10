@@ -23,3 +23,5 @@ async function UserLayout({ children }: UserLayoutProps) {
 }
 
 export default memo(UserLayout);
+
+export const experimental_ppr = true;

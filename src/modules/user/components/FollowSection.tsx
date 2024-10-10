@@ -28,15 +28,18 @@ import SkeletonCard from "@/components/common/SkeletonCard";
 import type { FollowAttributes } from "@/interfaces/model";
 import useProfile from "../hooks/useProfile";
 import useTargetProfile from "../hooks/useTargetProfile";
+import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 
 export interface FollowSectionProps {
-  session: CustomSession | null;
   id: string;
+  className?: string;
 }
 
-function FollowSection({ session, id }: FollowSectionProps) {
+function FollowSection({ id, className }: FollowSectionProps) {
   const { me } = useProfile();
   const { target } = useTargetProfile();
+  const { data: session } = useSession();
   const data = useMemo(
     () => ({
       followersCount:
@@ -53,15 +56,15 @@ function FollowSection({ session, id }: FollowSectionProps) {
   const handler = useMemo(
     () => ({
       follower:
-        session?.user?.id !== id
+        (session as CustomSession)?.user?.id !== id
           ? (query: BaseQuery) => getUserFollower(id, query)
           : getMyFollower,
       following:
-        session?.user?.id !== id
+        (session as CustomSession)?.user?.id !== id
           ? (query: BaseQuery) => getUserFollowing(id, query)
           : getMyFollowing,
     }),
-    [type, session?.user?.id, id, me]
+    [type, (session as CustomSession)?.user?.id, id, me]
   );
 
   const handleSeeFollow = useCallback(
@@ -83,7 +86,12 @@ function FollowSection({ session, id }: FollowSectionProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="flex sm:space-x-1 md:space-x-7 sm:text-xs text-sm items-start flex-nowrap">
+        <div
+          className={cn(
+            "flex sm:space-x-1 md:space-x-7 sm:text-xs text-sm items-start flex-nowrap",
+            className
+          )}
+        >
           <Button
             className="cursor-pointer hover:text-opacity-85 hover:bg-opacity-0 pb-6"
             aria-disabled={pending || open}
@@ -111,7 +119,7 @@ function FollowSection({ session, id }: FollowSectionProps) {
           <>
             <DialogTitle className="capitalize">{type}</DialogTitle>
             <FollowList
-              session={session}
+              session={session as CustomSession}
               type={type}
               handler={handler[type]}
               initialDatas={datas}

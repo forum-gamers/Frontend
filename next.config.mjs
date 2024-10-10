@@ -30,6 +30,9 @@ const nextConfig = {
     DOMAIN: process.env.DOMAIN,
   },
   reactStrictMode: false,
+  experimental: {
+    ppr: "incremental",
+  },
 };
 
 export default nextConfig;
