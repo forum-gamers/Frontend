@@ -1,4 +1,4 @@
 TODOS :
 <br>
 
-- [ ] Seperate Me Profile page & Target Profile page (me:csr & target:ssr)
+- [ ] Seperate Me Profile page & Target Profile page also create static page for each user for seo
