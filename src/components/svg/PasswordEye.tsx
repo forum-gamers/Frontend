@@ -1,14 +1,12 @@
+import { memo } from "react";
+
 export interface PasswordEyeProps {
   w?: string | number;
   h?: string | number;
   open: boolean;
 }
 
-export default function PasswordEye({
-  w = 24,
-  h = 24,
-  open,
-}: PasswordEyeProps) {
+function PasswordEye({ w = 24, h = 24, open }: PasswordEyeProps) {
   return (
     <svg
       className="shrink-0 size-3.5"
@@ -48,3 +46,5 @@ export default function PasswordEye({
     </svg>
   );
 }
+
+export default memo(PasswordEye);

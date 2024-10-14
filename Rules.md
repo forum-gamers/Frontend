@@ -13,3 +13,5 @@
 - strong typed, if possible, use interface
 
 - use as few thirdparty packages as possible
+
+- page must have loading & error (spesific but can use a global error page) & sitemap & metadata

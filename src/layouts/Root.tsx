@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { memo, Suspense } from "react";
 import "@/styles/globals.css";
 import "aos/dist/aos.css";
 import TopLoader from "nextjs-toploader";
@@ -7,22 +7,29 @@ import AppThemeProvider from "@/providers/Theme";
 import type { ChildrenProps } from "@/interfaces";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import InitPage from "@/components/Init";
+import LoadGPT from "@/components/scripts/gpt";
+import LoadGtm from "@/components/scripts/gtm";
+import GlobalListener from "./GlobalListener";
 
 const font = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
-/**
- *
- * @TODO : add favicon
- */
-export default function RootLayout({ children }: Readonly<ChildrenProps>) {
+export interface RootLayoutProps extends ChildrenProps {}
+
+function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="id-ID" suppressContentEditableWarning suppressHydrationWarning>
       <head>
+        <LoadGPT />
+        <LoadGtm />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <title>Forum Gamers</title>
       </head>
-      <body className={cn(font.variable, `bg-[#D6EFFF] dark:bg-[#001F3F]`)}>
+      <body
+        className={cn(
+          font.variable,
+          `bg-gray-100 dark:bg-[#36393f] transition-colors duration-150`
+        )}
+      >
         <Suspense>
           <SessionProvider>
             <AppThemeProvider>
@@ -37,7 +44,10 @@ export default function RootLayout({ children }: Readonly<ChildrenProps>) {
                 speed={200}
                 shadow="0 0 10px #05b6d3,0 0 5px #45c6c0"
               />
-              <InitPage>{children}</InitPage>
+              <Suspense>
+                <GlobalListener />
+              </Suspense>
+              {children}
             </AppThemeProvider>
           </SessionProvider>
         </Suspense>
@@ -45,3 +55,5 @@ export default function RootLayout({ children }: Readonly<ChildrenProps>) {
     </html>
   );
 }
+
+export default memo(RootLayout);

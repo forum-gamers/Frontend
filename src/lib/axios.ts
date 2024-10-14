@@ -1,5 +1,6 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
 import type { BaseResponse } from "@/interfaces/request";
+import type { PaginationRespProps } from "@/interfaces/response";
 
 export interface Query {
   url: string;
@@ -16,12 +17,12 @@ export interface Mutation {
 }
 
 class ThirdPartyRequest {
-  private client: AxiosInstance;
-
+  private readonly client: AxiosInstance;
   constructor() {
     this.client = axios.create({
       baseURL: process.env.BACKEND_BASE_URL,
       validateStatus: (s) => s >= 200,
+      withXSRFToken: true,
     });
   }
 
@@ -29,12 +30,16 @@ class ThirdPartyRequest {
     url,
     headers,
     params,
-  }: Query): Promise<AxiosResponse<BaseResponse<T>>> {
-    return this.client<BaseResponse<T>>({
+  }: Query): Promise<
+    AxiosResponse<BaseResponse<T> & Partial<PaginationRespProps>>
+  > {
+    const { signal } = new AbortController();
+    return this.client<BaseResponse<T> & Partial<PaginationRespProps>>({
       url,
       headers,
       method: "GET",
       params,
+      signal,
     });
   }
 
@@ -45,12 +50,14 @@ class ThirdPartyRequest {
     method,
     params,
   }: Mutation): Promise<AxiosResponse<BaseResponse<T>>> {
+    const { signal } = new AbortController();
     return this.client<BaseResponse<T>>({
       url,
       headers,
       method,
       data,
       params,
+      signal,
     });
   }
 }
