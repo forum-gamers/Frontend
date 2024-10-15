@@ -24,14 +24,15 @@ export default function ThemeToggleBtn() {
       aria-label="Toggle Theme"
       onClick={toggleTheme}
       className={cn(
-        resolvedTheme === "light" ? "bg-white" : "bg-neutral-800",
+        resolvedTheme === "light" ? "bg-white" : "bg-gray-900",
         "rounded-xl p-2",
         "border dark:stroke-slate-950 stroke-gray-100",
-        "hover:cursor-pointer"
+        "hover:cursor-pointer hover:scale-95 duration-300 transition-transform"
       )}
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.5 }}
+      whileHover={{ scale: 0.95 }}
     >
       {resolvedTheme === "light" ? (
         <SunIcon className="h-4 w-4 hover:opacity-75" />

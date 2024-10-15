@@ -17,7 +17,7 @@ const className = "h-6 w-6";
 
 const SIDEBAR_MENUS: SidebarMenu[] = [
   {
-    title: "Home",
+    title: "Feed",
     href: "/feed",
     icon: <HomeIcon className={className} />,
   },

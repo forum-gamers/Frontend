@@ -7,7 +7,6 @@ import { memo, useState, type ChangeEventHandler } from "react";
 import { forgetPasswordHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
-import useCsrf from "@/hooks/useCsrf";
 import useInIndonesia from "@/hooks/useInIndonesia";
 
 export interface ForgetFormProps {
@@ -15,13 +14,12 @@ export interface ForgetFormProps {
 }
 
 function ForgetForm({ session }: ForgetFormProps) {
-  const csrf = useCsrf();
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [pending, inIndonesia] = useInIndonesia();
 
   const actionHandler: FormAction = async (formData) => {
-    if ((!email && !session) || formData.get("csrf") !== csrf) return;
+    if (!email && !session) return;
 
     formData.append("email", email);
     formData.append("lang", inIndonesia ? "id" : "en");
@@ -39,7 +37,6 @@ function ForgetForm({ session }: ForgetFormProps) {
 
   return (
     <form id="forget-password-form" action={actionHandler}>
-      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="grid gap-y-4">
         {!session && (
           <EmailForm

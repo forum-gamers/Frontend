@@ -55,7 +55,7 @@ export default function CommunityDetail({
         <Card
           className={cn(
             "md:col-span-4",
-            "bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100",
+            "bg-white dark:bg-gray-900 shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100",
             "flex flex-col"
           )}
         >
@@ -96,7 +96,7 @@ export default function CommunityDetail({
 
         {/* statistic */}
         <aside className="space-y-6 md:col-span-3">
-          <Card className="bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100">
+          <Card className="bg-white dark:bg-gray-900 shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100">
             <CardHeader>
               <CardTitle>Community Stats</CardTitle>
             </CardHeader>
@@ -118,7 +118,7 @@ export default function CommunityDetail({
             </CardContent>
           </Card>
 
-          <Card className="bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100">
+          <Card className="bg-white dark:bg-gray-900 shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100">
             <CardHeader>
               <CardTitle>Members</CardTitle>
             </CardHeader>

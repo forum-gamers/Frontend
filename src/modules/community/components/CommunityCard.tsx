@@ -25,7 +25,7 @@ function CommunityCard({ community }: CommunityCardProps) {
     <Card
       className={cn(
         "overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[102%] cursor-pointer shadow-sm min-h-[375px] my-4",
-        "bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100"
+        "bg-white dark:bg-gray-900 shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100"
       )}
     >
       <CardHeader className="p-0 w-full rounded-md">

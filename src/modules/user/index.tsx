@@ -38,7 +38,7 @@ function UserPage({
     <>
       <Init target={user} session={session} />
       <BackBtn url="/" />
-      <header className="w-full rounded-md bg-white dark:bg-[#202225]">
+      <header className="w-full rounded-md bg-white dark:bg-gray-900">
         <figure className="w-full">
           {session?.user?.id !== id ? (
             <PriorityImage
@@ -89,7 +89,7 @@ function UserPage({
           </div>
         </hgroup>
       </header>
-      <Card className="w-full bg-white dark:bg-[#202225]">
+      <Card className="w-full bg-white dark:bg-gray-900">
         {<CardHeader>{lang === "id" ? "Tentang" : "About"}</CardHeader>}
         <CardContent>
           {session?.user?.id !== id ? (
@@ -104,7 +104,7 @@ function UserPage({
         </CardContent>
       </Card>
       <Card
-        className="w-full !border-none bg-gray-100 dark:bg-[#36393f] !shadow-none"
+        className="w-full !border-none bg-white dark:bg-gray-950 !shadow-none"
         id="post-section"
       >
         <TabPost tabs={tabs} activeTab={activeTab} />

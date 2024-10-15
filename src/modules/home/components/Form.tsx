@@ -12,6 +12,7 @@ import {
   memo,
   useCallback,
   useMemo,
+  useRef,
   useState,
   type ChangeEventHandler,
 } from "react";
@@ -36,7 +37,6 @@ import ChevronDown from "@/components/svg/ChevronDown";
 import { Input } from "@/components/ui/input";
 import type { PostResponse } from "@/interfaces/model";
 import { SUPPORTED_IMAGE_TYPE, SUPPORTED_VIDEO_TYPE } from "@/constants/global";
-import useCsrf from "@/hooks/useCsrf";
 
 export interface CreatePostFormProps {
   communityId?: number;
@@ -44,12 +44,12 @@ export interface CreatePostFormProps {
 }
 
 function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
-  const csrf = useCsrf();
   const privacyValues = useMemo(
     () => ["public", "private", "friend-only"] as const,
     []
   );
   const { addPost } = usePost();
+  const ref = useRef<HTMLFormElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
   const [privacy, setPrivacy] =
@@ -58,7 +58,7 @@ function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
   const [allowComment, setAllowComment] = useState<boolean>(true);
 
   const actionHandler: FormAction = async (formData) => {
-    if ((!text && !files.length) || formData.get("csrf") !== csrf) return;
+    if (!text && !files.length) return;
 
     if (communityId) formData.append("communityId", String(communityId));
     formData.append("text", text);
@@ -79,6 +79,7 @@ function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
       setText("");
       setFiles([]);
       if (onSuccess && typeof onSuccess === "function") onSuccess(data);
+      if (ref.current) ref.current.reset();
       return;
     }
   };
@@ -108,7 +109,7 @@ function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
       <DialogTrigger asChild>
         <div
           className={cn(
-            "h-auto flex-row shadow-white dark:shadow-black shadow-sm bg-white dark:bg-[#202225] w-full max-w-3xl  border-4 mb-4 justify-between items-center px-8 py-4 gap-4 rounded-lg",
+            "h-auto flex-row shadow-white dark:shadow-black shadow-sm bg-white dark:bg-gray-900 dark:border-gray-800 w-full max-w-3xl  border-4 mb-4 justify-between items-center px-8 py-4 gap-4 rounded-lg",
             "inline-flex"
           )}
         >
@@ -121,12 +122,16 @@ function CreatePostForm({ communityId, onSuccess }: CreatePostFormProps) {
           </Button>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-[#202225]">
+      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-gray-900 dark:border-gray-800">
         <DialogHeader>
           <p className="font-bold text-lg">Create your post</p>
         </DialogHeader>
-        <input type="hidden" name="csrf" value={csrf} id="csrf" />
-        <form action={actionHandler} id="post-form" className="grid gap-4 py-4">
+        <form
+          action={actionHandler}
+          ref={ref}
+          id="post-form"
+          className="grid gap-4 py-4"
+        >
           <div className="space-y-2">
             <Label htmlFor="text">Text</Label>
             <Textarea

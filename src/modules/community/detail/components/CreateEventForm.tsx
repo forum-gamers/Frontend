@@ -28,14 +28,12 @@ import SubmitBtn from "@/components/common/SubmitBtn";
 import { AppWindowIcon } from "lucide-react";
 import { createEvent } from "../../action";
 import { swalError } from "@/lib/swal";
-import useCsrf from "@/hooks/useCsrf";
 
 export interface CreateEventFormProps {
   communityId: number;
 }
 
 function CreateEventForm({ communityId }: CreateEventFormProps) {
-  const csrf = useCsrf();
   const [open, setOpen] = useState<boolean>(false);
   const [
     { title, description, location, startTime, endTime, isPublic },
@@ -77,8 +75,7 @@ function CreateEventForm({ communityId }: CreateEventFormProps) {
   }, []);
 
   const actionHandler: FormAction = async (formData) => {
-    if (!title || !location || !startTime || formData.get("csrf") !== csrf)
-      return;
+    if (!title || !location || !startTime) return;
 
     formData.delete("description");
     formData.delete("title");
@@ -130,7 +127,6 @@ function CreateEventForm({ communityId }: CreateEventFormProps) {
           id="create-event-form"
           className="space-y-4"
         >
-          <input type="hidden" name="csrf" value={csrf} id="csrf" />
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <AnimateInput

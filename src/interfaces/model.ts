@@ -343,3 +343,21 @@ export type TeamRole =
   | "inspector"
   | "manager"
   | "admin";
+
+export interface TournamentData {
+  id: number;
+  name: string;
+  pricePool: number;
+  slot: number;
+  startDate: Date;
+  registrationFee: number;
+  description?: string;
+  location: string;
+  tags: string[];
+  status: "preparation" | "started" | "finished" | "cancel";
+  isPublic: boolean;
+  liveOn?: string;
+  user?: Omit<UserRecomendationAttributes, "followerStatus" | "source"> | null;
+  community?: Omit<CommunityListAttributes, "role"> | null;
+  participantsTotal: number;
+}

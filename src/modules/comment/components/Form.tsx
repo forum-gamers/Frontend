@@ -9,7 +9,6 @@ import { useState, type ChangeEventHandler } from "react";
 import { postAComment } from "../action";
 import { swalError } from "@/lib/swal";
 import usePost from "@/modules/home/hooks/usePost";
-import useCsrf from "@/hooks/useCsrf";
 
 export interface CommentFormProps {
   postId: number;
@@ -20,13 +19,12 @@ export default function CommentForm({
   postId,
   disabled = false,
 }: CommentFormProps) {
-  const csrf = useCsrf();
   const { addComment } = useComment();
   const { updateCountComment } = usePost();
   const [text, setText] = useState<string>("");
 
   const actionHandler: FormAction = async (formData) => {
-    if (!text || formData.get("csrf") !== csrf) return;
+    if (!text) return;
 
     formData.append("text", text);
     formData.append("postId", postId.toString());
@@ -52,7 +50,6 @@ export default function CommentForm({
 
   return (
     <form action={actionHandler} id="comment-form" className="mb-6">
-      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="py-2 px-4 mb-4 bg-white dark:bg-[#202225] rounded-lg rounded-t-lg border border-gray-200 dark:border-gray-700">
         <Label htmlFor="comment" className="sr-only">
           Add a comment

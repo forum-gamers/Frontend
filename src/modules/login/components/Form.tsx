@@ -13,10 +13,8 @@ import { Label } from "@/components/ui/label";
 import GoogleLoginBtn from "./GoogleLoginBtn";
 import AnimateInput from "@/components/common/AnimateInput";
 import DiscordLoginBtn from "./DiscordLoginBtn";
-import useCsrf from "@/hooks/useCsrf";
 
 function LoginForm() {
-  const csrf = useCsrf();
   const router = useRouter();
   const [{ identifier, password }, setdata] = useState({
     identifier: "",
@@ -24,7 +22,7 @@ function LoginForm() {
   });
 
   const actionHandler: FormAction = async (formData) => {
-    if (!identifier || !password || formData.get("csrf") !== csrf) return;
+    if (!identifier || !password) return;
 
     formData.append("identifier", identifier);
     formData.append("password", password);
@@ -55,7 +53,6 @@ function LoginForm() {
       action={actionHandler}
       id="login-form"
     >
-      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label
           htmlFor="identifier"

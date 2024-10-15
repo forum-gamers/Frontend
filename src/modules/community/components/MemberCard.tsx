@@ -16,7 +16,6 @@ function MemberCard({
   backgroundUrl,
   createdAt,
 }: MemberCardProps) {
-  console.log(username);
   return (
     <article className="flex items-center space-x-4">
       <ProfilePic

@@ -33,7 +33,7 @@ function CommunityTab({ children }: Readonly<ChildrenProps>) {
       <nav
         className={cn(
           "flex justify-evenly items-center h-12 mb-4",
-          "bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100",
+          "bg-white dark:bg-gray-900 shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100",
           "rounded-sm shadow-sm"
         )}
       >

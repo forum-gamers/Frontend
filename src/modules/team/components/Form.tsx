@@ -23,13 +23,11 @@ import { createTeam } from "../action";
 import useForm from "../hooks/useForm";
 import { swalError } from "@/lib/swal";
 import useTeam from "../hooks/useTeam";
-import useCsrf from "@/hooks/useCsrf";
 
 function CreateTeamForm() {
   const ref = useRef<HTMLFormElement>(null);
   const { setOpen } = useForm();
   const { setDatas } = useTeam();
-  const csrfToken = useCsrf();
   const [{ name, description, isPublic, gameId }, setData] = useState({
     name: "",
     description: "",
@@ -39,7 +37,7 @@ function CreateTeamForm() {
   const [file, setFile] = useState<File | null>(null);
 
   const actionHandler: FormAction = async (formData) => {
-    if (formData.get("csrf") !== csrfToken || !name || !gameId || !file) return;
+    if (!name || !gameId || !file) return;
 
     formData.delete("name");
     formData.delete("description");
@@ -117,7 +115,6 @@ function CreateTeamForm() {
       className="space-y-4"
       action={actionHandler}
     >
-      <input type="hidden" name="csrf" value={csrfToken} id="csrf" />
       <div className="space-y-2">
         <Label
           className="block mb-2 text-sm font-medium text-neutral-900 dark:text-neutral-300 after:content-['*'] after:ml-0.5 after:text-red-500"

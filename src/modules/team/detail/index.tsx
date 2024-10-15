@@ -38,7 +38,7 @@ export default function TeamDetail({
       <InitMemberSection datas={members} />
       <InitTeamDetail data={data} />
 
-      <header className="bg-white dark:bg-[#202225] border-b border-r border-l rounded-sm shadow-sm md:w-[95%] md:mx-auto">
+      <header className="bg-white dark:bg-gray-900 border-b border-r border-l rounded-sm shadow-sm md:w-[95%] md:mx-auto">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <BackBtn />
           <h1 className="text-2xl font-bold font-sans text-blue-500 antialiased hover:underline-offset-2 hover:underline duration-300 transition-transform cursor-pointer">
@@ -50,7 +50,7 @@ export default function TeamDetail({
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div className="md:col-span-3">
-            <Card className="mb-8">
+            <Card className="mb-8 bg-white dark:bg-gray-900">
               <CardContent className="pt-6">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start mb-4">
                   <PriorityImage
@@ -83,7 +83,7 @@ export default function TeamDetail({
               </CardContent>
             </Card>
 
-            <Card className="mb-8">
+            <Card className="mb-8 bg-white dark:bg-gray-900">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Trophy className="mr-2 h-5 w-5" />
@@ -95,7 +95,7 @@ export default function TeamDetail({
               </CardContent>
             </Card>
 
-            <Card className="mb-8">
+            <Card className="mb-8 bg-white dark:bg-gray-900">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Trophy className="mr-2 h-5 w-5" />
@@ -107,7 +107,7 @@ export default function TeamDetail({
               </CardContent>
             </Card>
           </div>
-          <Card className="md:max-h-[30%] md:col-span-2">
+          <Card className="md:max-h-[30%] md:col-span-2 bg-white dark:bg-gray-900">
             <CardHeader>
               <CardTitle className="flex items-center !text-lg text-center">
                 <Users className="mr-2 h-5 w-5" />

@@ -36,7 +36,7 @@ function MainLayout({
         >
           <Sidebar
             className={cn(
-              "bg-white dark:bg-[#202225] shadow-gray-200 top-32 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100 shadow-lg h-[75%] max-h-[75vh] p-4 rounded-lg",
+              "bg-white dark:bg-gray-950 top-32 h-[75%] max-h-[75vh] p-4 rounded-lg",
               visibleRightSection
                 ? "sm:w-1/5 lg:w-[23%] xl:w-1/4 fixed"
                 : "lg:col-span-3 mt-8 w-[93.8%] sticky",
@@ -59,8 +59,8 @@ function MainLayout({
             <aside
               id="right-sidebar"
               className={cn(
-                "fixed top-32 right-4 xl:right-8 sm:w-1/5 lg:w-[23%] xl:w-1/4 h-[75%] shadow-lg p-4",
-                "bg-white dark:bg-[#202225] shadow-gray-200 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100",
+                "fixed top-32 right-4 xl:right-8 sm:w-1/5 lg:w-[23%] xl:w-1/4 h-[75%] p-4",
+                "bg-white dark:bg-gray-950",
                 "hidden lg:flex justify-start flex-col rounded-lg"
               )}
             >

@@ -22,10 +22,8 @@ import { swalError } from "@/lib/swal";
 import { signIn } from "next-auth/react";
 import useCommunity from "../hooks/useCommunity";
 import useForm from "../hooks/useForm";
-import useCsrf from "@/hooks/useCsrf";
 
 function ImportedForm() {
-  const csrf = useCsrf();
   const { setDatas } = useCommunity();
   const { setOpen } = useForm();
   const [pending, startTransition] = useTransition();
@@ -59,7 +57,7 @@ function ImportedForm() {
   }, []);
 
   const actionHandler: FormAction = async (formData) => {
-    if (!selectedServer || formData.get("csrf") !== csrf) return;
+    if (!selectedServer) return;
 
     formData.delete("discordServerId");
     formData.append("discordServerId", selectedServer);
@@ -104,7 +102,6 @@ function ImportedForm() {
       className="space-y-4 min-h-[414px] flex flex-col justify-between"
       action={actionHandler}
     >
-      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <div className="space-y-2">
         <Label htmlFor="discord-server">Select Discord Server</Label>
         <Select defaultValue={selectedServer} onValueChange={onChangeHandler}>

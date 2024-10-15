@@ -7,6 +7,7 @@ import ThemeToggleBtn from "@/components/common/ThemeToggleBtn";
 import LazyLoadImg from "@/components/common/LazyLoadImage";
 import Link from "next/link";
 import LogoutBtn from "@/components/common/LogoutBtn";
+import { cn } from "@/lib/utils";
 
 function Navbar() {
   const placeholders = [
@@ -17,7 +18,14 @@ function Navbar() {
   ];
 
   return (
-    <header className="fixed z-10 w-full bg-blue-500 p-5 shadow-sm dark:border-b dark:border-neutral-800">
+    <header
+      className={cn(
+        "fixed z-10 w-full rounded-t-2xl rounded-b-sm",
+        "p-5 shadow-sm dark:border-b dark:border-neutral-800 ",
+        "bg-blue-500",
+        "hover:shadow-xl hover:scale-[100.5%] duration-500 transition-all"
+      )}
+    >
       <div className="w-full max-w-7xl mx-auto flex justify-between gap-4 items-center">
         <div className="hidden lg:block lg:rounded-full lg:bg-slate-50 lg:dark:bg-[#202225]">
           <LazyLoadImg

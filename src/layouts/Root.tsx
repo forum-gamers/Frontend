@@ -27,7 +27,8 @@ function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           font.variable,
-          `bg-gray-100 dark:bg-[#36393f] transition-colors duration-150`
+          `bg-white dark:bg-gray-950 transition-colors duration-150`,
+          "rounded-lg"
         )}
       >
         <Suspense>
@@ -38,8 +39,8 @@ function RootLayout({ children }: RootLayoutProps) {
                 initialPosition={0.08}
                 crawlSpeed={200}
                 height={3}
-                crawl={true}
-                showSpinner={true}
+                crawl
+                showSpinner
                 easing="ease"
                 speed={200}
                 shadow="0 0 10px #05b6d3,0 0 5px #45c6c0"

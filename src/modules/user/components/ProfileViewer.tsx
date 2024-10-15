@@ -9,8 +9,8 @@ function ProfileViewer() {
   return (
     <div className="relative hidden w-full flex-col items-center overflow-hidden pb-2 lg:flex">
       <BackgroundImage
-        wrapperClass="h-24 w-full xl:w-[90%] overflow-hidden rounded-lg dark:brightness-50"
-        imageClass="-ml-4 w-full scale-125"
+        wrapperClass="h-24 w-full xl:w-[90%] hover:xl-w-[95%] duration-300 transition-transform overflow-hidden rounded-lg dark:brightness-50"
+        imageClass="-ml-4 w-full scale-125 hover:scale-150 duration-300 transition-transform"
         w={100}
         h={100}
       />
@@ -21,11 +21,11 @@ function ProfileViewer() {
         <ProfileImage
           h={80}
           w={80}
-          imageClass="lg:hover:scale-105 rounded-full overflow-hidden object-center object-cover p-0"
-          wrapperClass="-mt-11 rounded-full border-2 border-white shadow-md dark:border-neutral-800 flex justify-center items-center"
+          imageClass="lg:hover:scale-105 rounded-full overflow-hidden object-center object-cover p-0 duration-300 transition-transform"
+          wrapperClass="-mt-11 lg:hover:scale-105 duration-300 transition-transform rounded-full border-2 border-white shadow-md dark:border-neutral-800 flex justify-center items-center"
         />
-        <hgroup className="mt-1 flex items-center gap-2 justify-center">
-          <UsernameViewer className="whitespace-nowrap text-lg text-center font-medium lg:text-xl" />
+        <hgroup className="mt-1 flex items-center gap-2 justify-center hover:scale-[102%] hover:animate-pulse transition-all duration-300 hover:opacity-80">
+          <UsernameViewer className="whitespace-nowrap text-lg text-center font-medium lg:text-xl hover:scale-[102%] hover:animate-pulse transition-all duration-300 hover:opacity-80" />
         </hgroup>
       </Link>
     </div>

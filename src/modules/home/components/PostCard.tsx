@@ -13,6 +13,7 @@ import {
   Fragment,
   memo,
   useCallback,
+  useMemo,
   useState,
   type ChangeEventHandler,
 } from "react";
@@ -37,12 +38,12 @@ import usePost from "../hooks/usePost";
 import EditableText from "@/modules/home/components/EditableText";
 import { Badge } from "@/components/ui/badge";
 import BookmarkBtn from "./BookmarkBtn";
+import { cn } from "@/lib/utils";
 
 export interface PostCardProps {
   data: PostResponse;
   session: CustomSession | null;
   as?: "page" | "card";
-  dataAos: "fade-left" | "fade-right" | "fade-up";
 }
 
 function PostCard({
@@ -67,7 +68,6 @@ function PostCard({
   },
   session,
   as = "card",
-  dataAos,
 }: PostCardProps) {
   const { deletePost: deletePostFromCtx, editPostText } = usePost();
   const [editable, setEditable] = useState<boolean>(false);
@@ -112,11 +112,28 @@ function PostCard({
     [editPostText, id]
   );
 
+  const mediaClass = useMemo(() => {
+    switch (medias.length) {
+      case 1:
+        return "grid-cols-1";
+      case 2:
+        return "grid-cols-2";
+      case 3:
+        return "grid-cols-3";
+      case 4:
+        return "grid-cols-4";
+      default:
+        return "grid-cols-[repeat(auto-fill,minmax(150px,1fr))]";
+    }
+  }, [medias]);
+
   return (
     <Card
-      data-aos={dataAos}
-      data-aos-duration="300"
-      className="bg-white dark:bg-[#202225] shadow-md shadow-gray-200 top-32 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100"
+      className={cn(
+        "bg-white dark:bg-gray-900 dark:border-gray-800 shadow-md shadow-gray-200 top-32 dark:shadow-slate-950 dark:stroke-slate-950 stroke-gray-100",
+        "hover:scale-[102.5%] hover:opacity-85 transition-all duration-300 hover:shadow-xl",
+        "px-2 mx-1"
+      )}
     >
       <CardHeader className="flex flex-row gap-2 items-center space-y-0 pb-2">
         <ProfilePic
@@ -180,12 +197,22 @@ function PostCard({
           </Badge>
         )}
         {!!medias?.length && (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8 mx-auto px-2">
+          <div
+            className={cn(
+              "grid gap-4",
+              mediaClass,
+              "overflow-x-scroll overflow-y-hidden no-scrollbar"
+            )}
+          >
             {medias.map((el) => (
               <Fragment key={el.fileId}>
                 {el.type === "image" ? (
                   <LazyLoadImg
-                    className="py-1 hover:scale-105"
+                    className={cn(
+                      "py-1 hover:scale-[102%] hover:opacity-95 rounded-sm cursor-pointer hover:shadow-md",
+                      "flex justify-center items-center",
+                      "transition-all duration-300"
+                    )}
                     src={el.url}
                     alt="post image"
                     width={400}
@@ -197,7 +224,11 @@ function PostCard({
                     alt="post video"
                     width={400}
                     height={300}
-                    className="py-1 hover:scale-105"
+                    className={cn(
+                      "py-1 hover:scale-[102%] hover:opacity-95 rounded-sm cursor-pointer hover:shadow-md",
+                      "flex justify-center items-center",
+                      "transition-all duration-300"
+                    )}
                   />
                 )}
               </Fragment>

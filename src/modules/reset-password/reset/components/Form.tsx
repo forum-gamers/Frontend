@@ -7,14 +7,12 @@ import { memo, useState, type ChangeEventHandler } from "react";
 import { resetPasswordHandler } from "../action";
 import { swalError } from "@/lib/swal";
 import { useRouter } from "next/navigation";
-import useCsrf from "@/hooks/useCsrf";
 
 export interface ResetFormProps {
   token: string;
 }
 
 function ResetForm({ token }: ResetFormProps) {
-  const csrf = useCsrf();
   const router = useRouter();
   const [{ password, confirmPassword }, setData] = useState({
     password: "",
@@ -46,7 +44,6 @@ function ResetForm({ token }: ResetFormProps) {
       className="mt-4 space-y-4 lg:mt-5 md:space-y-5"
       action={actionHandler}
     >
-      <input type="hidden" name="csrf" value={csrf} id="csrf" />
       <PasswordForm
         id="password"
         name="password"

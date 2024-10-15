@@ -10,6 +10,7 @@ import PostCard from "@/modules/home/components/PostCard";
 import NoDataState from "./NoDataState";
 import SkeletonCard from "./SkeletonCard";
 import { memo } from "react";
+import { cn } from "@/lib/utils";
 
 export interface PostListProps {
   fetcher: Fetcher<PostResponse>;
@@ -24,15 +25,16 @@ function PostList({ fetcher, session, handler }: PostListProps) {
   );
 
   return (
-    <div className="overflow-y-scroll space-y-6 no-scrollbar mx-auto max-w-lg">
+    <div
+      className={cn(
+        "space-y-6 no-scrollbar mx-auto max-w-lg",
+        "overflow-y-scroll overflow-x-hidden scroll-smooth scroll-px-2 overscroll-auto hover:overscroll-contain",
+        "mb-8"
+      )}
+    >
       {!!datas?.length ? (
-        datas.map((data, idx) => (
-          <PostCard
-            session={session}
-            key={data.id}
-            data={data}
-            dataAos={idx % 2 === 0 ? "fade-right" : "fade-left"}
-          />
+        datas.map((data) => (
+          <PostCard session={session} key={data.id} data={data} />
         ))
       ) : (
         <NoDataState />
