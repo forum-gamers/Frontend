@@ -1,5 +1,5 @@
 import useComment from "@/modules/comment/hooks/useComment";
-import usePost from "@/modules/home/hooks/usePost";
+import usePost from "@/modules/feed/hooks/usePost";
 import { follow, unFollow } from "@/modules/user/action";
 import useProfile from "@/modules/user/hooks/useProfile";
 import useRecomendation from "@/modules/user/hooks/useRecomendation";

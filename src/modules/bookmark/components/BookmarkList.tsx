@@ -1,7 +1,7 @@
 "use client";
 
 import type { CustomSession } from "@/interfaces";
-import PostCard from "@/modules/home/components/PostCard";
+import PostCard from "@/modules/feed/components/PostCard";
 import useScroll from "@/hooks/useScroll";
 import SkeletonCard from "@/components/common/SkeletonCard";
 import useBookmark from "../hooks/useBookmark";

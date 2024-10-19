@@ -3,11 +3,11 @@
 import type { CustomSession } from "@/interfaces";
 import type { PostResponse, UserAttributes } from "@/interfaces/model";
 import { CardContent } from "@/components/ui/card";
-import PostCard from "@/modules/home/components/PostCard";
+import PostCard from "@/modules/feed/components/PostCard";
 import { useEffect } from "react";
 import useScroll, { type Fetcher } from "@/hooks/useScroll";
 import SkeletonCard from "@/components/common/SkeletonCard";
-import usePost from "@/modules/home/hooks/usePost";
+import usePost from "@/modules/feed/hooks/usePost";
 import useProfile from "../hooks/useProfile";
 import NoDataState from "@/components/common/NoDataState";
 

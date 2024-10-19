@@ -1,6 +1,6 @@
 import { getServerSideSession, isValidUUID } from "@/helpers/global";
 import type { PageProps } from "@/interfaces";
-import { getPostByUserId } from "@/modules/home/action";
+import { getPostByUserId } from "@/modules/feed/action";
 import User from "@/modules/user";
 import { getUserById } from "@/modules/user/action";
 import { notFound, redirect } from "next/navigation";

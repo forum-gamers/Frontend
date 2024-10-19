@@ -6,7 +6,7 @@ import useScroll, {
 } from "@/hooks/useScroll";
 import type { CustomSession } from "@/interfaces";
 import type { PostResponse } from "@/interfaces/model";
-import PostCard from "@/modules/home/components/PostCard";
+import PostCard from "@/modules/feed/components/PostCard";
 import NoDataState from "./NoDataState";
 import SkeletonCard from "./SkeletonCard";
 import { memo } from "react";

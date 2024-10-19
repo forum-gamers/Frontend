@@ -1,4 +1,4 @@
-import Home from "@/modules/home";
+import Home from "@/modules/feed";
 import { getServerSideSession } from "@/helpers/global";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";

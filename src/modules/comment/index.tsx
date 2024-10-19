@@ -5,7 +5,7 @@ import CommentList from "./components/CommentList";
 import CommentForm from "./components/Form";
 import BackBtn from "@/components/common/BackBtn";
 import Breakline from "@/components/common/Breakline";
-import PostCard from "../home/components/PostCard";
+import PostCard from "../feed/components/PostCard";
 import type { CustomSession } from "@/interfaces";
 
 export interface CommentProps {

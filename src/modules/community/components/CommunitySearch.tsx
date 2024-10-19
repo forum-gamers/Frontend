@@ -59,7 +59,7 @@ function CommunitySearch() {
         type="text"
         placeholder="Search communities..."
         onChange={onChangeHandler}
-        className="pl-10 pr-4 py-2 w-64"
+        className="pl-10 pr-4 py-2 w-64 bg-white dark:bg-gray-900"
         value={value}
       />
       {!!value && (

@@ -57,7 +57,7 @@ function TeamSearch() {
       <AnimateInput
         type="text"
         placeholder="Search team..."
-        className="pl-10 pr-4 py-2"
+        className="pl-10 pr-4 py-2 bg-white dark:bg-gray-900"
         value={value}
         onChange={onChangeHandler}
         ref={ref}

@@ -35,7 +35,7 @@ import { PencilIcon } from "lucide-react";
 import { swalAskDelete, swalError } from "@/lib/swal";
 import { deletePost } from "../action";
 import usePost from "../hooks/usePost";
-import EditableText from "@/modules/home/components/EditableText";
+import EditableText from "@/modules/feed/components/EditableText";
 import { Badge } from "@/components/ui/badge";
 import BookmarkBtn from "./BookmarkBtn";
 import { cn } from "@/lib/utils";

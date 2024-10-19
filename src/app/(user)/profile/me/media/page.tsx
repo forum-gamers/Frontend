@@ -1,4 +1,4 @@
-import { getMyPost } from "@/modules/home/action";
+import { getMyPost } from "@/modules/feed/action";
 import User from "@/modules/user";
 import { getMe } from "@/modules/user/action";
 import { redirect } from "next/navigation";

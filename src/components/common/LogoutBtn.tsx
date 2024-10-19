@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { memo, useCallback, type MouseEventHandler } from "react";
 import useBookmark from "@/modules/bookmark/hooks/useBookmark";
 import useComment from "@/modules/comment/hooks/useComment";
-import usePost from "@/modules/home/hooks/usePost";
+import usePost from "@/modules/feed/hooks/usePost";
 
 function LogoutBtn() {
   const { resetUser } = useProfile();

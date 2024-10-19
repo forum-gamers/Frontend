@@ -2,7 +2,7 @@ import { getServerSideSession } from "@/helpers/global";
 import type { PageProps } from "@/interfaces";
 import Comment from "@/modules/comment";
 import { fetchPostComment } from "@/modules/comment/action";
-import { fetchPostById } from "@/modules/home/action";
+import { fetchPostById } from "@/modules/feed/action";
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 

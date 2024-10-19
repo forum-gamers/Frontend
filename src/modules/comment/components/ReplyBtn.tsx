@@ -13,7 +13,7 @@ import { replyComment } from "../action";
 import { swalError } from "@/lib/swal";
 import { Button } from "../../../components/ui/button";
 import useComment from "@/modules/comment/hooks/useComment";
-import usePost from "@/modules/home/hooks/usePost";
+import usePost from "@/modules/feed/hooks/usePost";
 
 export interface ReplyBtnProps {
   commentId: number;

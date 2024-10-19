@@ -1,6 +1,6 @@
 "use client";
 
-import CreatePostForm from "@/modules/home/components/Form";
+import CreatePostForm from "@/modules/feed/components/Form";
 import { memo, useCallback } from "react";
 import useCommunityPost from "../../hooks/useCommunityPost";
 import type { PostResponse } from "@/interfaces/model";

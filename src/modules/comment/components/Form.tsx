@@ -8,7 +8,7 @@ import type { FormAction } from "@/interfaces";
 import { useState, type ChangeEventHandler } from "react";
 import { postAComment } from "../action";
 import { swalError } from "@/lib/swal";
-import usePost from "@/modules/home/hooks/usePost";
+import usePost from "@/modules/feed/hooks/usePost";
 
 export interface CommentFormProps {
   postId: number;
